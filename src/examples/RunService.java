@@ -38,6 +38,8 @@ import org.mindswap.owls.OWLSFactory;
 import org.mindswap.owls.process.Process;
 import org.mindswap.owls.process.execution.DefaultProcessMonitor;
 import org.mindswap.owls.process.execution.ProcessExecutionEngine;
+import org.mindswap.owls.process.execution.SimpleThreadedMonitor;
+import org.mindswap.owls.process.execution.ThreadedProcessExecutionEngine;
 import org.mindswap.owls.profile.Profile;
 import org.mindswap.owls.service.Service;
 import org.mindswap.query.ValueMap;
@@ -69,6 +71,68 @@ public class RunService {
         // Attach a listener to the execution engine
         exec.addMonitor(new DefaultProcessMonitor());
     }
+    
+    public void runThreaded() throws Exception {
+    	ThreadedProcessExecutionEngine threadedExec = OWLSFactory.createThreadedExecutionEngine();
+    	threadedExec.addMonitor(new SimpleThreadedMonitor());
+    	
+        OWLKnowledgeBase kb = OWLFactory.createKB();
+        kb.setReasoner("Pellet");
+        
+        // read the service description
+        service = kb.readService("http://www.mindswap.org/2004/owl-s/1.1/FrenchDictionary.owl");
+        process = service.getProcess();
+
+        // get the parameter using the local name
+        values = new ValueMap();
+        values.setDataValue(process.getInput("FirstParam"), "2");
+        values.setDataValue(process.getInput("SecParam"), "3");
+        
+        threadedExec.setSleepInterval(3000);
+        threadedExec.executeInThread(process, values);
+        
+        Thread.sleep(1000);
+        threadedExec.interruptExecution();
+        Thread.sleep(2000);
+        threadedExec.continueExecution();
+        
+//        Service service1 = kb.readService("http://www.mindswap.org/2004/owl-s/1.1/FrenchDictionary.owl");
+//        Service service2 = kb.readService("http://www.mindswap.org/2004/owl-s/1.1/FindCheaperBook.owl");
+//        Service service3 = kb.readService("http://www.mindswap.org/2004/owl-s/1.1/Dictionary.owl");
+//        Service service4 = kb.readService("http://www.mindswap.org/2004/owl-s/1.1/BabelFishTranslator.owl");
+
+//        Process process1 = service1.getProcess();
+//        Process process2 = service2.getProcess();
+//        Process process3 = service3.getProcess();
+//        Process process4 = service4.getProcess();
+
+        // initialize the input values to be empty
+//        ValueMap values1 = new ValueMap();
+//        ValueMap values2 = new ValueMap();
+//        ValueMap values3 = new ValueMap();
+//        ValueMap values4 = new ValueMap();
+
+        // set inputs
+//        values1.setDataValue(process1.getInput("InputString"), "mere");
+        
+//        values2.setDataValue(process2.getInput("BookName"), "City of Glass");
+//        
+//        inValue = "hello";
+//        values3.setDataValue(process3.getInput("InputString"), inValue);
+//        
+//        String langOnt = "http://www.daml.org/2003/09/factbook/languages#";
+//        OWLIndividual English = kb.getIndividual(URI.create(langOnt + "English"));
+//        OWLIndividual French = kb.getIndividual(URI.create(langOnt + "French"));
+//        values4.setDataValue(process4.getInput("InputString"), "Hello world!");
+//        values4.setValue(process4.getInput("InputLanguage"), English);
+//        values4.setValue(process4.getInput("OutputLanguage"), French);
+        
+        
+//       threadedExec.executeInThread(process1, values1);
+//        threadedExec.executeInThread(process2, values2);
+//        threadedExec.executeInThread(process3, values3);
+//        threadedExec.executeInThread(process4, values4);
+    }
 
     public void runZipCode() throws Exception {
         OWLKnowledgeBase kb = OWLFactory.createKB();
@@ -80,6 +144,7 @@ public class RunService {
         values = new ValueMap();
 
         values.setDataValue(process.getInput("City"), "College Park");
+        values.setDataValue(process.getInput("Stadt"), "College Park");
         values.setDataValue(process.getInput("State"), "MD");
 
         values = exec.execute(process, values);
@@ -287,50 +352,50 @@ public class RunService {
     }
     
     public void runAll() throws Exception {
-    	try {
-            runCurrencyConverter();
-        } catch(Exception e) {
-        }
+//    	try {
+//            runCurrencyConverter();
+//        } catch(Exception e) {
+//        }
 
         try {
             runZipCode();
         } catch(Exception e) {
         }
-
-        try {
-            runTranslator();
-        } catch(Exception e) {
-        }
-
-        try {
-            runJGroundingTest();
-        } catch(Exception e) {
-        }
-
-        try {
-            runDictionary();
-        } catch(Exception e) {
-        }
-
-        try {
-            runBookFinder();
-        } catch(Exception e) {
-        }
-
-        try {
-            runFrenchDictionary();
-        } catch(Exception e) {
-        }
-
-        try {
-            runBookPrice();
-        } catch(Exception e) {
-        }
-
-        try {
-            runFindCheaperBook();
-        } catch(Exception e) {
-        }
+//
+//        try {
+//            runTranslator();
+//        } catch(Exception e) {
+//        }
+//
+//        try {
+//            runJGroundingTest();
+//        } catch(Exception e) {
+//        }
+//
+//        try {
+//            runDictionary();
+//        } catch(Exception e) {
+//        }
+//
+//        try {
+//            runBookFinder();
+//        } catch(Exception e) {
+//        }
+//
+//        try {
+//            runFrenchDictionary();
+//        } catch(Exception e) {
+//        }
+//
+//        try {
+//            runBookPrice();
+//        } catch(Exception e) {
+//        }
+//
+//        try {
+//            runFindCheaperBook();
+//        } catch(Exception e) {
+//        }
     }
 
     public static void main(String[] args) throws Exception {

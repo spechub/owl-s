@@ -33,7 +33,6 @@ import org.mindswap.owl.vocabulary.RDF;
 import org.mindswap.owls.generic.expression.Expression;
 import org.mindswap.owls.process.Condition;
 import org.mindswap.owls.vocabulary.OWLS;
-import org.mindswap.owls.vocabulary.OWLS_1_2;
 import org.mindswap.query.ValueMap;
 import org.mindswap.swrl.AtomList;
 import org.mindswap.utils.RDFUtils;

@@ -25,8 +25,8 @@ import org.mindswap.owls.process.Parameter;
 import org.mindswap.owls.vocabulary.MoreGroundings;
 import org.mindswap.owls.vocabulary.OWLS;
 import org.mindswap.query.ValueMap;
+import org.mindswap.utils.ReflectionHelpers;
 import org.mindswap.utils.XSLTEngine;
-import org.owlet.helpers.ReflectionHelpers;
 
 /**
  * A JavaAtomicGrounding grounds an OWL-S Service to a Java method invocation. The method call
@@ -173,7 +173,7 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
                 else
                     paramValues[i] = ((OWLIndividual) owlValue).toString();
             }
-            System.out.println( "Parameter " + i + " " + paramValues[i] );
+            //System.out.println( "Parameter " + i + " " + paramValues[i] );
         }
         
         // invoke java method
@@ -193,7 +193,7 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
         if (result != null) {
             Parameter param = getOutputOWLSParam();
             if (param == null) 
-            	throw new ExecutionException("JavaAtomicGrounding: Output in Grounding not specified although method provides a return value.");
+            	throw new ExecutionException("JavaAtomicGrounding: Output in Grounding not specified although method provides a return value.");            
             if(param.getParamType().isDataType())
 		    	results.setValue(param, EntityFactory.createDataValue(result));
 			else 
@@ -204,11 +204,11 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
     }
 
     // returns the OWL-S Output Parameter
-	private Parameter getOutputOWLSParam() {
+	private Parameter getOutputOWLSParam() {	
 		OWLObject owlsParam = getProperty(MoreGroundings.javaOutput).getProperty(MoreGroundings.owlsParameter);
 		return (owlsParam == null) ? null : (Parameter) owlsParam.castTo(Parameter.class);
     }
-    
+	
 	// Implements the Singleton Pattern for the private field inParamList 
     private void createInputOWLSParamList() {
     	if (inParamList == null)

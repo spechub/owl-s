@@ -1,7 +1,7 @@
 /*
  * Created on Apr 15, 2005
  */
-package org.owlet.helpers;
+package org.mindswap.utils;
 
 import java.net.MalformedURLException;
 import java.net.URL;

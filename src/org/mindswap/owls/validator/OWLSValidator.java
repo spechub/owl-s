@@ -1,69 +1,53 @@
 package org.mindswap.owls.validator;
 
-import java.util.Map;
+import java.net.URI;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-
-import org.mindswap.exceptions.ConversionException;
-
-import org.mindswap.owl.OWLIndividualList;
-import org.mindswap.owl.OWLKnowledgeBase;
-import org.mindswap.owl.OWLFactory;
-import org.mindswap.owl.OWLOntology;
-import org.mindswap.owl.OWLIndividual;
-import org.mindswap.owl.OWLDataType;
-import org.mindswap.owl.OWLObjectProperty;
-
-import org.mindswap.owls.OWLSFactory;
-
-import org.mindswap.owls.vocabulary.OWLS;
-
-import org.mindswap.owls.service.Service;
-
-import org.mindswap.owls.process.execution.ProcessExecutionEngine;
+import java.util.Map;
+import java.util.Set;
 
 import org.mindswap.exceptions.CastingException;
-
-import org.mindswap.owls.process.ControlConstructBag;
-import org.mindswap.owls.process.InputList;
-import org.mindswap.owls.process.Input;
-import org.mindswap.owls.process.OutputList;
-import org.mindswap.owls.process.Output;
-import org.mindswap.owls.process.Local;
-import org.mindswap.owls.process.Result;
-import org.mindswap.owls.process.ResultList;
-import org.mindswap.owls.process.OutputBinding;
-import org.mindswap.owls.process.OutputBindingList;
-import org.mindswap.owls.process.Process;
-import org.mindswap.owls.process.Perform;
+import org.mindswap.exceptions.ConversionException;
+import org.mindswap.owl.OWLFactory;
+import org.mindswap.owl.OWLIndividual;
+import org.mindswap.owl.OWLIndividualList;
+import org.mindswap.owl.OWLKnowledgeBase;
+import org.mindswap.owl.OWLOntology;
+import org.mindswap.owls.grounding.AtomicGrounding;
+import org.mindswap.owls.grounding.AtomicGroundingList;
+import org.mindswap.owls.grounding.Grounding;
+import org.mindswap.owls.grounding.JavaAtomicGrounding;
+import org.mindswap.owls.grounding.MessageMap;
+import org.mindswap.owls.grounding.MessageMapList;
+import org.mindswap.owls.grounding.WSDLAtomicGrounding;
 import org.mindswap.owls.process.AtomicProcess;
 import org.mindswap.owls.process.CompositeProcess;
 import org.mindswap.owls.process.ControlConstruct;
-import org.mindswap.owls.process.ProcessList;
-import org.mindswap.owls.process.ParameterList;
-import org.mindswap.owls.process.Parameter;
-import org.mindswap.owls.process.SplitJoin;
-import org.mindswap.owls.process.InputBindingList;
+import org.mindswap.owls.process.ControlConstructBag;
+import org.mindswap.owls.process.Input;
 import org.mindswap.owls.process.InputBinding;
-
+import org.mindswap.owls.process.InputBindingList;
+import org.mindswap.owls.process.InputList;
+import org.mindswap.owls.process.Local;
+import org.mindswap.owls.process.Output;
+import org.mindswap.owls.process.OutputBinding;
+import org.mindswap.owls.process.OutputBindingList;
+import org.mindswap.owls.process.OutputList;
+import org.mindswap.owls.process.Parameter;
+import org.mindswap.owls.process.ParameterList;
+import org.mindswap.owls.process.Perform;
+import org.mindswap.owls.process.Process;
+import org.mindswap.owls.process.ProcessList;
+import org.mindswap.owls.process.Result;
+import org.mindswap.owls.process.ResultList;
+import org.mindswap.owls.process.SplitJoin;
 import org.mindswap.owls.profile.Profile;
 import org.mindswap.owls.profile.ServiceCategory;
 import org.mindswap.owls.profile.ServiceParameter;
-
-import org.mindswap.owls.grounding.Grounding;
-import org.mindswap.owls.grounding.AtomicGroundingList;
-import org.mindswap.owls.grounding.AtomicGrounding;
-import org.mindswap.owls.grounding.WSDLAtomicGrounding;
-import org.mindswap.owls.grounding.MessageMapList;
-import org.mindswap.owls.grounding.MessageMap;
-import org.mindswap.owls.grounding.JavaAtomicGrounding;
-
-import org.mindswap.query.ValueMap;
-
-import java.net.URI;
+import org.mindswap.owls.service.Service;
+import org.mindswap.owls.vocabulary.OWLS;
 
 /*
 

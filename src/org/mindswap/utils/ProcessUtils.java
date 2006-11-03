@@ -11,9 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.mindswap.owl.OWLClass;
-import org.mindswap.owl.OWLFactory;
 import org.mindswap.owl.OWLKnowledgeBase;
-import org.mindswap.owl.OWLOntology;
 import org.mindswap.owl.OWLType;
 import org.mindswap.owl.OWLValue;
 import org.mindswap.owls.process.Condition;

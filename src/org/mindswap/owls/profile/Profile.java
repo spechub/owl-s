@@ -27,7 +27,6 @@
 package org.mindswap.owls.profile;
 
 import java.net.URI;
-import java.util.List;
 
 import org.mindswap.owl.OWLDataValueList;
 import org.mindswap.owl.OWLIndividual;

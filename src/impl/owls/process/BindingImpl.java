@@ -6,19 +6,14 @@ package impl.owls.process;
 import impl.owl.WrappedIndividual;
 
 import org.mindswap.exceptions.NotImplementedException;
-import org.mindswap.owl.EntityFactory;
 import org.mindswap.owl.OWLDataValue;
 import org.mindswap.owl.OWLIndividual;
-import org.mindswap.owl.OWLType;
 import org.mindswap.owl.OWLValue;
-import org.mindswap.owl.vocabulary.RDF;
 import org.mindswap.owls.process.Binding;
-import org.mindswap.owls.process.Parameter;
 import org.mindswap.owls.process.ParameterValue;
 import org.mindswap.owls.process.ValueData;
 import org.mindswap.owls.process.ValueOf;
 import org.mindswap.owls.vocabulary.OWLS;
-import org.mindswap.utils.RDFUtils;
 
 /**
  * @author Evren Sirin

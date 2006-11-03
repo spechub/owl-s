@@ -29,28 +29,29 @@ import org.mindswap.owls.process.Process;
 import org.mindswap.query.ValueMap;
 
 /**
- * <p>This class subclasses the default <code>ProcessExecutionEngine</code> and adds support 
- * for threaded Execution of a process or perform.</p> 
+ * <p>This class allows to run several executions in parallel threads by 
+ * subclassing the default <code>ProcessExecutionEngine</code>. An ID is returned
+ * from the first call to the <code>ThreadedProcessExecutionEngine</code>, which 
+ * must be used for all further interaction.</p> 
  * 
- * <p>Logically interruptable (means nested) ControlConstruct's check before the Execution
- * of every SubControlConstruct if the Execution was interrupted (with a call of interrupt()) 
- * by another thread and wait until the interruption ends (with a call of unfreeze()). </p> 
+ * <p>Logically interruptable (means nested) ControlConstruct's check before 
+ * the Execution of every SubControlConstruct if the Execution was 
+ * interrupted (with a call of interruptExecution()) by another thread and wait until the interruption ends (with a call of unfreeze()). </p> 
  * 
- * <p>Because of the asynchronous execution the results cannot be returned directly to the 
- * caller. Results can be fetched in two different ways. 
- * <ul>
- * 	<li>A ThreadedProcessExecutionListener is used and the resultReady() method is 
- * 		overwritten to get the result with a call of getResultMap()</li>
- *	<li>A custom wait loop is implemented, which polls on isResultReady() and fetchs 
- *		the result when the answer is positive.</li>
- *</ul></p> 
- * 
- * @author Michael Daenzer, University of Zurich
+ * @author Michael Dänzer, University of Zurich
  * @see org.mindswap.owls.process.execution.ProcessExecutionEngine  
- * @see org.mindswap.owls.process.execution.ThreadedProcessExecutionListener
+ * @see org.mindswap.owls.process.execution.ProcessMonitor
  */
 
 public interface ThreadedProcessExecutionEngine extends ProcessExecutionEngine {
+	/**
+	 * This is the default time in milli seconds, this threads sleeps in interrupted
+	 * mode before checking the interruption state again.
+	 * 
+	 * @see #setSleepInterval(int)
+	 * @see #getSleepInterval()
+	 */
+	public static final int DEFAULT_SLEEP_INTERVAL = 5000;
 	
     /**
      * Executes the given process in a seperate thread.
@@ -58,19 +59,19 @@ public interface ThreadedProcessExecutionEngine extends ProcessExecutionEngine {
      * @param process the process to execute
      * @param values a <code>ValueMap</code> containing the values for all inputs and locals.
      */
-    public void executeThreaded(Process process, ValueMap values);
+    public void executeInThread(Process process, ValueMap values);
     
 	/**
 	 * Finishes the interruption of the execution. 
 	 * The Execution is not continued immediately!
 	 */
-	public void continueExec();
+	public void continueExecution();
 
 	/**
 	 * Interrupts the Execution after the execution of the 
 	 * current atomic entity has finished and until unfreeze() is invoked.
 	 */
-	public void interruptExec();
+	public void interruptExecution();
 	
 	/**
 	 * Interrupts the Execution after the execution of the 
@@ -78,32 +79,27 @@ public interface ThreadedProcessExecutionEngine extends ProcessExecutionEngine {
 	 * 
 	 * @param millisToSleep Interval in millisecond for which the ExecutionEngine sleeps before checking the interruption state
 	 */
-	public void interruptExec(int millisToSleep);
-
-	/**
-	 * Returns the result of an execution (or null if there is no result). Due to the asynchronous
-	 * execution the result cannot be passed back to the caller, but must be fetched with a call of this method
-	 *  
-	 * @return A <code>ValueMap</code> containing the results of the execution
-	 */
-	public ValueMap getResultMap();
-
-	/**
-	 * Indicates, if the execution has finished and the result is available
-	 * 
-	 * @return true, if execution finished and a result is avalaible. false, otherwise
-	 */
-	public boolean isResultReady();
+	public void interruptExecution(int millisToSleep);
+   
+    /**
+     * Returns the interval an interrupted thread sleeps before checking 
+     * whether the intrruption still holds or not
+     * 
+     * @return the interval in milliseconds
+     */
+    public int getSleepInterval();
 
     /**
-     * Adds the listener to the listener list
-     * @param listener the listener to add to the registred listeners
+  	 * Sets the interval for the thread of the given process to sleep before 
+  	 * checking whether the intrruption still holds or not
+     * 
+     * @param sleepInterval the interval in millseconds
      */
-    public void addExecutionListener(ThreadedProcessExecutionListener listener);
-    
+    public void setSleepInterval(int sleepInterval);
+
     /**
-     * Removes the listener from the listener list
-     * @param listener the listener to remove to the registred listeners
+     * Stops the current execution
+     *
      */
-    public void removeExecutionListener(ThreadedProcessExecutionListener listener);
+	public void stopExecution();
 }

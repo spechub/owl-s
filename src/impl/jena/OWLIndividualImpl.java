@@ -58,7 +58,7 @@ public class OWLIndividualImpl extends OWLEntityImpl implements OWLIndividual {
         super(ontology, resource);
     }
 
-    public OWLEntity inOntology(OWLOntology ont) {
+	public OWLEntity inOntology(OWLOntology ont) {
         if(ontology.equals(ont))
             return this;
 

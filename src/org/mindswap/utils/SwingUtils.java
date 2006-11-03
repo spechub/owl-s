@@ -58,6 +58,7 @@ public class SwingUtils {
 		info.pack();
 		//info.setResizable(false);
 		centerFrame(info);
-		info.show();		
+		//info.show();
+		info.setVisible(true);
 	}
 }

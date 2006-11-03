@@ -3,8 +3,6 @@
  */
 package org.mindswap.owls.process.execution;
 
-import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.Iterator;
 
 import org.mindswap.exceptions.ExecutionException;
@@ -21,26 +19,8 @@ import org.mindswap.query.ValueMap;
  * @author Evren Sirin
  *
  */
-public class DefaultProcessMonitor implements ProcessMonitor {
-    private PrintWriter out;
-    private int monitorFilter;
-    
-    public DefaultProcessMonitor() {
-        this( new PrintWriter( System.out ) );
-    }
-
-    public DefaultProcessMonitor( Writer writer ) {
-        monitorFilter = Process.ANY;
-        
-        setWriter( writer );
-    }
-
-    public void setWriter( Writer writer ) {
-        this.out = (writer instanceof PrintWriter) 
-        	? (PrintWriter) writer 
-        	: new PrintWriter( writer );
-    }
-    
+public class DefaultProcessMonitor extends AbstractMonitor {
+	
     public void executionStarted() {        
         out.println();
         out.flush();
@@ -102,13 +82,5 @@ public class DefaultProcessMonitor implements ProcessMonitor {
         out.println( "Execution failed: ");
         out.println( e );
         out.flush();
-    }
-
-    public void setMonitorFilter(int processType) {
-        monitorFilter = processType;
-    }
-
-    public int getMonitorFilter() {
-        return monitorFilter;
     }
 }

@@ -100,6 +100,8 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
 	
 	protected Map performResults;
 	
+	protected Process process;
+	
 	public ProcessExecutionEngineImpl() {
 	    executionListeners = new ArrayList();
 	    monitors = new ArrayList();
@@ -177,15 +179,16 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
 		monitors.add(monitor);	
 	}
 
-    protected void executionFailed(String msg) {
+    protected void executionFailed(String msg) throws ExecutionException {
         executionFailed( new ExecutionException( msg ) );
     }
 
-    protected void executionFailed(Exception e) {
+    protected void executionFailed(Exception e) throws ExecutionException {
         executionFailed( new ExecutionException( e ) );
     }
     
-    protected void executionFailed(ExecutionException e) {
+    protected void executionFailed(ExecutionException e) throws ExecutionException {
+    	e.setProcess(process);
         for(Iterator i = monitors.iterator(); i.hasNext();) {
             ProcessMonitor monitor = (ProcessMonitor) i.next();
             monitor.executionFailed(e);
@@ -255,6 +258,7 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
 	public ValueMap execute(Process p, ValueMap values) {
 	    initEnv( p.getKB() );
 	    
+	    process = p;
 	    executionStarted();
 	    
 	    ValueMap result = null;
@@ -275,7 +279,7 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
 	public ValueMap execute(Perform p) {
 	    initEnv( p.getKB() );
 	    
-	    executionStarted();
+	    process = p.getProcess();
 	    
 	    ValueMap result = null;	    
 		try {
@@ -286,8 +290,6 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
         
 		notifyListeners("[DONE]");
 		finishExecution(ProcessExecutionListener.EXEC_DONE);
-		
-		executionFinished();
 		
 	    return result;
 	}
@@ -319,7 +321,7 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
         
         // just for safety
         if( result == null )
-            executionFailed( "Null result after executng process " + process + "!" );
+            executionFailed( "Null result after executing process " + process + "!" );
         else
         	executionFinished( process, inputs, result );
 
@@ -342,8 +344,7 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
 	    if(DEBUG) System.out.println("Result:\n" + result.debugString() + "\n");
  
 	    if( !env.isConsistent() )
-	        throw new ExecutionException( 
-	            "Invalid value returned from the process " + process );
+	        throw new ExecutionException("Invalid value returned from the process " + process, process);
 	    
 	    return result;
 	}

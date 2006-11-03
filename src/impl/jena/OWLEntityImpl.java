@@ -38,7 +38,7 @@ public abstract class OWLEntityImpl extends OWLObjectImpl implements OWLEntity {
 		this.ontology = ontology;
 		this.kb = ontology.getKB();
 	}
-
+	
     public OWLKnowledgeBase getKB() {
         return kb;
     }

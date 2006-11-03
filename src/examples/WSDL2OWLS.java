@@ -33,7 +33,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -340,7 +339,8 @@ public class WSDL2OWLS extends JPanel implements ActionListener {
         info.pack();
         info.setResizable(false);
         SwingUtils.centerFrame(info);
-        info.show();
+        //info.show();
+        info.setVisible(true);
 
         System.out.println(t1.getText() + " " + t2.getText());
 
@@ -540,7 +540,8 @@ public class WSDL2OWLS extends JPanel implements ActionListener {
 
     void showAdvanced() {
         SwingUtils.centerFrame(advanced);
-        advanced.show();
+        //advanced.show();
+        advanced.setVisible(true);
     }
 
 
@@ -757,7 +758,8 @@ public class WSDL2OWLS extends JPanel implements ActionListener {
         test.setSize(800, 600);
         SwingUtils.centerFrame(test);
         test.getContentPane().add(new WSDL2OWLS());
-        test.show();
+        //test.show();
+        test.setVisible(true);
     }
 
 }

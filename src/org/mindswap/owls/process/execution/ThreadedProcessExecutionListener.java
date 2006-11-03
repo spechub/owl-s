@@ -36,6 +36,7 @@ import org.mindswap.owls.process.Process;
  * @author Michael Daenzer, University of Zurich
  * @see org.mindswap.owls.process.execution.ProcessExecutionEngine
  * @see org.mindswap.owls.process.execution.ThreadedProcessExecutionEngine 
+ * @deprecated
  */
 public interface ThreadedProcessExecutionListener {
     /**

@@ -29,8 +29,11 @@ package impl.owls.process;
 import impl.owl.WrappedIndividual;
 
 import org.mindswap.owl.OWLIndividual;
+import org.mindswap.owl.OWLIndividualList;
 import org.mindswap.owls.process.ControlConstruct;
+import org.mindswap.owls.process.Process;
 import org.mindswap.owls.process.ProcessList;
+import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * @author Evren Sirin
@@ -43,5 +46,15 @@ public abstract class ControlConstructImpl extends WrappedIndividual implements 
     
     public ProcessList getAllProcesses() {
         return getAllProcesses(false);
+    }
+    
+    public Process getParentProcess() {
+    	OWLIndividualList processes = getIncomingProperties(OWLS.Process.composedOf);
+    	if (processes.size() == 0)
+    		return null;
+    	if (processes.size() > 1)
+    		return null;    	
+    	else
+    		return (Process) processes.individualAt(0).castTo(Process.class);
     }
 }

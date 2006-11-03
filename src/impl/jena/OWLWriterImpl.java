@@ -15,24 +15,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.mindswap.owl.OWLModel;
 import org.mindswap.owl.OWLClass;
+import org.mindswap.owl.OWLFactory;
+import org.mindswap.owl.OWLModel;
 import org.mindswap.owl.OWLOntology;
 import org.mindswap.owl.OWLWriter;
-import org.mindswap.owl.OWLFactory;
-import org.mindswap.owl.OWLKnowledgeBase;
-
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.RDFWriter;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.Ontology;
-
-import com.hp.hpl.jena.vocabulary.RDFSyntax;
-import com.hp.hpl.jena.vocabulary.RDF;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.RDFWriter;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.OWL;
+import com.hp.hpl.jena.vocabulary.RDF;
+import com.hp.hpl.jena.vocabulary.RDFSyntax;
 
 /**
  * @author Evren Sirin

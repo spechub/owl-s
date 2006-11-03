@@ -88,6 +88,9 @@ public class CreateJavaGrounding {
 	}
 	
 	public String testIt(int i, Double y) throws Exception {
+		// wait some time to show interruption feature
+		Thread.sleep(8000);
+		// calc some value
         double s = i * y.doubleValue();
     	// something to show correct invocation
     	System.out.println("FirstParameter * SecondParameter = " + s);

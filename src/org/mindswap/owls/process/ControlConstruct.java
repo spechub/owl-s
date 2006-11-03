@@ -69,4 +69,11 @@ public interface ControlConstruct extends OWLIndividual {
 	 * @return
 	 */
 	public String getConstructName();
+	
+	/**
+	 * Returns the process to which this control construct belongs. 
+	 * 
+	 * @return the parent process of this control construct. 
+	 */
+	public Process getParentProcess();
 }

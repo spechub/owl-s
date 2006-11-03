@@ -1,5 +1,14 @@
 package examples;
 
+/**
+ * Just calls most of the examples in one go to be used as some sort of 
+ * test before updating core parts of the API to ensure (!) correctness and
+ * soundness of changes. 
+ * 
+ * And yes, UnitTests should be written :-)
+ * 
+ * @author Michael Dänzer, University of Zürich
+ */
 public class RunAllExamples {
 	public static void main(String[] args) {		
 		

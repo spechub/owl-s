@@ -21,7 +21,6 @@ import org.mindswap.owl.OWLObjectConverter;
 import org.mindswap.owl.OWLObjectProperty;
 import org.mindswap.owl.OWLProperty;
 import org.mindswap.owl.OWLType;
-import org.mindswap.owl.vocabulary.OWL;
 
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;

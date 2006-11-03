@@ -78,4 +78,34 @@ public interface ProcessMonitor {
     public void setMonitorFilter(int processType);
     
     public int getMonitorFilter();
+    
+    /**
+     * Called after the execution of a process interrupts. <code>setMonitorFilter</code> function can be used to 
+     * control if this function will be called for all the processes or only for
+     * a specific type of processes (e.g. only atomic processes). 
+     * 
+     * @param process the process whose execution was interrupted
+     */
+    public void executionInterrupted(Process process);
+    
+    /**
+     * Called after the interrupted execution of a process has been continued. 
+     * <code>setMonitorFilter</code> function can be used to control if this function 
+     * will be called for all the processes or only for a specific type of processes 
+     * (e.g. only atomic processes).
+     * 
+     * @param process the process whose execution has been interrupted
+     */
+    public void executionContinued(Process process);
+    
+    /**
+     * Called after the perform of a process to return the outputs of the process.
+     * Therefore, value changes for intermediate results can be monitored. 
+     * <code>setMonitorFilter</code> function can be used to control if this function 
+     * will be called for all the processes or only for a specific type of processes 
+     * (e.g. only atomic processes).
+     * 
+     * @param values
+     */
+    public void intermediateResultsReceived(ValueMap values);
 }

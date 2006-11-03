@@ -28,7 +28,6 @@ package examples;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URI;
 import java.util.Iterator;
 
 import javax.swing.BoxLayout;
@@ -38,28 +37,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import org.mindswap.exceptions.ExecutionException;
-import org.mindswap.owl.OWLClass;
-import org.mindswap.owl.OWLDataProperty;
-import org.mindswap.owl.OWLDataValue;
 import org.mindswap.owl.OWLFactory;
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owl.OWLKnowledgeBase;
-import org.mindswap.owl.OWLObjectProperty;
 import org.mindswap.owl.OWLValue;
 import org.mindswap.owls.OWLSFactory;
-import org.mindswap.owls.process.AtomicProcess;
 import org.mindswap.owls.process.Input;
 import org.mindswap.owls.process.Output;
 import org.mindswap.owls.process.Process;
 import org.mindswap.owls.process.execution.DefaultProcessMonitor;
 import org.mindswap.owls.process.execution.ProcessExecutionEngine;
 import org.mindswap.owls.process.execution.ProcessMonitor;
-import org.mindswap.owls.profile.Profile;
 import org.mindswap.owls.service.Service;
 import org.mindswap.query.ValueMap;
-import org.mindswap.utils.Utils;
-import org.mindswap.wsdl.WSDLOperation;
-import org.mindswap.wsdl.WSDLService;
 
 /**
  * 
