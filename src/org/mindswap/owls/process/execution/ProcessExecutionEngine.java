@@ -79,10 +79,10 @@ public interface ProcessExecutionEngine extends EventListener {
     public void setAllowMultipleSatisifedPreconditions(boolean allow);
 
     /**
-     * @return Returns if multiple satisifed preconditions are allowed
+     * Returns if multiple satisifed preconditions are allowed
+     * @return true if multiple satisifed preconditions are allowed. false, otherwise
      */
-    public boolean isAllowMultipleSatisifedPreconditions();
-    
+    public boolean isAllowMultipleSatisifedPreconditions();      
 	
 	/**
 	 * Execute the given process with no value bindings for input parameters. Process is 

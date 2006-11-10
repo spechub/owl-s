@@ -97,6 +97,7 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
 	protected OWLKnowledgeBase kb;
 	protected boolean checkPreconditions;
 	protected boolean allowMultipleSatisifedPreconditions;
+	protected boolean stopOnException;
 	
 	protected Map performResults;
 	
@@ -108,6 +109,7 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
 	    
 	    checkPreconditions = true;
 	    allowMultipleSatisifedPreconditions = true;
+	    stopOnException = true;
 	}
 	
 	public void setKB(OWLKnowledgeBase kb) {
@@ -187,7 +189,7 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
         executionFailed( new ExecutionException( e ) );
     }
     
-    protected void executionFailed(ExecutionException e) throws ExecutionException {
+    protected void executionFailed(ExecutionException e) throws ExecutionException, UnsatisfiedPreconditionException, MultipleSatisfiedPreconditionException {
     	e.setProcess(process);
         for(Iterator i = monitors.iterator(); i.hasNext();) {
             ProcessMonitor monitor = (ProcessMonitor) i.next();
@@ -265,7 +267,8 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
 		try {
             result = executeProcess( p, values );            
         } catch( ExecutionException e ) {
-            executionFailed( e );
+            // executionFailed( e );
+        	System.out.println("Excecution failed");
         }        
 		
 		notifyListeners("[DONE]");
@@ -285,7 +288,8 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
 		try {
 		    result = executePerform( p );            
         } catch( ExecutionException e ) {
-            executionFailed( e );
+        	// executionFailed( e );
+        	System.out.println("Excecution failed");
         }
         
 		notifyListeners("[DONE]");
@@ -303,7 +307,7 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
         
         if( checkPreconditions ) {
             checkPreconditions( process, inputs );
-        }
+        }     
         
         if(process instanceof AtomicProcess) {
         	result = executeAtomicProcess((AtomicProcess) process, inputs);
@@ -597,7 +601,8 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
 	    }
 	}
 
-	protected void checkPreconditions( Process process, ValueMap values ) {
+	protected void checkPreconditions(Process process, ValueMap values) 
+			throws UnsatisfiedPreconditionException, MultipleSatisfiedPreconditionException {
 	    ParameterList locals = process.getLocals();
 	    
 	    for( Iterator i = process.getConditions().iterator(); i.hasNext(); ) {
@@ -688,5 +693,5 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
 				}
 			}
 		}
-	}	
+	}
 }

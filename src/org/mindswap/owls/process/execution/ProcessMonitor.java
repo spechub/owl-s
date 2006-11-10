@@ -5,6 +5,7 @@ package org.mindswap.owls.process.execution;
 
 import org.mindswap.exceptions.ExecutionException;
 import org.mindswap.query.ValueMap;
+import org.mindswap.owls.process.AtomicProcess;
 import org.mindswap.owls.process.Process;
 
 /**
@@ -86,7 +87,7 @@ public interface ProcessMonitor {
      * 
      * @param process the process whose execution was interrupted
      */
-    public void executionInterrupted(Process process);
+    public void executionInterrupted(Process process, AtomicProcess lastProcess);
     
     /**
      * Called after the interrupted execution of a process has been continued. 

@@ -28,6 +28,7 @@ public class ThreadedProcessExecutionEngineImpl extends ProcessExecutionEngineIm
 	private boolean stopped = false;
 	private Process process;
 	private ValueMap values;
+	private AtomicProcess processInExecution;
 		
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
@@ -52,6 +53,7 @@ public class ThreadedProcessExecutionEngineImpl extends ProcessExecutionEngineIm
 	 * @see impl.owls.process.execution.ProcessExecutionEngineImpl#executeAtomicProcess(org.mindswap.owls.process.AtomicProcess, org.mindswap.query.ValueMap)
 	 */
 	protected ValueMap executeAtomicProcess(AtomicProcess process, ValueMap values) {
+		processInExecution = process;
 		ValueMap result = super.executeAtomicProcess(process, values);
 		monitorOutputs(result);
 		return result;
@@ -92,7 +94,7 @@ public class ThreadedProcessExecutionEngineImpl extends ProcessExecutionEngineIm
 	 * (non-Javadoc)
 	 * @see org.mindswap.owls.process.execution.ThreadedProcessExecutionEngine#interruptExecution(int)
 	 */
-    public void interruptExecution(int millisToSleep) {
+    public void interruptExecution(int millisToSleep) {    	
         setInterrupted(true);
         setSleepInterval(millisToSleep);
         monitorInterruption();
@@ -172,7 +174,7 @@ public class ThreadedProcessExecutionEngineImpl extends ProcessExecutionEngineIm
 	protected void monitorInterruption() {
         for(Iterator i = monitors.iterator(); i.hasNext();) {
             ProcessMonitor monitor = (ProcessMonitor) i.next();
-            monitor.executionInterrupted(process);
+            monitor.executionInterrupted(process, processInExecution);
         }
 	}
 	

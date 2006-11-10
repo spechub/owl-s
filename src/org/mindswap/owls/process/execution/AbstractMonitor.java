@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 
 import org.mindswap.exceptions.ExecutionException;
+import org.mindswap.owls.process.AtomicProcess;
 import org.mindswap.owls.process.Process;
 import org.mindswap.query.ValueMap;
 
@@ -33,7 +34,7 @@ public abstract class AbstractMonitor implements ProcessMonitor {
 	public void executionFinished(Process process, ValueMap inputs, ValueMap outputs) {
 	}
 
-	public void executionInterrupted(Process process) {
+	public void executionInterrupted(Process process, AtomicProcess atomicProcess) {
 	}
 
 	public void executionStarted() {
