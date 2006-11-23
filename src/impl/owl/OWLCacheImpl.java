@@ -48,6 +48,7 @@ public class OWLCacheImpl implements OWLCache {
 	protected Properties cache = new Properties();
 	protected String localCacheDirectory = null;
 	protected boolean forced = true;
+	protected boolean silent = true;
 	
 	/**
 	 * Forces the readers to use the cached copies of the files even if the remote
@@ -142,7 +143,8 @@ public class OWLCacheImpl implements OWLCache {
 					System.out.println("WARNING: Cached file does not exist " + file);
 				}
 				else {
-				    System.err.println("INFO: Using cached file " + file + " for URI " + fileURI);
+					if (!silent)
+						System.err.println("INFO: Using cached file " + file + " for URI " + fileURI);
 				    in = new InputSource(new FileInputStream(file));
 				}
 			}

@@ -232,11 +232,14 @@ public class OWLReaderImpl implements OWLReader {
 			
 			if(physicalURI != null)
 			    modelCache.put(physicalURI, ont);
-			
+			StringBuffer out = new StringBuffer();
+			if(DEBUG) out.append("--------------------------------\n");
+			if(DEBUG) out.append("Handling imports for " + fileURI + "\n");
 			StmtIterator i = jenaModel.listStatements(null, OWL.imports, (Resource) null);
 			while (i.hasNext()) {
 				Statement stmt = i.nextStatement();
 				String importFile = stmt.getResource().toString();
+				if(DEBUG) out.append("Loading import " + importFile + "\n");
 				
 				try {
 				    URI importURI = new URI(importFile);
@@ -249,6 +252,7 @@ public class OWLReaderImpl implements OWLReader {
 					System.err.println("WARNING: The import file " + importFile + " cannot be parsed");
                 }
 			}
+			if (DEBUG) System.out.println(out.toString());
 		}
 		
 		return ont;

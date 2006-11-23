@@ -31,7 +31,7 @@ import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 
 import org.apache.axis.client.Call;
-import org.apache.axis.enum.Style;
+import org.apache.axis.constants.Style;
 import org.apache.axis.message.SOAPBodyElement;
 import org.apache.axis.message.SOAPEnvelope;
 import org.mindswap.utils.URIUtils;
