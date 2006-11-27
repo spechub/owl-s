@@ -10,10 +10,8 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owls.process.AtomicProcess;
@@ -40,7 +38,7 @@ public class SHOPTranslator {
 	private PrintWriter out;
 	
 	private List processes;
-	private Set  written;
+//	private Set  written;
 	
 	private String getSHOPAbbr(OWLIndividual resource) {
 		String s = qnames.shortForm(resource.getURI());
@@ -61,7 +59,7 @@ public class SHOPTranslator {
 	 */
 	public void write(Service service, Writer writer) {
 		out = new PrintWriter(writer);
-		written = new HashSet();
+//		written = new HashSet();
 		processes = new ArrayList();
 		
 		processes.add(service.getProcess());		

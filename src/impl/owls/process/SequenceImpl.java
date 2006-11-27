@@ -47,7 +47,6 @@ public class SequenceImpl extends ControlConstructImpl implements Sequence {
 	public SequenceImpl(OWLIndividual ind) {
 		super(ind);
 	}
-
 	
 	public void addComponent(ControlConstruct component) {
 	    ControlConstructList components = getComponents();

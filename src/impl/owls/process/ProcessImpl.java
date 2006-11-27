@@ -43,18 +43,21 @@ import org.mindswap.owls.process.Output;
 import org.mindswap.owls.process.OutputList;
 import org.mindswap.owls.process.Parameter;
 import org.mindswap.owls.process.ParameterList;
+import org.mindswap.owls.process.Perform;
 import org.mindswap.owls.process.Process;
 import org.mindswap.owls.process.Result;
 import org.mindswap.owls.process.ResultList;
 import org.mindswap.owls.profile.Profile;
 import org.mindswap.owls.service.Service;
 import org.mindswap.owls.vocabulary.OWLS;
+import org.mindswap.owls.vocabulary.OWLS_Extensions;
 
 /**
  * @author Evren Sirin
  *
  */
 public abstract class ProcessImpl extends WrappedIndividual implements Process {
+	
 	public ProcessImpl(OWLIndividual ind) {
 		super(ind);	
 	}
@@ -267,5 +270,17 @@ public abstract class ProcessImpl extends WrappedIndividual implements Process {
 			str += outputs.outputAt(i).debugString() + "\n";
 		
 		return str;
+	}
+
+	public Perform getPerform() {
+		return (Perform) getPropertyAs(OWLS_Extensions.Process.hasPerform, Perform.class);
+	}
+
+	public void setPerform(Perform perform) {
+		if(hasProperty(OWLS_Extensions.Process.hasPerform, perform))
+		    return;
+		
+		setProperty(OWLS_Extensions.Process.hasPerform, perform);
+		perform.setProcess(this);
 	}
 }

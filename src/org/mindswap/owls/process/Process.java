@@ -181,4 +181,20 @@ public interface Process extends OWLIndividual, MultiConditional {
 	 * @return
 	 */
 	public OWLDataValueList getNames();
+	
+	
+	//TODO dmi add this to the OWL-S specification
+	/**
+	 * Returns the perform to which this process is possibly bound. Attention: This is only a in-memory
+	 * property and is not stored at all as OWL-S does not define a link from Process to Perform.
+	 * @return the perform to which this process is bound. null, if the process is not bound to any perform
+	 */
+	public Perform getPerform();
+	
+	/**
+	 * Sets the perform to which this process is bound. Attention: This is only a in-memory
+	 * property and is not stored at all as OWL-S does not define a link from Process to Perform.
+	 * @param perform the perform to which this process is bound
+	 */
+	public void setPerform(Perform perform);
 }

@@ -11,7 +11,6 @@ import java.util.Set;
 import org.mindswap.exceptions.CastingException;
 import org.mindswap.exceptions.ConversionException;
 import org.mindswap.owl.OWLFactory;
-import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owl.OWLIndividualList;
 import org.mindswap.owl.OWLKnowledgeBase;
 import org.mindswap.owl.OWLOntology;
@@ -332,7 +331,7 @@ public class OWLSValidator
             ProcessList aProcessList = aCC.getAllProcesses();
             for (int i = 0; i < aProcessList.size(); i++)
             {
-                Process aProcess = aProcessList.processAt(i);
+ //               Process aProcess = aProcessList.processAt(i);
 
                 // TODO: validate each process?
                 //System.err.println("proc: "+aProcess);
@@ -488,7 +487,7 @@ public class OWLSValidator
         OWLIndividualList aList = theResult.getEffects();
         for (int i = 0; i < aList.size(); i++)
         {
-            OWLIndividual aInd = aList.individualAt(i);
+//            OWLIndividual aInd = aList.individualAt(i);
             // are these the preconditions? or post conditions?
         }
 
@@ -695,7 +694,7 @@ public class OWLSValidator
     {
         System.err.println("validator main");
 
-        OWLSValidator aValidator = new OWLSValidator();
+//        OWLSValidator aValidator = new OWLSValidator();
 
         try {
 
