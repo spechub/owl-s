@@ -61,12 +61,14 @@ public class PerformImpl extends ControlConstructImpl implements Perform {
 	
 	public Process getProcess() {
 		Process process = (Process) getPropertyAs(OWLS.Process.process, Process.class);
-		process.setPerform(this);
+		if (process != null)
+			process.setPerform(this);
 		return process;
 	}
 
     public void setProcess(Process process) {
-    	process.setPerform(this);
+    	if (process != null)
+    		process.setPerform(this);
         setProperty(OWLS.Process.process, process);       
     }
 

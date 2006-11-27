@@ -281,6 +281,7 @@ public abstract class ProcessImpl extends WrappedIndividual implements Process {
 		    return;
 		
 		setProperty(OWLS_Extensions.Process.hasPerform, perform);
-		perform.setProcess(this);
+		if (perform != null)
+			perform.setProcess(this);
 	}
 }
