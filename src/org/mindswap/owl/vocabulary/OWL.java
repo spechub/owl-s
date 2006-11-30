@@ -51,6 +51,7 @@ public class OWL {
 	// end added by Michael Daenzer	
 	
 	public final static URI imports       = URI.create(ns + "imports");	
+	public final static URI inverseOf       = URI.create(ns + "inverseOf");
 	public final static URI versionInfo   = URI.create(ns + "versionInfo");
 	public final static URI backwardCompatibleWith   = URI.create(ns + "backwardCompatibleWith");
 	public final static URI priorVersion   = URI.create(ns + "priorVersion");
