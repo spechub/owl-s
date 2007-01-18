@@ -112,4 +112,9 @@ public class GroundingImpl extends WrappedIndividual implements Grounding {
 		service.setGrounding(this);
 	}
 
+	public void removeService() {
+		if (hasProperty(OWLS.Service.supportedBy, getService()))
+			removeProperty(OWLS.Service.supportedBy, getService());
+	}
+
 }

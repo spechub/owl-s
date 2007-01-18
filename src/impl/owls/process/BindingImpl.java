@@ -10,6 +10,7 @@ import org.mindswap.owl.OWLDataValue;
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owl.OWLValue;
 import org.mindswap.owls.process.Binding;
+import org.mindswap.owls.process.Parameter;
 import org.mindswap.owls.process.ParameterValue;
 import org.mindswap.owls.process.ValueData;
 import org.mindswap.owls.process.ValueOf;
@@ -88,5 +89,9 @@ public abstract class BindingImpl extends WrappedIndividual implements Binding {
         else
             throw new NotImplementedException("Only ValueOf parameter values are implemented!");
     }
+    
+    public Parameter getParameter() {
+    	return (Parameter) getPropertyAs(OWLS.Process.toParam, Parameter.class);
+   }
 
 }

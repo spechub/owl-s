@@ -6,6 +6,8 @@ package impl.owls.process;
 import impl.owl.WrappedIndividual;
 
 import org.mindswap.owl.OWLIndividual;
+import org.mindswap.owls.process.Binding;
+import org.mindswap.owls.process.InputBinding;
 import org.mindswap.owls.process.Parameter;
 import org.mindswap.owls.process.Perform;
 import org.mindswap.owls.process.ValueOf;
@@ -46,4 +48,28 @@ public class ValueOfImpl extends WrappedIndividual implements ValueOf {
     public void setParameter(Parameter param) {
         setProperty(OWLS.Process.theVar, param);
     }
+
+	public Binding getEnclosingBinding() {
+		OWLIndividual uncastedBinding = getIncomingProperty(OWLS.Process.valueSource);
+		Binding binding = null;
+		if (uncastedBinding instanceof InputBinding)
+			binding = new InputBindingImpl(getIncomingProperty(OWLS.Process.valueSource));
+		else
+			binding = new OutputBindingImpl(getIncomingProperty(OWLS.Process.valueSource));
+		return binding;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (object instanceof ValueOf) {
+			ValueOf toCompare = (ValueOf) object;			
+			return getParameter().equals(toCompare.getParameter()) && 
+				getPerform().equals(toCompare.getPerform());
+		} else {
+			return false;
+		}
+			
+	}
+	
+	
 }

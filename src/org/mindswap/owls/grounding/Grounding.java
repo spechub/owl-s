@@ -85,4 +85,6 @@ public interface Grounding extends OWLIndividual {
 	 * @return
 	 */
 	public AtomicGroundingList getAtomicGroundings(AtomicProcess process);
+
+	public void removeService();
 }

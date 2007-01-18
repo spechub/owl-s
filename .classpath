@@ -2,33 +2,33 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/axis/axis.jar"/>
-	<classpathentry kind="lib" path="lib/jena/antlr-2.7.5.jar"/>
-	<classpathentry kind="lib" path="lib/pellet/aterm-java-1.6.jar"/>
-	<classpathentry kind="lib" path="lib/xsdlib/relaxngDatatype.jar"/>
-	<classpathentry kind="lib" path="lib/upnp.jar"/>
-	<classpathentry kind="lib" path="lib/axis/axis-ant.jar"/>
-	<classpathentry kind="lib" path="lib/axis/commons-discovery.jar"/>
-	<classpathentry kind="lib" path="lib/axis/commons-httpclient-3.0-alpha1.jar"/>
-	<classpathentry kind="lib" path="lib/axis/commons-logging.jar"/>
-	<classpathentry kind="lib" path="lib/axis/jaxrpc.jar"/>
-	<classpathentry kind="lib" path="lib/axis/log4j-1.2.8.jar"/>
-	<classpathentry kind="lib" path="lib/axis/saaj.jar"/>
-	<classpathentry kind="lib" path="lib/axis/wsdl4j.jar"/>
-	<classpathentry kind="lib" path="lib/jena/arq.jar"/>
-	<classpathentry kind="lib" path="lib/jena/commons-logging.jar"/>
-	<classpathentry kind="lib" path="lib/jena/concurrent.jar"/>
-	<classpathentry kind="lib" path="lib/jena/icu4j_3_4.jar"/>
-	<classpathentry kind="lib" path="lib/jena/jakarta-oro-2.0.8.jar"/>
-	<classpathentry kind="lib" path="lib/jena/jena.jar"/>
-	<classpathentry kind="lib" path="lib/jena/junit.jar"/>
-	<classpathentry kind="lib" path="lib/jena/log4j-1.2.12.jar"/>
-	<classpathentry kind="lib" path="lib/jena/stax-1.1.1-dev.jar"/>
-	<classpathentry kind="lib" path="lib/jena/stax-api-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/jena/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="lib/jena/xml-apis.jar"/>
-	<classpathentry kind="lib" path="lib/pellet/pellet.jar"/>
-	<classpathentry kind="lib" path="lib/xsdlib/xsdlib.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/NExT Groundings"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis/axis.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/antlr-2.7.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pellet/aterm-java-1.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xsdlib/relaxngDatatype.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/upnp.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis/axis-ant.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis/commons-discovery.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis/commons-httpclient-3.0-alpha1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis/commons-logging.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis/jaxrpc.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis/log4j-1.2.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis/saaj.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis/wsdl4j.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/arq.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/commons-logging.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/concurrent.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/icu4j_3_4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/jakarta-oro-2.0.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/jena.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/junit.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/log4j-1.2.12.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/stax-1.1.1-dev.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/stax-api-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/xercesImpl.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/xml-apis.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xsdlib/xsdlib.jar"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/NExT Groundings"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

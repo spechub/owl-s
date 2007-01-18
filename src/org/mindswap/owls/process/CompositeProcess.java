@@ -31,6 +31,30 @@ package org.mindswap.owls.process;
  *
  */
 public interface CompositeProcess extends Process {
+	/**
+	 * Returns the control construct of which the composite process is composed of.
+	 * The <code>process:composedOf</code> property is read to retrieve the correct
+	 * construct.   
+	 * @return the control construct this composite process is composed of
+	 */
 	public ControlConstruct getComposedOf();
+	
+	/**
+	 * Sets the control construct of which the composite process is composed of.
+	 * The <code>process:composedOf</code> property is written to set the correct
+	 * construct.   
+	 * 
+	 * @param cc the control construct this composite process is composed of
+	 */
 	public void setComposedOf(ControlConstruct cc);
+	
+	/**
+	 * Returns all data flow bindings within this composite process. It does not distinguish
+	 * wether the flow is coming from outside into the process or the flow is completely
+	 * embedded into the process or the flow goes from the process out to some outside
+	 * perform.
+	 * 
+	 * @return a list of bindings that have at least their source or sink in this process
+	 */
+	public BindingList getAllBindings();
 }

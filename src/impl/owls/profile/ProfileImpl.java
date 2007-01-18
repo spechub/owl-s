@@ -349,4 +349,9 @@ public class ProfileImpl extends WrappedIndividual implements Profile {
 	public void setServiceClassification(URI classification) {
 	    setProperty(OWLS.Profile.serviceClassification, classification);
 	}
+
+	public void removeService() {
+		if (hasProperty(OWLS.Service.presentedBy, getService()))
+			removeProperty(OWLS.Service.presentedBy, getService());
+	}
 }

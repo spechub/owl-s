@@ -163,6 +163,17 @@ public abstract class ProcessImpl extends WrappedIndividual implements Process {
 	    return result;
 	}
 	
+	public void removeResult(Result result) {
+		if (hasProperty(OWLS.Process.hasResult, result))
+			removeProperty(OWLS.Process.hasResult, result);
+	}
+	
+	public void removeResults() {
+		ResultList list = getResults();
+		for (int i = 0; i < list.size(); i++) 
+			removeResult((Result) list.get(i));		
+	}
+	
 	public InputList getInputs() {
 	    return OWLSFactory.createInputList(getProperties(OWLS.Process.hasInput));
 	}
@@ -283,5 +294,10 @@ public abstract class ProcessImpl extends WrappedIndividual implements Process {
 		setProperty(OWLS_Extensions.Process.hasPerform, perform);
 		if (perform != null)
 			perform.setProcess(this);
+	}
+
+	public void removeService() {
+		if (hasProperty(OWLS.Service.describes, getService()))
+			removeProperty(OWLS.Service.describes, getService());
 	}
 }

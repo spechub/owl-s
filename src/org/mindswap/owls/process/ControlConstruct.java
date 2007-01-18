@@ -51,6 +51,16 @@ public interface ControlConstruct extends OWLIndividual {
      * @return
      */
     public ProcessList getAllProcesses();
+    
+    /**
+     * Returns a list of all the Binding objects used (directly or indirectly) in this control 
+     * construct. 
+     * 
+     * @param recursive If true all the bindings inside a Perform will be recursively added
+     * to the results
+     * @return List of bindings objects
+     */
+	public BindingList getAllBindings();
 	
 	/**
 	 * Returns the immediate sub-constructs of this ControlConstruct. Unlike getComponents()
@@ -76,4 +86,17 @@ public interface ControlConstruct extends OWLIndividual {
 	 * @return the parent process of this control construct. 
 	 */
 	public Process getParentProcess();
+
+	
+	/**
+	 * Removes the given CC, which is contained in this CC. Control flow is rerouted from
+	 * predecessor to successor of the given CC. Data flow from and to the given CC
+	 * is removed too.
+	 * 
+	 * @param CC the ControlConstruct to remove
+	 * @return true, if removal was succesful. false otherwise
+	 * @see #getAllBindings() used for retrieving the bindings from and to the given CC
+	 */
+	//public boolean removeCC(ControlConstruct CC);
+	
 }

@@ -27,6 +27,7 @@
 package impl.owls.process;
 
 import org.mindswap.owl.OWLIndividual;
+import org.mindswap.owls.process.BindingList;
 import org.mindswap.owls.process.CompositeProcess;
 import org.mindswap.owls.process.ControlConstruct;
 import org.mindswap.owls.vocabulary.OWLS;
@@ -47,4 +48,10 @@ public class CompositeProcessImpl extends ProcessImpl implements CompositeProces
 	public void setComposedOf(ControlConstruct construct) {
 	    setProperty(OWLS.Process.composedOf, construct);
 	}
+
+	public BindingList getAllBindings() {
+		ControlConstruct cc = getComposedOf();
+		return cc.getAllBindings();		
+	}
+
 }

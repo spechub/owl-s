@@ -28,11 +28,17 @@ package impl.owls.process;
 
 import impl.owl.WrappedIndividual;
 
+import java.util.Iterator;
+
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owl.OWLIndividualList;
+import org.mindswap.owls.OWLSListFactory;
+import org.mindswap.owls.process.BindingList;
 import org.mindswap.owls.process.ControlConstruct;
+import org.mindswap.owls.process.Perform;
 import org.mindswap.owls.process.Process;
 import org.mindswap.owls.process.ProcessList;
+import org.mindswap.owls.process.ValueOf;
 import org.mindswap.owls.vocabulary.OWLS;
 
 /**
@@ -57,4 +63,35 @@ public abstract class ControlConstructImpl extends WrappedIndividual implements 
     	else
     		return (Process) processes.individualAt(0).castTo(Process.class);
     }
+    
+	public BindingList getAllBindings() {			
+		BindingList bindings = OWLSListFactory.createBindingList();		
+		return getBindingsRecursively(this, bindings); 
+	}
+	
+	private BindingList getBindingsRecursively(ControlConstruct cc, BindingList bindings) {		
+		if (cc instanceof Perform) {
+			Perform perform = (Perform) cc;
+
+			// get bindings for flows to this perform
+			bindings.addBindingWithoutDuplicate((BindingList)perform.getBindings());
+			
+			// get bindings for flows going out of this perform
+			OWLIndividualList list = perform.getIncomingProperties(OWLS.Process.fromProcess);
+			
+			for (int index = 0; index < list.size(); index++) {
+				ValueOf valueOf = new ValueOfImpl((OWLIndividual) list.get(index));
+				bindings.addBindingWithoutDuplicate(valueOf.getEnclosingBinding());
+			}
+		} else {
+			Iterator<ControlConstruct> ccs = cc.getConstructs().iterator();		
+			while (ccs.hasNext()) 
+				bindings = getBindingsRecursively(ccs.next(), bindings);
+		}
+			
+		return bindings;
+	}
+	
+
+    
 }

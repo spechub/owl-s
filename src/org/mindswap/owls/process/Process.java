@@ -138,6 +138,10 @@ public interface Process extends OWLIndividual, MultiConditional {
 	
 	public ResultList getResults();
 	
+	public void removeResult(Result result);
+	
+	public void removeResults();
+	
 	/**
 	 * Get all the parameters of this process. This list includes inputs, outputs and local parameters.
 	 * 
@@ -197,4 +201,6 @@ public interface Process extends OWLIndividual, MultiConditional {
 	 * @param perform the perform to which this process is bound
 	 */
 	public void setPerform(Perform perform);
+
+	public void removeService();
 }

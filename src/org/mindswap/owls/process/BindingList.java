@@ -12,4 +12,8 @@ public interface BindingList extends OWLIndividualList {
 	public Binding bindingAt(int index);
 	
 	public Binding getBindingFor(Parameter param);
+	
+	public void addBindingWithoutDuplicate(Binding binding);
+
+	public void addBindingWithoutDuplicate(BindingList list);
 }

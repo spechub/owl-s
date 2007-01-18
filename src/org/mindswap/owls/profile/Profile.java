@@ -266,4 +266,6 @@ public interface Profile extends OWLIndividual, MultiConditional {
 	public OWLDataValueList getServiceClassifications();
 	public void addServiceClassification(URI classification);
 	public void setServiceClassification(URI classification);
+
+	public void removeService();
 }

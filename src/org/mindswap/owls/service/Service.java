@@ -42,6 +42,7 @@ import org.mindswap.owls.profile.Profile;
  *
  */
 public interface Service extends OWLIndividual {	
+		
 	/**
 	 * Return the Profile that belongs to this Service. Multiple profiles
 	 * for the same service is not supported.
@@ -85,6 +86,27 @@ public interface Service extends OWLIndividual {
 	 * @param grounding
 	 */
 	public void setGrounding(Grounding grounding);
+	
+	/**
+	 * Removes the Profile for this service
+	 * 
+	 * @param profile
+	 */
+	public void removeProfile(Profile profile);
+	
+	/**
+	 * Removes the Process for this service
+	 * 
+	 * @param profile
+	 */
+	public void removeProcess();
+	
+	/**
+	 * Removes the Grounding for this service
+	 * 
+	 * @param grounding
+	 */
+	public void removeGrounding(Grounding grounding);
 	
 	/**
 	 * Get the service name defined in the profile of this service. See {@link org.mindswap.owl.OWLConfig#DEFAULT_LANGS OWLConfig}
