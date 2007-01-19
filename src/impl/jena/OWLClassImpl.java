@@ -3,6 +3,8 @@
  */
 package impl.jena;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.mindswap.owl.OWLClass;
@@ -14,6 +16,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 
 /**
  * @author Evren Sirin
+ * @author Michael Dänzer, University of Zurich
  */
 public class OWLClassImpl extends OWLEntityImpl implements OWLClass {
     public OWLClassImpl(OWLOntology ont, Resource resource) {
@@ -28,6 +31,18 @@ public class OWLClassImpl extends OWLEntityImpl implements OWLClass {
         return kb.isDisjoint(this, c);
     }
 
+    public Map getProperties() {
+    	return kb.getProperties(this);
+    }
+    
+    public List getDeclaredProperties() {
+    	return kb.getDeclaredProperties(this);
+    }
+    
+    public List getDeclaredProperties(boolean direct) {
+    	return kb.getDeclaredProperties(this, direct);
+    }
+    
     public Set getSubClasses() {
         return kb.getSubClasses(this);
     }

@@ -54,6 +54,7 @@ import java.util.Set;
 import org.mindswap.exceptions.LockNotSupportedException;
 import org.mindswap.exceptions.NotImplementedException;
 import org.mindswap.exceptions.UnboundVariableException;
+import org.mindswap.owl.EntityFactory;
 import org.mindswap.owl.OWLClass;
 import org.mindswap.owl.OWLConfig;
 import org.mindswap.owl.OWLDataProperty;
@@ -142,6 +143,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntDocumentManager;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
+import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.ontology.OntResource;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
@@ -174,6 +176,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.reasoner.Reasoner;
 import com.hp.hpl.jena.shared.Lock;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 import com.hp.hpl.jena.util.iterator.Map1;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
@@ -668,12 +671,12 @@ public abstract class OWLModelImpl implements OWLModel, org.mindswap.owls.OWLSMo
         ReasonerVocabulary.directRDFType,
         OWL.hasValue, OWL.allValuesFrom, OWL.someValuesFrom,
         OWL.minCardinality, OWL.maxCardinality, OWL.cardinality });
-
-    public Map getProperties(OWLIndividual ind) {
-        Map result = new HashMap();
-
+    
+    private Map getProperties(Resource resource, OWLOntology ontology) {
+    	Map result = new HashMap();
+    	
         Iterator i = ontModel.listStatements(
-            (Resource) ind.getImplementation(),
+            resource,
             null,
             (RDFNode) null);
 
@@ -714,7 +717,7 @@ public abstract class OWLModelImpl implements OWLModel, org.mindswap.owls.OWLSMo
                     list = OWLFactory.createIndividualList();
                     result.put(prop, list);
                 }
-                list.add(OWLModelImpl.this.wrapIndividual(stmt.getResource(), ind.getOntology()));
+                list.add(OWLModelImpl.this.wrapIndividual(stmt.getResource(), ontology));
             }
             else {
                 OWLDataProperty prop = baseOntology.createDataProperty(URI.create(pred.getURI()));
@@ -723,11 +726,48 @@ public abstract class OWLModelImpl implements OWLModel, org.mindswap.owls.OWLSMo
                     list = OWLFactory.createDataValueList();
                     result.put(prop, list);
                 }
-                list.add(OWLModelImpl.this.wrapDataValue(stmt.getLiteral(), ind.getOntology()));
+                list.add(OWLModelImpl.this.wrapDataValue(stmt.getLiteral(), ontology));
             }
         }
 
         return result;
+    }
+    
+    public List getDeclaredProperties(OWLClass claz) {
+    	return getDeclaredProperties(claz, true);
+    }
+    
+    public List getDeclaredProperties(OWLClass claz, boolean direct) {
+    	List result = OWLFactory.createIndividualList();
+    	
+    	OntResource ontRes = ontModel.getOntResource((Resource) claz.getImplementation());
+    	OntClass ontClaz = ontRes.asClass(); 
+        ExtendedIterator i = ontClaz.listDeclaredProperties(direct);
+
+        while(i.hasNext()) {        	
+            OntProperty ontProp = (OntProperty) i.next();            
+
+            if(SKIP_PROPS.contains(ontProp))
+                continue;
+            
+            if (ontProp.isDatatypeProperty()) {
+            	OWLDataProperty prop = baseOntology.createDataProperty(URI.create(ontProp.getURI()));
+            	result.add(prop);
+            } else {
+                OWLObjectProperty prop = baseOntology.createObjectProperty(URI.create(ontProp.getURI()));                
+                result.add(prop);
+            }
+        }
+
+        return result;
+    }
+    
+    public Map getProperties(OWLClass claz) {
+    	return getProperties((Resource) claz.getImplementation(), claz.getOntology());
+    }
+
+    public Map getProperties(OWLIndividual ind) {
+    	return getProperties((Resource) ind.getImplementation(), ind.getOntology());
     }
 
     /* (non-Javadoc)

@@ -549,6 +549,43 @@ public interface OWLModel {
      * @return
      */
     public Map getProperties(OWLIndividual ind);
+    
+    /**
+     * Returns all properties for a class. Note that a class is an instance in OWL and therefore
+     * the properties given to the instance at definition are returned and NOT the
+     * properties that are declared for this class. Use 
+     * <code>getDeclaredProperties(OWLClass claz)</code> instead.
+     *  
+     * @param claz the class whose properties will be returned
+     * @return all properties (data- and object-properties) of the given class
+     * @see #getDeclaredProperties(OWLClass)
+     */
+    public Map getProperties(OWLClass claz);
+    
+    /**
+     * Returns all declared properties for a class. Use 
+     * <code>getDeclaredProperties(OWLClass claz)</code> if you want the properties
+     * of the instance at class defintion.
+     *  
+     * @param claz the class whose properties will be returned
+     * @return all properties (data- and object-properties) of the given class
+     * @see #getDeclaredProperties(OWLClass)
+     */
+    public List getDeclaredProperties(OWLClass claz);
+    
+    /**
+     * Returns all declared properties for a class. Use 
+     * <code>getDeclaredProperties(OWLClass claz)</code> if you want the properties
+     * of the instance at class defintion.
+     *  
+     * @param claz the class whose properties will be returned
+     * @param direct true, if only properties of the given class itself should be returned. false, if properties of superclasses should be returned too 
+     * @return all properties (data- and object-properties) of the given class
+     * @see #getDeclaredProperties(OWLClass)
+     */
+    public List getDeclaredProperties(OWLClass claz, boolean direct);
+    
+    
     /**
      * @param ind
      * @param prop
