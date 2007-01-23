@@ -107,7 +107,7 @@ public interface OWLCache {
 	 * 
 	 * @param uri update the local cache by using the latest content from uri.
 	 */
-	public void updateCachedFile (URI uri);
+	public void updateCachedFile(URI uri);
 	
 	/**
 	 * Saves the current status of the index file (service.idx) persistently. 
@@ -117,4 +117,6 @@ public interface OWLCache {
 	 * @see addCachedFile(String fileURI, File localFile)
 	 */
 	public void updateIndexFile();
+	
+	public void removeCachedFile(URI uri, File localFile);
 }

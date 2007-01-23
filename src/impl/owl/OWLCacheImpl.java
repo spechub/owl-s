@@ -184,4 +184,15 @@ public class OWLCacheImpl implements OWLCache {
 			e.printStackTrace();
 		}
 	}
+
+	public void removeCachedFile(URI uri, File localFile) {
+		if (localFile.exists()) 
+			localFile.delete();				
+		
+		if (cache.containsKey(uri)) {
+			cache.remove(uri);
+			updateIndexFile();
+		}
+
+	}
 }
