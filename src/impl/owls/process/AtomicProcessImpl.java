@@ -45,7 +45,7 @@ public class AtomicProcessImpl extends ProcessImpl implements AtomicProcess {
 	public AtomicProcessImpl(OWLIndividual ind) {
 		super(ind);
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see org.mindswap.owls.process.AtomicProcess#getGrounding()
 	 */

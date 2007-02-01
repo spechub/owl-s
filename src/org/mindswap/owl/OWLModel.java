@@ -3,14 +3,12 @@
  */
 package org.mindswap.owl;
 
+import java.io.OutputStream;
+import java.io.Writer;
 import java.net.URI;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import java.io.OutputStream;
-import java.io.Writer;
 
 import org.mindswap.exceptions.LockNotSupportedException;
 import org.mindswap.exceptions.UnboundVariableException;
@@ -322,7 +320,15 @@ public interface OWLModel {
     public void addProperty(OWLIndividual ind, OWLDataProperty prop, Object value);
 
     public void addProperty(OWLIndividual ind, OWLDataProperty prop, String value);
-
+    
+    /**
+     * Removes all RDF statements from the model with the given OWLIndividual in 
+     * its object or subject therefore removing each occurrence of the given individual.  
+     *  
+     * @param ind the individual to remove
+     */
+    public void removeIndividuals(OWLIndividual ind);
+    
     /**
      * @param ind
      * @param prop

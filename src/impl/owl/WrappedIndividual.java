@@ -431,5 +431,9 @@ public class WrappedIndividual extends OWLObjectImpl implements OWLIndividual {
 
 	public String toPrettyString() {
 		return individual.toPrettyString();	    
+	}
+
+	public void remove() {
+		individual.remove();
 	}    
 }

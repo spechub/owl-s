@@ -37,6 +37,7 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
 
@@ -482,5 +483,22 @@ public class OWLOntologyImpl extends OWLModelImpl implements OWLOntology, org.mi
 			return kb.getServices();
 		
 		return super.getServices();
+	}
+
+	public void removeIndividuals(OWLIndividual ind) {
+		Resource resource = (Resource) ind.getImplementation();
+		resource.removeProperties();
+		
+		// removes all statements with the given individual in the subject
+		StmtIterator stmtiter = ontModel.listStatements(resource, (Property) null, (RDFNode) null);
+		ontModel.remove(stmtiter);
+	
+		// removes all statements with the given individual in the object		
+		stmtiter = ontModel.listStatements((Resource) null, (Property) null, (RDFNode) resource);
+		ontModel.remove(stmtiter);
+	}
+	
+	public void removeIndividualsRecursively(OWLIndividual ind) {
+		
 	}
 }

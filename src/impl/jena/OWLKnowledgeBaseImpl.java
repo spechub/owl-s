@@ -431,6 +431,11 @@ public class OWLKnowledgeBaseImpl extends OWLModelImpl implements OWLKnowledgeBa
     public void removeTypes(OWLIndividual ind) {
         baseOntology.removeTypes(ind);
     }
+    
+    public void removeIndividuals(OWLIndividual ind) {
+    	baseOntology.removeIndividuals(ind);
+    }
+
 
     /* (non-Javadoc)
      * @see org.mindswap.owl.OWLKnowledgeBase#getAutoConsistency()
