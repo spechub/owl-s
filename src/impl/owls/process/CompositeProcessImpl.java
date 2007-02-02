@@ -41,17 +41,42 @@ public class CompositeProcessImpl extends ProcessImpl implements CompositeProces
 		super(ind);
 	}
 
+	/**
+	 * Returns the control construct with which the composite process is composed of.
+	 */
 	public ControlConstruct getComposedOf() {		
 		return (ControlConstruct) getPropertyAs(OWLS.Process.composedOf, ControlConstruct.class);
 	}
 
+	/**
+	 * Sets the control construct with which the composite process is composed of.
+	 */
 	public void setComposedOf(ControlConstruct construct) {
 	    setProperty(OWLS.Process.composedOf, construct);
 	}
 
+	/** 
+	 * Returns all bindings which are set within this composite process
+	 */
 	public BindingList getAllBindings() {
 		ControlConstruct cc = getComposedOf();
 		return cc.getAllBindings();		
+	}
+
+	/**
+	 * Delete the control construct with which this composite process is composed of
+	 */
+	public void deleteComposedOf() {
+		getComposedOf().delete();
+	}
+
+	/**
+	 * Removes the control construct with which this composite process is composed of
+	 * by breaking the property <code>process:composedOf</code>
+	 */
+	public void removeComposedOf() {
+		if (hasProperty(OWLS.Process.composedOf))
+			removeProperties(OWLS.Process.composedOf);
 	}
 
 }

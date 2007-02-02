@@ -36,4 +36,15 @@ public interface AtomicProcess extends Process {
 	public AtomicGrounding getGrounding();
 	
 	public void setGrounding(AtomicGrounding grounding);
+	
+	/**
+	 * Removes the atomic grounding from this atomic process by cutting the link
+	 * grounding:owlsProcess. The Grounding itself remains untouched.
+	 */
+	public void removeGrounding();
+	
+	/**
+	 * Deletes the atomic grounding from the ontology.
+	 */
+	public void deleteGrounding();
 }

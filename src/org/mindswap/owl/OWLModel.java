@@ -323,11 +323,28 @@ public interface OWLModel {
     
     /**
      * Removes all RDF statements from the model with the given OWLIndividual in 
-     * its object or subject therefore removing each occurrence of the given individual.  
+     * its object or subject therefore removing each occurrence of the given individual.
+     * This is a convenience method for removeIndividuals(ind, false)  
      *  
      * @param ind the individual to remove
+     * @see #removeIndividuals(OWLIndividual, boolean)
      */
     public void removeIndividuals(OWLIndividual ind);
+    
+    /**
+     * Removes all RDF statements from the model with the given OWLIndividual in 
+     * its object or subject therefore removing each occurrence of the given individual.
+     * If the <code>recursive</code> parameter is set, the method iterates recursively 
+     * through all properties of the given individual and removes them all.   
+     * 
+     * ATTENTION: Use the recursive mode only when you are sure that your data is 
+     * structured in a tree and not in a graph (as OWL and OWL-S usually is). Otherwise 
+     * unexpected behaviour may be observed.
+     *  
+     * @param ind the individual to remove
+     * @param recursive true, if recursive removal is desired. false otherwise
+     */
+    public void removeIndividuals(OWLIndividual ind, boolean recursive);
     
     /**
      * @param ind

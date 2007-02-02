@@ -31,6 +31,7 @@ import org.mindswap.owls.grounding.AtomicGrounding;
 import org.mindswap.owls.grounding.Grounding;
 import org.mindswap.owls.process.AtomicProcess;
 import org.mindswap.owls.service.Service;
+import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * @author Evren Sirin
@@ -68,5 +69,12 @@ public class AtomicProcessImpl extends ProcessImpl implements AtomicProcess {
         grounding.setProcess(this);
     }
 
+	public void deleteGrounding() {
+		getGrounding().delete();		
+	}
 
+	public void removeGrounding() {
+		if (getGrounding().hasProperty(OWLS.Grounding.owlsProcess, this))
+			getGrounding().removeProperty(OWLS.Grounding.owlsProcess, this);
+	}
 }

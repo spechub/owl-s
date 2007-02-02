@@ -435,6 +435,10 @@ public class OWLKnowledgeBaseImpl extends OWLModelImpl implements OWLKnowledgeBa
     public void removeIndividuals(OWLIndividual ind) {
     	baseOntology.removeIndividuals(ind);
     }
+    
+    public void removeIndividuals(OWLIndividual ind, boolean recursive) {
+    	baseOntology.removeIndividuals(ind, recursive);
+    }
 
 
     /* (non-Javadoc)

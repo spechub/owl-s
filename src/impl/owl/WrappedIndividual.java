@@ -433,7 +433,7 @@ public class WrappedIndividual extends OWLObjectImpl implements OWLIndividual {
 		return individual.toPrettyString();	    
 	}
 
-	public void remove() {
-		individual.remove();
+	public void delete() {
+		individual.delete();
 	}    
 }

@@ -131,15 +131,36 @@ public class ServiceImpl extends WrappedIndividual implements Service {
     }
 
 	public void removeGrounding(Grounding grounding) {		
-		grounding.remove();	
+		if (hasProperty(OWLS.Service.supports, grounding))
+			removeProperty(OWLS.Service.supports, grounding);
+		
+		grounding.removeService();
 	}
 
 	public void removeProcess() {
-		getProcess().remove(); 
+		getProcess().removeService();
+		
+		if (hasProperty(OWLS.Service.describedBy))
+			removeProperties(OWLS.Service.describedBy);		
 	}
 
 	public void removeProfile(Profile profile) {
-		profile.remove();
+		if (hasProperty(OWLS.Service.presents, profile))
+			removeProperty(OWLS.Service.presents, profile);
+		
+		profile.removeService();
+	}
+
+	public void deleteGrounding(Grounding grounding) {
+		grounding.delete();	
+	}
+
+	public void deleteProcess() {
+		getProcess().delete();
+	}
+
+	public void deleteProfile(Profile profile) {
+		profile.delete();
 	}
 
 

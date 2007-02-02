@@ -47,7 +47,7 @@ public interface Service extends OWLIndividual {
 	 * Return the Profile that belongs to this Service. Multiple profiles
 	 * for the same service is not supported.
 	 * 
-	 * @return Profile
+	 * @return the profile of the service 
 	 */
 	public Profile getProfile();
 	
@@ -55,16 +55,16 @@ public interface Service extends OWLIndividual {
 	 * Convenience method to get the Process from the ProcessModel. This function
 	 * call is equivalent to getProcessModel().getProcess()
 	 * 
-	 * @return Process
+	 * @return the process of the service 
 	 */
-	public Process      getProcess();
+	public Process getProcess();
 	
 	/**
 	 * Return the Grounding that belongs to this service
 	 * 
-	 * @return
+	 * @return the grounding of the service
 	 */
-	public Grounding    getGrounding();
+	public Grounding getGrounding();
 	
 	/**
 	 * Set the Profile for this service
@@ -88,25 +88,45 @@ public interface Service extends OWLIndividual {
 	public void setGrounding(Grounding grounding);
 	
 	/**
-	 * Removes the Profile for this service
+	 * Removes the Profile for this service by breaking the link 
+	 * <code>service:presents</code>. The profile itself remains untouched.
 	 * 
 	 * @param profile
 	 */
 	public void removeProfile(Profile profile);
 	
 	/**
-	 * Removes the Process for this service
-	 * 
-	 * @param profile
+	 * Removes the process for this service by breaking the link 
+	 * <code>service:describedBy</code>. The process itself remains untouched.
 	 */
 	public void removeProcess();
 	
 	/**
-	 * Removes the Grounding for this service
+	 * Removes the grounding for this service by breaking the link 
+	 * <code>service:supports</code>. The grounding itself remains untouched.
 	 * 
 	 * @param grounding
 	 */
 	public void removeGrounding(Grounding grounding);
+	
+	/**
+	 * Deletes the profile for this service
+	 * 
+	 * @param profile
+	 */
+	public void deleteProfile(Profile profile);
+	
+	/**
+	 * Deletes the process for this service
+	 */
+	public void deleteProcess();
+	
+	/**
+	 * Removes the grounding for this service
+	 * 
+	 * @param grounding
+	 */
+	public void deleteGrounding(Grounding grounding);
 	
 	/**
 	 * Get the service name defined in the profile of this service. See {@link org.mindswap.owl.OWLConfig#DEFAULT_LANGS OWLConfig}

@@ -354,4 +354,67 @@ public class ProfileImpl extends WrappedIndividual implements Profile {
 		if (hasProperty(OWLS.Service.presentedBy, getService()))
 			removeProperty(OWLS.Service.presentedBy, getService());
 	}
+
+	public void removeInput(Input input) {
+		if (hasProperty(OWLS.Profile.hasInput, input))
+			removeProperty(OWLS.Profile.hasInput, input);
+	}
+
+	public void removeInputs() {
+		InputList list = getInputs();
+		for (int i = 0; i < list.size(); i++) 
+			removeInput((Input) list.individualAt(i));	
+	}
+
+	public void removeOutput(Output output) {
+		if (hasProperty(OWLS.Profile.hasOutput, output))
+			removeProperty(OWLS.Profile.hasOutput, output);
+	}
+
+	public void removeOutputs() {
+		OutputList list = getOutputs();
+		for (int i = 0; i < list.size(); i++) 
+			removeOutput((Output) list.individualAt(i));	
+	}
+	
+	public void removeResult(Result result) {
+		if (hasProperty(OWLS.Profile.hasResult, result))
+			removeProperty(OWLS.Profile.hasResult, result);
+	}
+
+	public void removeResults() {
+		ResultList list = getResults();
+		for (int i = 0; i < list.size(); i++) 
+			removeResult((Result) list.individualAt(i));	
+	}
+	
+	public void deleteInput(Input input) {
+		input.delete();
+	}
+
+	public void deleteInputs() {
+		InputList inputs = getInputs();
+		for (int index = 0; index < inputs.size(); index++) 
+			inputs.individualAt(index).delete();
+	}
+
+	public void deleteOutput(Output output) {
+		output.delete(); 
+	}
+
+	public void deleteOutputs() {
+		OutputList outputs = getOutputs();
+		for (int index = 0; index < outputs.size(); index++) 
+			outputs.individualAt(index).delete();
+	}
+
+	public void deleteResult(Result result) {
+		result.delete();
+	}
+
+	public void deleteResults() {
+		ResultList results = getResults();
+		for (int index = 0; index < results.size(); index++) 
+			results.individualAt(index).delete();
+	}
 }

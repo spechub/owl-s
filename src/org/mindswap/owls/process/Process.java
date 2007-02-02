@@ -63,9 +63,16 @@ public interface Process extends OWLIndividual, MultiConditional {
 	 * process definition and process occurence. This implementation treats each process object as
 	 * a process occurence and returns the service object this process is used in.   
 	 * 
-	 * @return
+	 * @return the service to which this process is bound
 	 */
 	public Service getService();
+	
+	/**
+	 * Removes the service from this process by breaking the link 
+	 * <code>service:describes</code>. The service itself remains untouched.
+	 *
+	 */
+	public void removeService();
 	
 	/**
 	 * Get the profile for the service of this project. This is equivalent to getService().getProfile()
@@ -200,7 +207,95 @@ public interface Process extends OWLIndividual, MultiConditional {
 	 * property and is not stored at all as OWL-S does not define a link from Process to Perform.
 	 * @param perform the perform to which this process is bound
 	 */
-	public void setPerform(Perform perform);
-
-	public void removeService();
+	public void setPerform(Perform perform);	
+	
+	/** 
+	 * Removes the given input by breaking the property <code>process:hasInput</code>
+	 * The input itself is not touched at all.
+	 * 
+	 * @param input the input to remove
+	 */
+	public void removeInput(Input input);
+	
+	/**
+	 * Removes all inputs from the process by breaking the property <code>process:hasInput</code>
+	 * The inputs themselves are not touched at all.
+	 */
+	public void removeInputs();
+	
+	/**
+	 * Removes the given output by breaking the property <code>process:hasOutput</code>
+	 * The output itself is not touched at all.
+	 * 
+	 * @param output the output to remove
+	 */
+	public void removeOutput(Output output);
+	
+	/**
+	 * Removes all outputs from the process by breaking the property <code>process:hasOutput</code>
+	 * The outputs themselves are not touched at all.
+	 */
+	public void removeOutputs();
+	
+	/**
+	 * Removes the given local by breaking the property <code>process:hasLocal</code>
+	 * The local itself is not touched at all.
+	 * 
+	 * @param output the local to remove
+	 */
+	public void removeLocal(Local local);
+	
+	/**
+	 * Removes all locals from the process by breaking the property <code>process:hasLocal</code>
+	 * The locals themselves are not touched at all.
+	 */
+	public void removeLocals();		
+	
+	/**
+	 * Deletes the given input from the ontology
+	 * 
+	 * @param input the input to delete
+	 */
+	public void deleteInput(Input input);
+	
+	/**
+	 * Deletes all inputs of this process from the ontology
+	 */
+	public void deleteInputs();
+	
+	/**
+	 * Deletes the given output from the ontology
+	 * 
+	 * @param output the output to delete
+	 */
+	public void deleteOutput(Output output);
+	
+	/**
+	 * Deletes all outputs of this process from the ontology
+	 */
+	public void deleteOutputs();
+	
+	/**
+	 * Deletes the given local from the ontology
+	 * 
+	 * @param local the local to delete
+	 */
+	public void deleteLocal(Local local);
+	
+	/**
+	 * Deletes all locals of this process from the ontology
+	 */
+	public void deleteLocals();		
+	
+	/**
+	 * Deletes the given result from the ontology
+	 * 
+	 * @param result the result to delete
+	 */
+	public void deleteResult(Result result);
+	
+	/**
+	 * Deletes all results of this process from the ontology
+	 */
+	public void deleteResults();
 }

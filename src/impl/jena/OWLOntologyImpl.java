@@ -485,9 +485,19 @@ public class OWLOntologyImpl extends OWLModelImpl implements OWLOntology, org.mi
 		return super.getServices();
 	}
 
-	public void removeIndividuals(OWLIndividual ind) {
-		Resource resource = (Resource) ind.getImplementation();
-		resource.removeProperties();
+	private void removeResourcesForOneLevel(Resource resource, boolean recursive) {
+		
+		if (recursive) {
+			StmtIterator propIter = resource.listProperties();
+			System.out.println("Processing resource " + resource);
+		
+			while (propIter.hasNext()) {
+				Statement stmt = propIter.nextStatement();
+				System.out.println("Processing statement " + stmt);
+				if (stmt.getObject().isResource()) 
+					removeResourcesForOneLevel((Resource) stmt.getObject(), recursive);			
+			}
+		}
 		
 		// removes all statements with the given individual in the subject
 		StmtIterator stmtiter = ontModel.listStatements(resource, (Property) null, (RDFNode) null);
@@ -496,9 +506,17 @@ public class OWLOntologyImpl extends OWLModelImpl implements OWLOntology, org.mi
 		// removes all statements with the given individual in the object		
 		stmtiter = ontModel.listStatements((Resource) null, (Property) null, (RDFNode) resource);
 		ontModel.remove(stmtiter);
+		if (recursive)
+			resource.removeProperties();
 	}
 	
-	public void removeIndividualsRecursively(OWLIndividual ind) {
-		
+	public void removeIndividuals(OWLIndividual ind) {
+		Resource resource = (Resource) ind.getImplementation();
+		removeResourcesForOneLevel(resource, false);
+	}
+	
+	public void removeIndividuals(OWLIndividual ind, boolean recursive) {
+		Resource resource = (Resource) ind.getImplementation();
+		removeResourcesForOneLevel(resource, true);
 	}
 }

@@ -76,6 +76,11 @@ public abstract class ProcessImpl extends WrappedIndividual implements Process {
 		setProperty(OWLS.Service.describes, service);
 		service.setProcess(this);
 	}
+	
+	public void removeService() {
+		if(hasProperty(OWLS.Service.describes, getService()))
+			removeProperty(OWLS.Service.describes, getService());
+	}
 
 	public Profile getProfile() {
 		return getService().getProfile();
@@ -296,8 +301,77 @@ public abstract class ProcessImpl extends WrappedIndividual implements Process {
 			perform.setProcess(this);
 	}
 
-	public void removeService() {
-		if (hasProperty(OWLS.Service.describes, getService()))
-			removeProperty(OWLS.Service.describes, getService());
+	public void removeInput(Input input) {
+		if (hasProperty(OWLS.Process.hasInput, input))
+			removeProperty(OWLS.Process.hasInput, input);
+	}
+
+	public void removeInputs() {
+		InputList list = getInputs();
+		for (int i = 0; i < list.size(); i++) 
+			removeInput((Input) list.individualAt(i));	
+	}
+
+	public void removeLocal(Local local) {
+		if (hasProperty(OWLS.Process.hasLocal, local))
+			removeProperty(OWLS.Process.hasLocal, local);
+	}
+
+	public void removeLocals() {
+		ParameterList list = getLocals();
+		for (int i = 0; i < list.size(); i++) 
+			removeLocal((Local) list.individualAt(i));	
+		
+	}
+
+	public void removeOutput(Output output) {
+		if (hasProperty(OWLS.Process.hasOutput, output))
+			removeProperty(OWLS.Process.hasOutput, output);
+	}
+
+	public void removeOutputs() {
+		OutputList list = getOutputs();
+		for (int i = 0; i < list.size(); i++) 
+			removeOutput((Output) list.individualAt(i));	
+	}
+	
+	public void deleteInput(Input input) {
+		input.delete();
+	}
+
+	public void deleteInputs() {
+		InputList inputs = getInputs();
+		for (int index = 0; index < inputs.size(); index++) 
+			inputs.individualAt(index).delete();
+	}
+
+	public void deleteLocal(Local local) {
+		local.delete();
+	}
+
+	public void deleteLocals() {
+		ParameterList locals = getLocals();
+		for (int index = 0; index < locals.size(); index++) 
+			locals.individualAt(index).delete();
+	}
+
+	public void deleteOutput(Output output) {
+		output.delete(); 
+	}
+
+	public void deleteOutputs() {
+		OutputList outputs = getOutputs();
+		for (int index = 0; index < outputs.size(); index++) 
+			outputs.individualAt(index).delete();
+	}
+	
+	public void deleteResult(Result result) {
+		result.delete();
+	}
+
+	public void deleteResults() {
+		ResultList results = getResults();
+		for (int index = 0; index < results.size(); index++) 
+			results.individualAt(index).delete();
 	}
 }

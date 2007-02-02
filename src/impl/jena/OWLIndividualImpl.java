@@ -272,7 +272,7 @@ public class OWLIndividualImpl extends OWLEntityImpl implements OWLIndividual {
         return kb.getDifferentIndividuals( this );
     }
 
-	public void remove() {
+	public void delete() {
 		ontology.removeIndividuals(this);
 	}	    
 }

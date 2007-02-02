@@ -49,6 +49,17 @@ public interface CompositeProcess extends Process {
 	public void setComposedOf(ControlConstruct cc);
 	
 	/**
+	 * Removes the Control Construct from the composite process by breaking the
+	 * link process.ComposedOf. The control construct itself remains untouched.
+	 */
+	public void removeComposedOf();
+	
+	/**
+	 * Deletes the control construct from this composite process.
+	 */
+	public void deleteComposedOf();
+	
+	/**
 	 * Returns all data flow bindings within this composite process. It does not distinguish
 	 * wether the flow is coming from outside into the process or the flow is completely
 	 * embedded into the process or the flow goes from the process out to some outside

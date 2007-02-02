@@ -97,6 +97,6 @@ public interface ControlConstruct extends OWLIndividual {
 	 * @return true, if removal was succesful. false otherwise
 	 * @see #getAllBindings() used for retrieving the bindings from and to the given CC
 	 */
-	//public boolean removeCC(ControlConstruct CC);
+	//public boolean removeConstruct(ControlConstruct CC);
 	
 }

@@ -64,6 +64,13 @@ public interface Profile extends OWLIndividual, MultiConditional {
 	 * @param service
 	 */
 	public void setService(Service service);
+	
+	/**
+	 * Removes the service by breaking the link <code>service:presentedBy</code>.
+	 * The service itself remains untouched.
+	 *
+	 */
+	public void removeService();
 
 	/**
 	 * Get the process associated with this profile. This process is the one that is the 
@@ -266,6 +273,82 @@ public interface Profile extends OWLIndividual, MultiConditional {
 	public OWLDataValueList getServiceClassifications();
 	public void addServiceClassification(URI classification);
 	public void setServiceClassification(URI classification);
-
-	public void removeService();
+	
+	/** 
+	 * Removes the given input by breaking the property <code>process:hasInput</code>
+	 * The input itself is not touched at all.
+	 * 
+	 * @param input the input to remove
+	 */
+	public void removeInput(Input input);
+	
+	/**
+	 * Removes all inputs from the process by breaking the property <code>process:hasInput</code>
+	 * The inputs themselves are not touched at all.
+	 */
+	public void removeInputs();
+	
+	/**
+	 * Removes the given output by breaking the property <code>process:hasOutput</code>
+	 * The output itself is not touched at all.
+	 * 
+	 * @param output the output to remove
+	 */
+	public void removeOutput(Output output);
+	
+	/**
+	 * Removes all outputs from the process by breaking the property <code>process:hasOutput</code>
+	 * The outputs themselves are not touched at all.
+	 */
+	public void removeOutputs();	
+	
+	/**
+	 * Removes the given result by breaking the property <code>process:hasResult</code>
+	 * The result itself is not touched at all.
+	 * 
+	 * @param result the output to remove
+	 */
+	public void removeResult(Result result);
+	
+	/**
+	 * Removes all results from the process by breaking the property <code>process:hasResult</code>
+	 * The results themselves are not touched at all.
+	 */
+	public void removeResults();
+	
+	/**
+	 * Deletes the given input from the ontology
+	 * 
+	 * @param input the input to delete
+	 */
+	public void deleteInput(Input input);
+	
+	/**
+	 * Deletes all inputs of this process from the ontology
+	 */
+	public void deleteInputs();
+	
+	/**
+	 * Deletes the given output from the ontology
+	 * 
+	 * @param output the output to delete
+	 */
+	public void deleteOutput(Output output);
+	
+	/**
+	 * Deletes all outputs of this process from the ontology
+	 */
+	public void deleteOutputs();
+	
+	/**
+	 * Deletes the given result from the ontology
+	 * 
+	 * @param result the result to delete
+	 */
+	public void deleteResult(Result result);
+	
+	/**
+	 * Deletes all results of this process from the ontology
+	 */
+	public void deleteResults();
 }

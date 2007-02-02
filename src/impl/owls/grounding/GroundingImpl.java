@@ -117,4 +117,30 @@ public class GroundingImpl extends WrappedIndividual implements Grounding {
 			removeProperty(OWLS.Service.supportedBy, getService());
 	}
 
+	public void deleteAtomicGroundings(AtomicProcess process) {
+		AtomicGroundingList list = getAtomicGroundings();
+		for (int index = 0; index < list.size(); index++) {
+			if (list.groundingAt(index).hasProperty(OWLS.Grounding.owlsProcess, process))
+				list.groundingAt(index).delete();
+		}
+	}
+
+	public void removeAtomicGroundings(AtomicProcess process) {
+		AtomicGroundingList list = getAtomicGroundings();
+		for (int index = 0; index < list.size(); index++) {
+			if (list.groundingAt(index).hasProperty(OWLS.Grounding.owlsProcess, process))
+				removeProperty(OWLS.Grounding.hasAtomicProcessGrounding, list.groundingAt(index));
+		}
+	}
+
+	public void deleteAtomicGroundings() {
+		AtomicGroundingList list = getAtomicGroundings();
+		for (int index = 0; index < list.size(); index++) 
+			list.individualAt(index).delete();
+	}
+
+	public void removeAtomicGroundings() {
+		if (hasProperty(OWLS.Grounding.hasAtomicProcessGrounding))
+			removeProperties(OWLS.Grounding.hasAtomicProcessGrounding);
+	}
 }

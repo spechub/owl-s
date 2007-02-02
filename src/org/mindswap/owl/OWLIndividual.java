@@ -160,9 +160,9 @@ public interface OWLIndividual extends OWLEntity, OWLValue {
     public void removeTypes();
     
     /**
-     * Removes this individual from its enclosing ontology
+     * Deletes this individual from its enclosing ontology
      */
-    public void remove();
+    public void delete();
 
     public OWLClass getType();
 
