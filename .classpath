@@ -20,7 +20,11 @@
 	<classpathentry exported="true" kind="lib" path="lib/jena/concurrent.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jena/icu4j_3_4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jena/jakarta-oro-2.0.8.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jena/jena.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena/jena.jar">
+		<attributes>
+			<attribute value="http://jena.sourceforge.net/javadoc/" name="javadoc_location"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/jena/junit.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jena/log4j-1.2.12.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jena/stax-1.1.1-dev.jar"/>

@@ -1,25 +1,16 @@
 package examples;
 
-import impl.owl.list.RDFListImpl;
-
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import org.mindswap.owl.OWLFactory;
-import org.mindswap.owl.OWLIndividual;
-import org.mindswap.owl.OWLIndividualList;
 import org.mindswap.owl.OWLKnowledgeBase;
-import org.mindswap.owl.list.RDFList;
-import org.mindswap.owl.vocabulary.RDF;
 import org.mindswap.owls.generic.list.OWLSObjList;
-import org.mindswap.owls.grounding.Grounding;
+import org.mindswap.owls.process.AnyOrder;
 import org.mindswap.owls.process.CompositeProcess;
+import org.mindswap.owls.process.ControlConstructBag;
 import org.mindswap.owls.process.ControlConstructList;
 import org.mindswap.owls.process.Perform;
-import org.mindswap.owls.process.Process;
 import org.mindswap.owls.process.Sequence;
-import org.mindswap.owls.profile.Profile;
 import org.mindswap.owls.service.Service;
 import org.mindswap.utils.URIUtils;
 
@@ -31,45 +22,67 @@ import org.mindswap.utils.URIUtils;
  * @date 16.01.2007
  */
 public class QuickTest {
+	String uri = "http://example.com/";
+	private OWLKnowledgeBase kb;
+	private Perform p1;
+	private Perform p2;
+	private Perform p3;
+	private Perform p4;
+	
 	public static void main(String[] args) {
 		QuickTest test = new QuickTest();
-		test.removeListTest();
+		test.removeCCTest();
 	}
 
-	private void removeListTest() {
-		OWLKnowledgeBase kb = OWLFactory.createKB();
-		kb.setReasoner("Pellet");
+	public QuickTest() {
+		kb = OWLFactory.createKB();
+		kb.setReasoner("Pellet");		
+	}
+	
+	private void removeCCTest() {
+		AnyOrder anyorder = kb.createAnyOrder(URIUtils.createURI(uri + "anyOrder"));
+		createList();
+		anyorder.addComponent(p4);
+		anyorder.addComponent(p3);
+		anyorder.addComponent(p2);
+		anyorder.addComponent(p1);			
+		
+		printSizeAndMembers(anyorder.getComponents());
+		
+		anyorder.removeConstruct(p4);
+		anyorder.removeConstruct(p3);
+		anyorder.removeConstruct(p2);
+		anyorder.removeConstruct(p1);
+		
+		printSizeAndMembers(anyorder.getComponents());
+	}	
+	
+	private ControlConstructBag createList() {
 		String uri = "http://example.com/p";
 		
-		Perform p1 = kb.createPerform(URIUtils.createURI(uri + "1"));
-		OWLSObjList list = kb.createControlConstructList(p1);
+		p1 = kb.createPerform(URIUtils.createURI(uri + "1"));
+		ControlConstructBag list = kb.createControlConstructBag(p1);
 		
-		Perform p2 = kb.createPerform(URIUtils.createURI(uri + "2"));
-		list = (OWLSObjList) list.insert(p2);
+		p2 = kb.createPerform(URIUtils.createURI(uri + "2"));
+		list = (ControlConstructBag) list.insert(p2);
 		
-		Perform p3 = kb.createPerform(URIUtils.createURI(uri + "3"));
-		list = (OWLSObjList) list.insert(p3);
+		p3 = kb.createPerform(URIUtils.createURI(uri + "3"));
+		list = (ControlConstructBag) list.insert(p3);
 		
-		Perform p4 = kb.createPerform(URIUtils.createURI(uri + "4"));
-		list = (OWLSObjList) list.insert(p4);
-				
+		p4 = kb.createPerform(URIUtils.createURI(uri + "4"));
+		list = (ControlConstructBag) list.insert(p4);
+		
+		return list;
+	}
+	
+	private void printSizeAndMembers(OWLSObjList list) {
 		System.out.println("List size " + list.size());
 		System.out.println("List members:");
 		Iterator iter = list.iterator();
 		while (iter.hasNext()) {
 			System.out.println("\t" + iter.next().toString());
 		}
-		
-		RDFList rdflist = list.remove();		
-		System.out.println("List size " + rdflist.size());
-		System.out.println("List members:");
-		iter = rdflist.iterator();
-		while (iter.hasNext()) {
-			System.out.println("\t" + iter.next().toString());
-		}
 	}
-	
-	
 	
 	private void removeTest() {
 		OWLKnowledgeBase kb = OWLFactory.createKB();

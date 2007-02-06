@@ -37,7 +37,7 @@ import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * @author Evren Sirin
- *
+ * @author Michael Dänzer, University of Zurich
  */
 public class OWLSObjListImpl extends RDFListImpl implements OWLSObjList {
     public OWLSObjListImpl(OWLIndividual ind) {
@@ -52,10 +52,28 @@ public class OWLSObjListImpl extends RDFListImpl implements OWLSObjList {
     
     // TODO returning an instance of the superclass as replacement for the instance this operation was called is really bad.
     public RDFList insert(OWLValue item) {
-        OWLSObjList list = new OWLSObjListImpl( getOntology().createInstance( vocabulary.List() ) );
+        OWLSObjListImpl list = new OWLSObjListImpl(getOntology().createInstance( vocabulary.List()));
+        list.setVocabulary(vocabulary);
+        
         list.setFirst( item );
         list.setRest( this );
                 
         return list;
-    }      
+    }  
+    
+    public RDFList remove() {
+        OWLSObjListImpl list = new OWLSObjListImpl(getOntology().createInstance(vocabulary.List()));
+        list.setVocabulary(vocabulary);
+        if (size() > 1) {        	
+        	list.setFirst(getRest().getFirstValue());        	
+        	list.setRest((OWLSObjList) getRest().getRest());
+        } else {
+        	return new OWLSObjListImpl(vocabulary.nil());
+        	// TODO it is not possible to set nil to the full list because the list type of nil cannot be inferred (on whatever reason), so we set first and rest to null as well
+   //     	list.setFirst(vocabulary.nil());
+     //   	list.setRestToNil();        	
+        }
+                
+        return list;
+    }
 }

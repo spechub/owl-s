@@ -77,4 +77,11 @@ public class AnyOrderImpl extends ControlConstructImpl implements AnyOrder {
     public String getConstructName() {
         return "Any-Order";
     }
+
+	public boolean removeConstruct(ControlConstruct CC) {
+		ControlConstructBag components = getComponents();
+		components = (ControlConstructBag) components.remove(CC);
+		setProperty(OWLS.Process.components, components);
+		return true;
+	}
 }

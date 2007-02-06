@@ -77,4 +77,11 @@ public class SplitJoinImpl extends ControlConstructImpl implements SplitJoin {
     public String getConstructName() {
         return "Split-Join";
     }
+    
+	public boolean removeConstruct(ControlConstruct CC) {
+		ControlConstructBag components = getComponents();
+		components = (ControlConstructBag) components.remove(CC);
+		setProperty(OWLS.Process.components, components);
+		return true;
+	}
 }

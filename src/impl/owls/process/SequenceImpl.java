@@ -81,4 +81,11 @@ public class SequenceImpl extends ControlConstructImpl implements Sequence {
     public String getConstructName() {
         return "Sequence";
     }
+
+	public boolean removeConstruct(ControlConstruct CC) {
+		ControlConstructList components = getComponents();
+		components = (ControlConstructList) components.remove(CC);
+		setProperty(OWLS.Process.components, components);
+		return true;
+	}
 }

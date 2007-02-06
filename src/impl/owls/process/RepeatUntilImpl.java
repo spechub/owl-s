@@ -50,4 +50,11 @@ public class RepeatUntilImpl extends IterateImpl implements RepeatUntil {
     public String getConstructName() {
         return "Repeat-Until";
     }
+    
+	@Override
+	public boolean removeConstruct(ControlConstruct CC) {
+		if (getComponent().equals(CC))
+			setComponent(null);
+		return true;
+	}
 }

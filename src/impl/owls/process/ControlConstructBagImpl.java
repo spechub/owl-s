@@ -50,6 +50,7 @@ public class ControlConstructBagImpl extends OWLSObjListImpl implements ControlC
         
     public RDFList insert(OWLValue item) {
         ControlConstructBagImpl list = new ControlConstructBagImpl( getOntology().createInstance( vocabulary.List() ) );
+        list.setVocabulary(vocabulary);
         list.setFirst( item );
         list.setRest( this );
                 
@@ -57,7 +58,11 @@ public class ControlConstructBagImpl extends OWLSObjListImpl implements ControlC
     }
     
     public OWLValue getFirstValue() {
-        return (ControlConstruct) getProperty(vocabulary.first()).castTo(ControlConstruct.class);
+    	OWLIndividual cc = getProperty(vocabulary.first());
+    	if (cc != null && !cc.equals(vocabulary.nil()))
+    		return (ControlConstruct) cc.castTo(ControlConstruct.class);
+    	else
+    		return null;
     }
     
     public RDFList getRest() {
@@ -68,4 +73,44 @@ public class ControlConstructBagImpl extends OWLSObjListImpl implements ControlC
 		return (ControlConstruct) get(index);
 	}
 
+    public RDFList remove() {
+    	ControlConstructBagImpl list = new ControlConstructBagImpl(getOntology().createInstance(vocabulary.List()));
+        list.setVocabulary(vocabulary);
+        if (size() > 1) {        	
+        	list.setFirst(getRest().getFirstValue());        	
+        	list.setRest((ControlConstructBag) getRest().getRest());
+        } else {
+        	return new ControlConstructBagImpl(vocabulary.nil());
+        }
+                
+        return list;
+    }
+    
+    public RDFList remove(OWLValue value) {
+    	if ((value == null) || (size() == 0))
+    		return this;
+    	if (size() == 1)
+    		return remove();
+    	    	    	
+    	RDFList rest = this;
+    	int i = 0;
+    	while (!rest.isEmpty()) {    		
+    		if (rest.getFirstValue().equals(value))     			    				
+    			return removeAt(i);
+    		i++;
+    		rest = rest.getRest();
+    	}
+    	return this;
+    }
+    
+    public RDFList removeAt(int index) {
+        if (index == 0)
+            return remove();
+
+        if (index < 0 || isEmpty())
+            throw new IndexOutOfBoundsException();
+        
+        setRest(getRest().removeAt(index - 1));
+        return this;
+    }
 }

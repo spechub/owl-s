@@ -46,6 +46,7 @@ import org.mindswap.owls.vocabulary.OWLS;
  *
  */
 public abstract class ControlConstructImpl extends WrappedIndividual implements ControlConstruct {
+
 	public ControlConstructImpl(OWLIndividual ind) {
 		super(ind);		
 	}	
@@ -92,6 +93,7 @@ public abstract class ControlConstructImpl extends WrappedIndividual implements 
 		return bindings;
 	}
 	
-
-    
+	public boolean removeConstruct(ControlConstruct CC) {
+		return true;
+	}
 }

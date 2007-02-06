@@ -45,7 +45,7 @@ import org.mindswap.owl.vocabulary.RDF;
 
 /**
  * @author Evren Sirin
- *
+ * @author Michael Dänzer, University of Zurich
  */
 public class RDFListImpl extends WrappedIndividual implements RDFList {
     protected ListVocabulary vocabulary;
@@ -69,18 +69,14 @@ public class RDFListImpl extends WrappedIndividual implements RDFList {
             if(list.isEmpty())
                 throw new NoSuchElementException();
                 
-            // TODO check whether Evren intended to do so. in some cases this causes a class cast exception
-            // changed it to getFirstValue() instead
-            //Object result = list.getFirst();
-            Object result = list.getFirstValue();
+            Object result = list.getFirst();            
             list = list.getRest();
             
             if(result == null || list == null)
                 throw new InvalidListException();
             
             return result;
-        }
-        
+        }        
     } 
     
     public RDFListImpl(OWLIndividual ind) {
@@ -96,6 +92,10 @@ public class RDFListImpl extends WrappedIndividual implements RDFList {
     public void setRest(RDFList rest) {
         setProperty(vocabulary.rest(), rest);
     }    
+    
+    public void setRestToNil() {
+    	setProperty(vocabulary.rest(), vocabulary.nil());
+    }
 
     public OWLIndividual getFirst() {
         return (OWLIndividual) getFirstValue();
@@ -110,13 +110,15 @@ public class RDFListImpl extends WrappedIndividual implements RDFList {
     }
     
     public void setFirst(OWLValue value) {
-        if( isEmpty() )
+        if (isEmpty())
             throw new RuntimeException( "Cannot modify empty list (list:nil)" );
         
-        if( value instanceof OWLDataValue )
-            setProperty( vocabulary.firstD(), (OWLDataValue) value );
+        if (value == null)
+        	setProperty(vocabulary.firstD(), vocabulary.nil());
+        else if (value instanceof OWLDataValue )
+            setProperty(vocabulary.firstD(), (OWLDataValue) value );
         else
-            setProperty( vocabulary.first(), (OWLIndividual) value );
+            setProperty(vocabulary.first(), (OWLIndividual) value );
     }
 
     public OWLIndividualList getAll() {
@@ -181,19 +183,18 @@ public class RDFListImpl extends WrappedIndividual implements RDFList {
     }
     
     public RDFList remove(OWLValue value) {
-    	if (value == null)
+    	if ((value == null) || (size() == 0))
     		return this;
-    	
-    	
-    	OWLValue currentValue = getFirstValue();
+    	if (size() == 1)
+    		return remove();
+    	    	    	
     	RDFList rest = this;
-    	while (!rest.isEmpty()) {
-    		rest = getRest();
-    		if (rest.getFirstValue() == value) {
-    			rest.setFirst(rest.getRest().getFirstValue());
-    			rest.setRest(rest.getRest().getRest());
-    			return this;
-    		}
+    	int i = 0;
+    	while (!rest.isEmpty()) {    		
+    		if (rest.getFirstValue().equals(value))     			    				
+    			return removeAt(i);
+    		i++;
+    		rest = rest.getRest();
     	}
     	return this;
     }
@@ -204,16 +205,20 @@ public class RDFListImpl extends WrappedIndividual implements RDFList {
 
         if (index < 0 || isEmpty())
             throw new IndexOutOfBoundsException();
-
-        RDFList rest = getRest();
-        return rest.removeAt(index - 1);
+        
+        setRest(getRest().removeAt(index - 1));
+        return this;
     }
     
     public RDFList remove() {
         RDFListImpl list = new RDFListImpl(getOntology().createInstance(vocabulary.List()));
         list.setVocabulary(vocabulary);
-        list.setFirst(getRest().getFirstValue());
-        list.setRest(getRest().getRest());
+        if (size() > 1) {        	
+        	list.setFirst(getRest().getFirstValue());        	
+        	list.setRest((RDFList) getRest().getRest());
+        } else {
+        	return new RDFListImpl(vocabulary.nil());
+        }
                 
         return list;
     }
@@ -240,12 +245,12 @@ public class RDFListImpl extends WrappedIndividual implements RDFList {
         return new RDFListIterator(this);
     }
 
-    public int size() {
+    public int size() {    	
         return isEmpty() ? 0 : 1 + getRest().size();
     }
 
     public boolean isEmpty() {
-        return equals(vocabulary.nil());
+        return equals(vocabulary.nil()) || (getFirstValue() != null && getFirstValue().equals(vocabulary.nil()));
     }
 
     public ListVocabulary getVocabulary() {

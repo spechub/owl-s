@@ -70,4 +70,13 @@ public class ForEachImpl extends IterateImpl implements ForEach {
     public String getConstructName() {
         return "For-Each";
     }
+
+	@Override
+	public boolean removeConstruct(ControlConstruct CC) {
+		if (getComponent().equals(CC))
+			setComponent(null);
+		return true;
+	}
+    
+    
 }

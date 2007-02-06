@@ -78,5 +78,10 @@ public class ChoiceImpl extends ControlConstructImpl implements Choice {
         return "Choice";
     }
 
-	
+	public boolean removeConstruct(ControlConstruct CC) {
+		ControlConstructBag components = getComponents();
+		components = (ControlConstructBag) components.remove(CC);
+		setProperty(OWLS.Process.components, components);
+		return true;
+	}
 }

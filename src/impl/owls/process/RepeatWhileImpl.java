@@ -50,4 +50,11 @@ public class RepeatWhileImpl extends IterateImpl implements RepeatWhile {
     public String getConstructName() {
         return "Repeat-While";
     }
+    
+	@Override
+	public boolean removeConstruct(ControlConstruct CC) {
+		if (getComponent().equals(CC))
+			setComponent(null);
+		return true;
+	}
 }

@@ -70,5 +70,11 @@ public class IfThenElseImpl extends ControlConstructImpl implements IfThenElse {
         return "If-Then-Else";
     }
 
-    
+	public boolean removeConstruct(ControlConstruct CC) {
+		if (getThen().equals(CC))
+			setThen(null);
+		if (getElse().equals(CC))
+			setElse(null);
+		return true;
+	}    
 }
