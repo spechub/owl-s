@@ -70,4 +70,10 @@ public interface RDFList extends OWLIndividual {
     public int size();
     
     public boolean isEmpty(); 
+    
+    public RDFList remove(OWLValue value);
+    
+    public RDFList removeAt(int index);
+    
+    public RDFList remove();
 }

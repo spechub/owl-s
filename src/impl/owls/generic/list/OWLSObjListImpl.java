@@ -50,11 +50,12 @@ public class OWLSObjListImpl extends RDFListImpl implements OWLSObjList {
         return (OWLSObjList) getProperty(vocabulary.rest()).castTo(OWLSObjList.class);
     }
     
+    // TODO returning an instance of the superclass as replacement for the instance this operation was called is really bad.
     public RDFList insert(OWLValue item) {
         OWLSObjList list = new OWLSObjListImpl( getOntology().createInstance( vocabulary.List() ) );
         list.setFirst( item );
         list.setRest( this );
                 
         return list;
-    }        
+    }      
 }

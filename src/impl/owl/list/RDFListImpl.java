@@ -69,7 +69,10 @@ public class RDFListImpl extends WrappedIndividual implements RDFList {
             if(list.isEmpty())
                 throw new NoSuchElementException();
                 
-            Object result = list.getFirst();            
+            // TODO check whether Evren intended to do so. in some cases this causes a class cast exception
+            // changed it to getFirstValue() instead
+            //Object result = list.getFirst();
+            Object result = list.getFirstValue();
             list = list.getRest();
             
             if(result == null || list == null)
@@ -144,13 +147,13 @@ public class RDFListImpl extends WrappedIndividual implements RDFList {
     }
 
     public RDFList add(OWLValue item) {
-        if( isEmpty() )
+        if (isEmpty())
             return insert( item );
         
         RDFList rest = getRest();
         
         if( rest.isEmpty() )
-            setRest( rest.insert( item ) );
+            setRest(rest.insert(item));
         else
             rest.add(item);
         
@@ -168,13 +171,51 @@ public class RDFListImpl extends WrappedIndividual implements RDFList {
         
     public RDFList insertAt(int index, OWLValue value) {
         if( index == 0 )
-            return insert( value );
+            return insert(value);
 
         if( index < 0 || isEmpty() )
             throw new IndexOutOfBoundsException();
 
         RDFList rest = getRest();
         return rest.insertAt( index - 1, value );
+    }
+    
+    public RDFList remove(OWLValue value) {
+    	if (value == null)
+    		return this;
+    	
+    	
+    	OWLValue currentValue = getFirstValue();
+    	RDFList rest = this;
+    	while (!rest.isEmpty()) {
+    		rest = getRest();
+    		if (rest.getFirstValue() == value) {
+    			rest.setFirst(rest.getRest().getFirstValue());
+    			rest.setRest(rest.getRest().getRest());
+    			return this;
+    		}
+    	}
+    	return this;
+    }
+    
+    public RDFList removeAt(int index) {
+        if (index == 0)
+            return remove();
+
+        if (index < 0 || isEmpty())
+            throw new IndexOutOfBoundsException();
+
+        RDFList rest = getRest();
+        return rest.removeAt(index - 1);
+    }
+    
+    public RDFList remove() {
+        RDFListImpl list = new RDFListImpl(getOntology().createInstance(vocabulary.List()));
+        list.setVocabulary(vocabulary);
+        list.setFirst(getRest().getFirstValue());
+        list.setRest(getRest().getRest());
+                
+        return list;
     }
     
     public void set(int index, OWLValue value) {
