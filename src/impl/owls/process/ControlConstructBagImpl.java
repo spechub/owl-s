@@ -85,32 +85,4 @@ public class ControlConstructBagImpl extends OWLSObjListImpl implements ControlC
                 
         return list;
     }
-    
-    public RDFList remove(OWLValue value) {
-    	if ((value == null) || (size() == 0))
-    		return this;
-    	if (size() == 1)
-    		return remove();
-    	    	    	
-    	RDFList rest = this;
-    	int i = 0;
-    	while (!rest.isEmpty()) {    		
-    		if (rest.getFirstValue().equals(value))     			    				
-    			return removeAt(i);
-    		i++;
-    		rest = rest.getRest();
-    	}
-    	return this;
-    }
-    
-    public RDFList removeAt(int index) {
-        if (index == 0)
-            return remove();
-
-        if (index < 0 || isEmpty())
-            throw new IndexOutOfBoundsException();
-        
-        setRest(getRest().removeAt(index - 1));
-        return this;
-    }
 }

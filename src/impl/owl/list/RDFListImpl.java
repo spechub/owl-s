@@ -185,7 +185,7 @@ public class RDFListImpl extends WrappedIndividual implements RDFList {
     public RDFList remove(OWLValue value) {
     	if ((value == null) || (size() == 0))
     		return this;
-    	if (size() == 1)
+    	if ((size() == 1) && (getFirstValue().equals(value)))
     		return remove();
     	    	    	
     	RDFList rest = this;

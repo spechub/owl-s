@@ -68,10 +68,7 @@ public class OWLSObjListImpl extends RDFListImpl implements OWLSObjList {
         	list.setFirst(getRest().getFirstValue());        	
         	list.setRest((OWLSObjList) getRest().getRest());
         } else {
-        	return new OWLSObjListImpl(vocabulary.nil());
-        	// TODO it is not possible to set nil to the full list because the list type of nil cannot be inferred (on whatever reason), so we set first and rest to null as well
-   //     	list.setFirst(vocabulary.nil());
-     //   	list.setRestToNil();        	
+        	return new OWLSObjListImpl(vocabulary.nil());    	
         }
                 
         return list;

@@ -8,7 +8,6 @@ import org.mindswap.owls.generic.list.OWLSObjList;
 import org.mindswap.owls.process.AnyOrder;
 import org.mindswap.owls.process.CompositeProcess;
 import org.mindswap.owls.process.ControlConstructBag;
-import org.mindswap.owls.process.ControlConstructList;
 import org.mindswap.owls.process.Perform;
 import org.mindswap.owls.process.Sequence;
 import org.mindswap.owls.service.Service;
@@ -40,21 +39,23 @@ public class QuickTest {
 	}
 	
 	private void removeCCTest() {
-		AnyOrder anyorder = kb.createAnyOrder(URIUtils.createURI(uri + "anyOrder"));
+		
+		
+		Sequence sequence = kb.createSequence(URIUtils.createURI(uri + "sequence"));
 		createList();
-		anyorder.addComponent(p4);
-		anyorder.addComponent(p3);
-		anyorder.addComponent(p2);
-		anyorder.addComponent(p1);			
+		sequence.addComponent(p4);
+		sequence.addComponent(p3);
+		sequence.addComponent(p2);
+		sequence.addComponent(p1);			
 		
-		printSizeAndMembers(anyorder.getComponents());
+		printSizeAndMembers(sequence.getComponents());
 		
-		anyorder.removeConstruct(p4);
-		anyorder.removeConstruct(p3);
-		anyorder.removeConstruct(p2);
-		anyorder.removeConstruct(p1);
+		sequence.removeConstruct(p4);
+		sequence.removeConstruct(p2);
+		sequence.removeConstruct(p1);
+		sequence.removeConstruct(p1);
 		
-		printSizeAndMembers(anyorder.getComponents());
+		printSizeAndMembers(sequence.getComponents());
 	}	
 	
 	private ControlConstructBag createList() {

@@ -233,11 +233,9 @@ public class AtomListImpl extends RDFListImpl implements AtomList {
         list.setVocabulary(vocabulary);
         if (size() > 1) {        	
         	list.setFirst(getRest().getFirstValue());        	
-        	list.setRest((AtomList) getRest().getRest());
+        	list.setRest((RDFList) getRest().getRest());
         } else {
-        	// TODO it is not possible to set nil to the full list because the list type of nil cannot be inferred (on whatever reason), so we set first and rest to null as well
-        	list.setFirst(vocabulary.nil());
-        	list.setRestToNil();
+        	return new AtomListImpl(vocabulary.nil());
         }
                 
         return list;
