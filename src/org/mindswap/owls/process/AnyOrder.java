@@ -27,11 +27,13 @@
 package org.mindswap.owls.process;
 
 /**
+ * An AnyOrder consists of a bag of processes which are executed in any order, i.e.
+ * the execution sequence it is not specified (and does not matter).  
+ * For more information refer to the OWL-S white paper at
+ * the official <a href="http://www.daml.org/services/owl-s/">web site.</a>
+ * 
  * @author Evren Sirin
- *
+ * @author Michael Dänzer, University of Zurich
  */
-public interface AnyOrder extends ControlConstruct {
-	public ControlConstructBag getComponents();
-	
-	public void addComponent(ControlConstruct component);	
+public interface AnyOrder extends BagBasedControlConstruct {
 }

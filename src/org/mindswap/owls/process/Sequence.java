@@ -26,12 +26,41 @@
  */
 package org.mindswap.owls.process;
 
+
 /**
+ * A sequence is a chain of constructs which is executed sequentially one 
+ * after the another. Fur more information refer to the OWL-S white paper at
+ * the official <a href="http://www.daml.org/services/owl-s/">web site.</a>
+ *  
+ * 
  * @author Evren Sirin
- *
+ * @author Michael Dänzer, University of Zurich
  */
 public interface Sequence extends ControlConstruct {
+	
+	/**
+	 * Returns the control constructs on which this sequence is composed of.
+	 * @return a typed list of control constructs on which this sequence is composed of
+	 */
 	public ControlConstructList getComponents();
 	
+	/**
+	 * Adds a control construct to this sequence composition. The new control construct
+	 * is added at the end of the sequence.
+	 * 
+	 * @param component the new control construct to add to the sequence
+	 */
 	public void addComponent(ControlConstruct component);
+	
+	/**
+	 * Removes the <code>Process:components</code> from the sequence. The <code>ControlConstructList</code>
+	 * remains untouched. Use {@link #deleteComponents()} if you want to delete the list as well.   
+	 */
+	public void removeComponents();
+	
+	/**
+	 * Removes the components from this sequence and deleted them all if possible 
+	 * (if not used elsewhere in the KB).
+	 */
+	public void deleteComponents();
 }

@@ -336,42 +336,62 @@ public abstract class ProcessImpl extends WrappedIndividual implements Process {
 	}
 	
 	public void deleteInput(Input input) {
+		removeInput(input);
 		input.delete();
 	}
 
-	public void deleteInputs() {
+	public void deleteInputs() {			
 		InputList inputs = getInputs();
+		removeInputs(); 
 		for (int index = 0; index < inputs.size(); index++) 
 			inputs.individualAt(index).delete();
 	}
 
 	public void deleteLocal(Local local) {
+		removeLocal(local);
 		local.delete();
 	}
 
 	public void deleteLocals() {
 		ParameterList locals = getLocals();
-		for (int index = 0; index < locals.size(); index++) 
+		removeLocals();
+		for (int index = 0; index < locals.size(); index++)  
 			locals.individualAt(index).delete();
 	}
 
 	public void deleteOutput(Output output) {
+		removeOutput(output);
 		output.delete(); 
 	}
 
 	public void deleteOutputs() {
-		OutputList outputs = getOutputs();
+		OutputList outputs = getOutputs();		
+		removeOutputs();				
 		for (int index = 0; index < outputs.size(); index++) 
 			outputs.individualAt(index).delete();
 	}
 	
 	public void deleteResult(Result result) {
+		removeResult(result);		
 		result.delete();
 	}
 
-	public void deleteResults() {
+	public void deleteResults() {				
 		ResultList results = getResults();
+		removeResults();
 		for (int index = 0; index < results.size(); index++) 
 			results.individualAt(index).delete();
 	}
+
+	public void deleteAllParameters() {		
+		deleteInputs();		
+		deleteOutputs();
+		deleteLocals();
+		deleteResults();
+	}
+	
+	@Override
+	public void delete() {
+		deleteAllParameters();				
+	}		
 }

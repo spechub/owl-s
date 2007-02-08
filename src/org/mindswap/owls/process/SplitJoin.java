@@ -27,11 +27,14 @@
 package org.mindswap.owls.process;
 
 /**
+ * A split and join construct consists of a bag of processes which are executed 
+ * concurrently. It completes as soon as all components have finished execution. 
+ * This garuantees a partial synchronization.  
+ * For more information refer to the OWL-S white paper at
+ * the official <a href="http://www.daml.org/services/owl-s/">web site.</a>
+ * 
  * @author Evren Sirin
- *
+ * @author Michael Dänzer, University of Zurich
  */
-public interface SplitJoin extends ControlConstruct {
-	public ControlConstructBag getComponents();
-	
-	public void addComponent(ControlConstruct component);
+public interface SplitJoin extends BagBasedControlConstruct {
 }

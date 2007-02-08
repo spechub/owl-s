@@ -151,15 +151,19 @@ public class ServiceImpl extends WrappedIndividual implements Service {
 		profile.removeService();
 	}
 
-	public void deleteGrounding(Grounding grounding) {
+	public void deleteGrounding(Grounding grounding) {		
+		removeGrounding(grounding);
 		grounding.delete();	
 	}
 
 	public void deleteProcess() {
-		getProcess().delete();
+		Process process = getProcess();
+		removeProcess();
+		process.delete();
 	}
 
 	public void deleteProfile(Profile profile) {
+		removeProfile(profile);
 		profile.delete();
 	}
 

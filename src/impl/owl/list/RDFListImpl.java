@@ -211,17 +211,35 @@ public class RDFListImpl extends WrappedIndividual implements RDFList {
     }
     
     public RDFList remove() {
-        RDFListImpl list = new RDFListImpl(getOntology().createInstance(vocabulary.List()));
-        list.setVocabulary(vocabulary);
+    	RDFList list = getRest();
+        
         if (size() > 1) {        	
         	list.setFirst(getRest().getFirstValue());        	
-        	list.setRest((RDFList) getRest().getRest());
-        } else {
-        	return new RDFListImpl(vocabulary.nil());
+        	list.setRest(getRest().getRest());
+        } else {   
+        	list = (RDFList) vocabulary.nil().castTo(RDFList.class);        	        	        	
         }
-                
+        if (hasProperty(vocabulary.first()))
+        	removeProperties(vocabulary.first());
+        if (hasProperty(vocabulary.rest()))
+        	removeProperties(vocabulary.rest());
+        individual.delete();
+        
         return list;
     }
+        
+    public RDFList removeAll() {
+    	RDFList list = this;
+    	while (list.size() > 0) 
+    		list = list.remove();
+    	return list;
+    }
+
+	@Override
+	public void delete() {		
+		removeAll();
+		individual.delete();		
+	} 
     
     public void set(int index, OWLValue value) {
         if( isEmpty() )

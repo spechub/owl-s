@@ -74,15 +74,27 @@ public class ControlConstructBagImpl extends OWLSObjListImpl implements ControlC
 	}
 
     public RDFList remove() {
-    	ControlConstructBagImpl list = new ControlConstructBagImpl(getOntology().createInstance(vocabulary.List()));
-        list.setVocabulary(vocabulary);
+    	ControlConstructBag bag = (ControlConstructBag) getRest();
+        
         if (size() > 1) {        	
-        	list.setFirst(getRest().getFirstValue());        	
-        	list.setRest((ControlConstructBag) getRest().getRest());
-        } else {
-        	return new ControlConstructBagImpl(vocabulary.nil());
+        	bag.setFirst(getRest().getFirstValue());        	
+        	bag.setRest((ControlConstructBag) getRest().getRest());
+        } else {   
+        	bag = (ControlConstructBag) vocabulary.nil().castTo(ControlConstructBag.class);        	        	        	
         }
-                
-        return list;
+        if (hasProperty(vocabulary.first()))
+        	removeProperties(vocabulary.first());
+        if (hasProperty(vocabulary.rest()))
+        	removeProperties(vocabulary.rest());
+        individual.delete();
+        
+        return bag;
+    }
+        
+    public RDFList removeAll() {
+    	ControlConstructBag bag = this;
+    	while (bag.size() > 0) 
+    		bag = (ControlConstructBag) bag.remove();    
+    	return bag;
     }
 }

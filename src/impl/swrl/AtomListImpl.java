@@ -229,15 +229,27 @@ public class AtomListImpl extends RDFListImpl implements AtomList {
     }
     
     public RDFList remove() {
-    	AtomListImpl list = new AtomListImpl(getOntology().createInstance(vocabulary.List()));
-        list.setVocabulary(vocabulary);
+    	AtomList list = (AtomList) getRest();
+        
         if (size() > 1) {        	
         	list.setFirst(getRest().getFirstValue());        	
-        	list.setRest((RDFList) getRest().getRest());
-        } else {
-        	return new AtomListImpl(vocabulary.nil());
+        	list.setRest((AtomList) getRest().getRest());
+        } else {   
+        	list = (AtomList) vocabulary.nil().castTo(RDFList.class);        	        	        	
         }
-                
+        if (hasProperty(vocabulary.first()))
+        	removeProperties(vocabulary.first());
+        if (hasProperty(vocabulary.rest()))
+        	removeProperties(vocabulary.rest());
+        individual.delete();
+        
         return list;
+    }
+        
+    public RDFList removeAll() {
+    	AtomList list = this;
+    	while (list.size() > 0) 
+    		list = (AtomList) list.remove();
+    	return list;
     }
 }

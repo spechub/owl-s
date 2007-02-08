@@ -37,7 +37,7 @@ import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * @author Evren Sirin
- *
+ * @author Michael Dänzer, University of Zurich
  */
 public class SequenceImpl extends ControlConstructImpl implements Sequence {
 
@@ -87,5 +87,23 @@ public class SequenceImpl extends ControlConstructImpl implements Sequence {
 		components = (ControlConstructList) components.remove(CC);
 		setProperty(OWLS.Process.components, components);
 		return true;
+	}
+	
+	public void removeComponents() {
+		if (hasProperty(OWLS.Process.components))
+			removeProperties(OWLS.Process.components);
+	}
+	
+	public void deleteComponents() {
+		ControlConstructList list = getComponents();
+		removeComponents();
+	
+		list.delete();			
+	}
+	
+	@Override
+	public void delete() {	
+		deleteComponents();	
+		super.delete();
 	}
 }

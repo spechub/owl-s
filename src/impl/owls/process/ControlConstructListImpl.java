@@ -75,15 +75,27 @@ public class ControlConstructListImpl extends OWLSObjListImpl implements Control
 	}	
     
     public RDFList remove() {
-    	ControlConstructListImpl list = new ControlConstructListImpl(getOntology().createInstance(vocabulary.List()));
-        list.setVocabulary(vocabulary);
+    	ControlConstructList list = (ControlConstructList) getRest();
+        
         if (size() > 1) {        	
         	list.setFirst(getRest().getFirstValue());        	
         	list.setRest((ControlConstructList) getRest().getRest());
-        } else {
-        	return new ControlConstructListImpl(vocabulary.nil());
+        } else {   
+        	list = (ControlConstructList) vocabulary.nil().castTo(ControlConstructList.class);        	        	        	
         }
-                
+        if (hasProperty(vocabulary.first()))
+        	removeProperties(vocabulary.first());
+        if (hasProperty(vocabulary.rest()))
+        	removeProperties(vocabulary.rest());
+        individual.delete();
+        
         return list;
+    }
+        
+    public RDFList removeAll() {
+    	ControlConstructList list = this;
+    	while (list.size() > 0) 
+    		list = (ControlConstructList) list.remove();
+    	return list;
     }
 }

@@ -27,13 +27,54 @@
 package org.mindswap.owls.process;
 
 /**
+ * An IfThenElse is a digital branching construct. Based on the evaluation of 
+ * a condition, the execution branches to one of the branches. For deeper branching, 
+ * nest this construct. 
+ * For more information refer to the OWL-S white paper at
+ * the official <a href="http://www.daml.org/services/owl-s/">web site.</a>
+ * 
  * @author Evren Sirin
- *
+ * @author Michael Dänzer, University of Zurich
  */
 public interface IfThenElse extends ControlConstruct, Conditional {
+	/**
+	 * Returns the control construct on which the if then part consists
+	 * @return the control construct on which the if then part consists
+	 */
 	public ControlConstruct getThen();
-	public void setThen(ControlConstruct cc);
+	/**
+	 * Sets the control construct on which the if then part consists
+	 * @param cc the control construct on which the if then part consists
+	 */
+	public void setThen(ControlConstruct cc);	
+	/**
+	 * Removes the <code>process:then</code> property from this construct.  
+	 * Note, that the then part is not deleted. Use {@link #deleteThen()} instead.
+	 */
+	public void removeThen();
+	/**
+	 * Deletes the then part from this construct and removes it from the ontology (if possible)
+	 */
+	public void deleteThen();
 	
+	
+	/**
+	 * Returns the control construct on which the else part consists
+	 * @return the control construct on which the else part consists
+	 */
 	public ControlConstruct getElse();
+	/**
+	 * Sets the control construct on which the else part consists
+	 * @param cc the control construct on which the else part consists
+	 */
 	public void setElse(ControlConstruct cc); 
+	/**
+	 * Removes the <code>process:else</code> property from this construct.  
+	 * Note, that the else part is not deleted. Use {@link #deleteElse()} instead.
+	 */
+	public void removeElse();
+	/**
+	 * Deletes the else part from this construct and removes it from the ontology (if possible)
+	 */
+	public void deleteElse();
 }

@@ -67,7 +67,12 @@ public class CompositeProcessImpl extends ProcessImpl implements CompositeProces
 	 * Delete the control construct with which this composite process is composed of
 	 */
 	public void deleteComposedOf() {
-		getComposedOf().delete();
+		ControlConstruct cc = getComposedOf();
+		
+		removeComposedOf();
+		
+		if (cc != null)
+			cc.delete();
 	}
 
 	/**
@@ -79,4 +84,10 @@ public class CompositeProcessImpl extends ProcessImpl implements CompositeProces
 			removeProperties(OWLS.Process.composedOf);
 	}
 
+	public void delete() {
+		super.delete();
+		deleteComposedOf();	
+		individual.delete();
+	}
+	
 }

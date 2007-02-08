@@ -5,9 +5,10 @@ import java.util.Iterator;
 import org.mindswap.owl.OWLFactory;
 import org.mindswap.owl.OWLKnowledgeBase;
 import org.mindswap.owls.generic.list.OWLSObjList;
-import org.mindswap.owls.process.AnyOrder;
 import org.mindswap.owls.process.CompositeProcess;
-import org.mindswap.owls.process.ControlConstructBag;
+import org.mindswap.owls.process.ControlConstructList;
+import org.mindswap.owls.process.Input;
+import org.mindswap.owls.process.Output;
 import org.mindswap.owls.process.Perform;
 import org.mindswap.owls.process.Sequence;
 import org.mindswap.owls.service.Service;
@@ -31,6 +32,7 @@ public class QuickTest {
 	public static void main(String[] args) {
 		QuickTest test = new QuickTest();
 		test.removeCCTest();
+		//test.removeList();
 	}
 
 	public QuickTest() {
@@ -38,43 +40,37 @@ public class QuickTest {
 		kb.setReasoner("Pellet");		
 	}
 	
-	private void removeCCTest() {
+	private void removeCCTest() {				
+		String uri = "http://example.com/p";
 		
+		p1 = kb.createPerform(URIUtils.createURI(uri + "1"));		
+		p2 = kb.createPerform(URIUtils.createURI(uri + "2"));		
+		p3 = kb.createPerform(URIUtils.createURI(uri + "3"));			
+		p4 = kb.createPerform(URIUtils.createURI(uri + "4"));	
 		
 		Sequence sequence = kb.createSequence(URIUtils.createURI(uri + "sequence"));
-		createList();
 		sequence.addComponent(p4);
 		sequence.addComponent(p3);
 		sequence.addComponent(p2);
-		sequence.addComponent(p1);			
+		sequence.addComponent(p1);
 		
-		printSizeAndMembers(sequence.getComponents());
+		Input in1 = kb.createInput(URIUtils.createURI(uri + "in1"));
+		Input in2 = kb.createInput(URIUtils.createURI(uri + "in2"));
+		Output out1 = kb.createOutput(URIUtils.createURI(uri + "out1"));
 		
-		sequence.removeConstruct(p4);
-		sequence.removeConstruct(p2);
-		sequence.removeConstruct(p1);
-		sequence.removeConstruct(p1);
+		CompositeProcess process = kb.createCompositeProcess(URIUtils.createURI(uri + "process"));
+		process.setComposedOf(sequence);
+		process.addInput(in1);
+		process.addInput(in2);
+		process.addOutput(out1);
 		
-		printSizeAndMembers(sequence.getComponents());
+		Service service = kb.createService(URIUtils.createURI(uri + "Service"));
+		service.setProcess(process);
+		
+		service.deleteProcess();
+		
+		kb.write(System.out);
 	}	
-	
-	private ControlConstructBag createList() {
-		String uri = "http://example.com/p";
-		
-		p1 = kb.createPerform(URIUtils.createURI(uri + "1"));
-		ControlConstructBag list = kb.createControlConstructBag(p1);
-		
-		p2 = kb.createPerform(URIUtils.createURI(uri + "2"));
-		list = (ControlConstructBag) list.insert(p2);
-		
-		p3 = kb.createPerform(URIUtils.createURI(uri + "3"));
-		list = (ControlConstructBag) list.insert(p3);
-		
-		p4 = kb.createPerform(URIUtils.createURI(uri + "4"));
-		list = (ControlConstructBag) list.insert(p4);
-		
-		return list;
-	}
 	
 	private void printSizeAndMembers(OWLSObjList list) {
 		System.out.println("List size " + list.size());
@@ -85,28 +81,26 @@ public class QuickTest {
 		}
 	}
 	
-	private void removeTest() {
-		OWLKnowledgeBase kb = OWLFactory.createKB();
-		kb.setReasoner("Pellet");
+	private void removeList() {
+		String uri = "http://example.com/p";
 		
-		Service service = kb.createService(URIUtils.createURI("http://examples.org#service"));
-		CompositeProcess process = kb.createCompositeProcess(URIUtils.createURI("http://examples.org#one"));
-		Perform perform1 = kb.createPerform(URIUtils.createURI("http://examples.org#perform1"));
-		Perform perform2 = kb.createPerform(URIUtils.createURI("http://examples.org#perform2"));
-		Sequence sequence = kb.createSequence(URIUtils.createURI("http://examples.org#sequence"));
-		sequence.addComponent(perform1);
-		sequence.addComponent(perform2);
-		process.setComposedOf(sequence);
-		process.setLabel("TestLabel");
-		service.setProcess(process);
+		p1 = kb.createPerform(URIUtils.createURI(uri + "1"));		
+		p2 = kb.createPerform(URIUtils.createURI(uri + "2"));		
+		p3 = kb.createPerform(URIUtils.createURI(uri + "3"));			
+		p4 = kb.createPerform(URIUtils.createURI(uri + "4"));	
 		
-		kb.write(System.out);	
-		System.out.println("--------------------");
+		Sequence sequence = kb.createSequence(URIUtils.createURI(uri + "sequence"));
+		sequence.addComponent(p4);
+		sequence.addComponent(p3);
+		sequence.addComponent(p2);
+		sequence.addComponent(p1);			
 		
-		process.deleteComposedOf();
-		service.deleteProcess();
+		sequence.removeConstruct(p4);
+		sequence.removeConstruct(p2);
 		
-		
-		kb.write(System.out);		
+		ControlConstructList list = sequence.getComponents();		
+		printSizeAndMembers(list);
+		System.out.println("---------------------");
+		kb.write(System.out);
 	}
 }

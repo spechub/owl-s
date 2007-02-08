@@ -27,8 +27,10 @@
 package org.mindswap.owls.process;
 
 /**
+ * This constructs executes its inner operation (i.e. executes this control construct)
+ * tests for the condition, exits if it is true, and otherwise loops. Thus it always acts at least once.
+ * 
  * @author Evren Sirin
- *
  */
 public interface RepeatUntil extends Iterate, Conditional {
 }

@@ -76,5 +76,36 @@ public class IfThenElseImpl extends ControlConstructImpl implements IfThenElse {
 		if (getElse().equals(CC))
 			setElse(null);
 		return true;
+	}
+
+	public void deleteElse() {
+		ControlConstruct elseCC = getElse();
+		removeElse();
+		elseCC.delete();
+	}
+
+	public void deleteThen() {
+		ControlConstruct thenCC = getThen();
+		removeThen();
+		thenCC.delete();
+	}
+
+	public void removeElse() {
+		if (hasProperty(OWLS.Process.elseP))
+			removeProperties(OWLS.Process.elseP);
+	}
+
+	public void removeThen() {
+		if (hasProperty(OWLS.Process.thenP))
+			removeProperties(OWLS.Process.thenP);
+	}
+
+	@Override
+	public void delete() {
+		deleteElse();
+		deleteThen();		
+		individual.delete();
 	}    
+	
+	
 }

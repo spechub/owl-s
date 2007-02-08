@@ -27,11 +27,13 @@
 package org.mindswap.owls.process;
 
 /**
+ * A choice construct consists of a bag of control constructs from which one and only one
+ * single constrcut is chosen for execution.   
+ * For more information refer to the OWL-S white paper at
+ * the official <a href="http://www.daml.org/services/owl-s/">web site.</a>
+ * 
  * @author Evren Sirin
- *
+ * @author Michael Dänzer, University of Zurich
  */
-public interface Choice extends ControlConstruct {
-	public ControlConstructBag getComponents();
-	
-	public void addComponent(ControlConstruct component);
+public interface Choice extends BagBasedControlConstruct {
 }

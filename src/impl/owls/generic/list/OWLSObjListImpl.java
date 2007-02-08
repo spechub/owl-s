@@ -62,15 +62,27 @@ public class OWLSObjListImpl extends RDFListImpl implements OWLSObjList {
     }  
     
     public RDFList remove() {
-        OWLSObjListImpl list = new OWLSObjListImpl(getOntology().createInstance(vocabulary.List()));
-        list.setVocabulary(vocabulary);
+    	OWLSObjList bag = (OWLSObjList) getRest();
+        
         if (size() > 1) {        	
-        	list.setFirst(getRest().getFirstValue());        	
-        	list.setRest((OWLSObjList) getRest().getRest());
-        } else {
-        	return new OWLSObjListImpl(vocabulary.nil());    	
+        	bag.setFirst(getRest().getFirstValue());        	
+        	bag.setRest((OWLSObjList) getRest().getRest());
+        } else {   
+        	bag = (OWLSObjList) vocabulary.nil().castTo(OWLSObjList.class);        	        	        	
         }
-                
-        return list;
+        if (hasProperty(vocabulary.first()))
+        	removeProperties(vocabulary.first());
+        if (hasProperty(vocabulary.rest()))
+        	removeProperties(vocabulary.rest());
+        individual.delete();
+        
+        return bag;
+    }
+        
+    public RDFList removeAll() {
+    	OWLSObjList list = this;
+    	while (list.size() > 0) 
+    		list = (OWLSObjList) list.remove();    
+    	return list;
     }
 }

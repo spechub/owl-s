@@ -3,16 +3,12 @@
  */
 package impl.owls.process;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owls.process.ControlConstruct;
 import org.mindswap.owls.process.ForEach;
 import org.mindswap.owls.process.Local;
 import org.mindswap.owls.process.Parameter;
 import org.mindswap.owls.process.Perform;
-import org.mindswap.owls.process.ProcessList;
 import org.mindswap.owls.process.ValueOf;
 import org.mindswap.owls.vocabulary.OWLS;
 
@@ -56,27 +52,13 @@ public class ForEachImpl extends IterateImpl implements ForEach {
         
         setListValue(valueOf);
     }
-    
-	public List getConstructs() {
-	    List list = new ArrayList();
-	    list.add(getComponent());
-	    return list;
-	}
-	
-	public ProcessList getAllProcesses(boolean recursive) {
-		return getComponent().getAllProcesses(recursive);
-	}
 	
     public String getConstructName() {
         return "For-Each";
     }
-
-	@Override
-	public boolean removeConstruct(ControlConstruct CC) {
-		if (getComponent().equals(CC))
-			setComponent(null);
-		return true;
+    
+	public void removeComponent() {
+		if (hasProperty(OWLS.Process.iterateBody))
+			removeProperties(OWLS.Process.iterateBody);
 	}
-    
-    
 }

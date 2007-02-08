@@ -485,8 +485,7 @@ public class OWLOntologyImpl extends OWLModelImpl implements OWLOntology, org.mi
 		return super.getServices();
 	}
 
-	private void removeResourcesForOneLevel(Resource resource, boolean recursive) {
-		
+	private void removeResourcesForOneLevel(Resource resource, boolean recursive) {		
 		if (recursive) {
 			StmtIterator propIter = resource.listProperties();
 			System.out.println("Processing resource " + resource);
@@ -511,11 +510,15 @@ public class OWLOntologyImpl extends OWLModelImpl implements OWLOntology, org.mi
 	}
 	
 	public void removeIndividuals(OWLIndividual ind) {
+		if (!ind.getIncomingProperties().isEmpty())
+			return;
 		Resource resource = (Resource) ind.getImplementation();
 		removeResourcesForOneLevel(resource, false);
 	}
 	
 	public void removeIndividuals(OWLIndividual ind, boolean recursive) {
+		if (ind.getIncomingProperties().isEmpty())
+			return;
 		Resource resource = (Resource) ind.getImplementation();
 		removeResourcesForOneLevel(resource, true);
 	}

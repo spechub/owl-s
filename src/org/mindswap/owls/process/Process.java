@@ -297,5 +297,5 @@ public interface Process extends OWLIndividual, MultiConditional {
 	/**
 	 * Deletes all results of this process from the ontology
 	 */
-	public void deleteResults();
+	public void deleteResults();		
 }

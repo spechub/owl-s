@@ -27,11 +27,14 @@
 package org.mindswap.owls.process;
 
 /**
+ * A split construct consists of a bag of processes which are executed concurrently.
+ * It completes as soon as all components are scheduled for execution (not ath end of
+ * their execution. See {@link SplitJoin} for that behaviour.  
+ * For more information refer to the OWL-S white paper at
+ * the official <a href="http://www.daml.org/services/owl-s/">web site.</a>
+ * 
  * @author Evren Sirin
- *
+ * @author Michael Dänzer, University of Zurich
  */
-public interface Split extends ControlConstruct {
-	public ControlConstructBag getComponents();
-	
-	public void addComponent(ControlConstruct component);
+public interface Split extends BagBasedControlConstruct {
 }

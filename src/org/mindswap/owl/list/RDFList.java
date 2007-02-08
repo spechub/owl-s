@@ -76,4 +76,6 @@ public interface RDFList extends OWLIndividual {
     public RDFList removeAt(int index);
     
     public RDFList remove();
+        
+    public RDFList removeAll();
 }

@@ -27,8 +27,10 @@
 package org.mindswap.owls.process;
 
 /**
+ * This construct tests for the condition, exits if it is true, and otherwise loops by
+ * executing its inner operation (i.e. executes this control construct). Thus it may never act
+ * 
  * @author Evren Sirin
- *
  */
 public interface RepeatWhile extends Iterate, Conditional {
 }

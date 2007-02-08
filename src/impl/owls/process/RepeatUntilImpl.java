@@ -3,13 +3,9 @@
  */
 package impl.owls.process;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owls.process.Condition;
 import org.mindswap.owls.process.ControlConstruct;
-import org.mindswap.owls.process.ProcessList;
 import org.mindswap.owls.process.RepeatUntil;
 import org.mindswap.owls.vocabulary.OWLS;
 
@@ -36,25 +32,13 @@ public class RepeatUntilImpl extends IterateImpl implements RepeatUntil {
     public void setComponent(ControlConstruct component) {
         setProperty(OWLS.Process.untilProcess, component);
     }
-    
-	public List getConstructs() {
-	    List list = new ArrayList();
-	    list.add(getComponent());
-	    return list;
-	}
-	
-	public ProcessList getAllProcesses(boolean recursive) {
-		return getComponent().getAllProcesses(recursive);
-	}	
 		
     public String getConstructName() {
         return "Repeat-Until";
     }
-    
-	@Override
-	public boolean removeConstruct(ControlConstruct CC) {
-		if (getComponent().equals(CC))
-			setComponent(null);
-		return true;
+
+	public void removeComponent() {
+		if (hasProperty(OWLS.Process.untilProcess))
+			removeProperties(OWLS.Process.untilProcess);
 	}
 }

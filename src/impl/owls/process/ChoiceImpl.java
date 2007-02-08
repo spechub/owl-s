@@ -26,62 +26,19 @@
  */
 package impl.owls.process;
 
-import java.util.List;
-
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owls.process.Choice;
-import org.mindswap.owls.process.ControlConstruct;
-import org.mindswap.owls.process.ControlConstructBag;
-import org.mindswap.owls.process.ProcessList;
-import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * @author Evren Sirin
- *
+ * @author Michael Dänzer, University of Zurich
  */
-public class ChoiceImpl extends ControlConstructImpl implements Choice {
+public class ChoiceImpl extends BagBasedControlConstructImpl implements Choice {
 	public ChoiceImpl(OWLIndividual ind) {
 		super(ind);
-	}
-
-	public void addComponent(ControlConstruct component) {
-	    ControlConstructBag components = getComponents();
-	    if(components == null) {
-	        components = getOntology().createControlConstructBag(component);
-	        addProperty(OWLS.Process.components, components);
-	    }
-	    else
-	        components.add(component);
-	}
-	
-	public ControlConstructBag getComponents() {
-	    return (ControlConstructBag) getPropertyAs(OWLS.Process.components, ControlConstructBag.class);
-	}		
-	
-	public List getConstructs() {
-	    return getComponents().getAll();
-	}
-	
-	public ProcessList getAllProcesses(boolean recursive) {
-		ProcessList list = new ProcessListImpl();
-		ControlConstructBag components = getComponents();
-		while(!components.isEmpty()) {
-			ControlConstruct cc = (ControlConstruct) components.getFirst();
-			list.addAll(cc.getAllProcesses(recursive));
-			components = (ControlConstructBag) components.getRest();
-		}
-		
-		return list;
 	}
 	
     public String getConstructName() {
         return "Choice";
     }
-
-	public boolean removeConstruct(ControlConstruct CC) {
-		ControlConstructBag components = getComponents();
-		components = (ControlConstructBag) components.remove(CC);
-		setProperty(OWLS.Process.components, components);
-		return true;
-	}
 }

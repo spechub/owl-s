@@ -3,18 +3,15 @@
  */
 package impl.owls.process;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owls.process.Condition;
 import org.mindswap.owls.process.ControlConstruct;
-import org.mindswap.owls.process.ProcessList;
 import org.mindswap.owls.process.RepeatWhile;
 import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * @author Evren Sirin
+ * @author Michael Dänzer, University of Zurich
  */
 public class RepeatWhileImpl extends IterateImpl implements RepeatWhile {  
     public RepeatWhileImpl(OWLIndividual ind) {
@@ -36,25 +33,13 @@ public class RepeatWhileImpl extends IterateImpl implements RepeatWhile {
     public void setComponent(ControlConstruct component) {
         setProperty(OWLS.Process.whileProcess, component);
     }
-    	
-	public List getConstructs() {
-	    List list = new ArrayList();
-	    list.add(getComponent());
-	    return list;
-	}
-        
-	public ProcessList getAllProcesses(boolean recursive) {
-		return getComponent().getAllProcesses(recursive);
-	}
 	
     public String getConstructName() {
         return "Repeat-While";
     }
     
-	@Override
-	public boolean removeConstruct(ControlConstruct CC) {
-		if (getComponent().equals(CC))
-			setComponent(null);
-		return true;
+	public void removeComponent() {
+		if (hasProperty(OWLS.Process.whileProcess))
+			removeProperties(OWLS.Process.whileProcess);
 	}
 }

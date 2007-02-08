@@ -27,11 +27,33 @@
 package org.mindswap.owls.process;
 
 /**
+ * This is super interface for loop based control constructs such as 
+ * {@link RepeatUntil}, {@link RepeatWhile} amd the non OWL-S standard
+ * {@link ForEach}. 
+ * 
  * @author Evren Sirin
- *
+ * @author Michael Dänzer, University of Zurich
  */
 public interface Iterate extends ControlConstruct {
+	/**
+	 * Returns the control construct within the loop
+	 * @return the control construct within the loop
+	 */
     public ControlConstruct getComponent();
     
+    /**
+     * Sets the control construct within the loop
+     * @param component the control construct within the loop
+     */
     public void setComponent(ControlConstruct component);
+    
+	/**
+	 * Removes the control construct within the loop. The construct itslef remains
+	 * untouched. Use {@link #deleteComponent() instead.
+	 */
+	public void removeComponent();
+	/**
+	 * Deletes the control construct within the loop and removes it from the ontology (if possible)
+	 */
+	public void deleteComponent();
 }
