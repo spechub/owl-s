@@ -31,7 +31,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jena/stax-api-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jena/xercesImpl.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jena/xml-apis.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet.jar"/>
+	<classpathentry exported="true" sourcepath="D:/Dev/Libs/pellet-1.3-beta2/src" kind="lib" path="lib/pellet/pellet.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xsdlib/xsdlib.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/NExT Groundings"/>
 	<classpathentry kind="output" path="bin"/>
