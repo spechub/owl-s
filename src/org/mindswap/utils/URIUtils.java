@@ -119,4 +119,13 @@ public class URIUtils {
 
         return name1.equals( name2 );
     }
+    
+    public static boolean isValidURI(String uri) {
+    	try {
+    		URI.create(uri);
+    		return true;
+    	} catch (Exception e) {
+    		return false;
+    	}
+    }
 }
