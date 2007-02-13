@@ -134,4 +134,8 @@ public class WSDLTranslator {
     public void writeOWLS(OutputStream out) {
         ont.write(out, baseURI);
     }
+    
+    public Service getService() {
+    	return service;
+    }
 }

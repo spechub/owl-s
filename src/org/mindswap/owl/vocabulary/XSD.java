@@ -172,4 +172,28 @@ public class XSD {
     /** URI URI for xsd:gMonthDay */
     public static URI gMonthDay = URI.create(ns + "gMonthDay");
 
+    public static URI getURIFromClass(Class parameterType) {
+    	String strType = parameterType.getName();
+    	
+    	if ("byte".equals(strType) || "java.lang.Byte".equals(strType))
+			return XSD.xsdByte;
+		else if ("short".equals(strType) || "java.lang.Short".equals(strType))
+			return XSD.xsdShort;
+		else if ("int".equals(strType) || "java.lang.Integer".equals(strType))
+			return XSD.integer;
+		else if ("long".equals(strType) || "java.lang.Long".equals(strType))
+			return XSD.xsdLong;
+		else if ("float".equals(strType) || "java.lang.Float".equals(strType))
+			return XSD.xsdFloat;
+		else if ("double".equals(strType) || "java.lang.Double".equals(strType))
+			return XSD.xsdDouble;
+		else if ("boolean".equals(strType) || "java.lang.Boolean".equals(strType))
+			return XSD.xsdBoolean;
+		else if ("char".equals(strType) || "java.lang.Character".equals(strType))
+			return XSD.string;
+		else if ("String".equals(strType) || "java.lang.String".equals(strType))
+			return XSD.string;
+		
+		return null;
+    }
 }
