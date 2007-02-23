@@ -24,19 +24,32 @@
  * Created on Dec 27, 2003
  *
  */
-package impl.owls.process;
+package impl.owls.process.parameter;
 
-import impl.owls.process.parameter.ParameterImpl;
+import java.net.URI;
 
-import org.mindswap.owl.OWLIndividual;
-import org.mindswap.owls.process.ResultVar;
+import org.mindswap.owl.OWLIndividualList;
+import org.mindswap.owls.process.Input;
+import org.mindswap.owls.process.InputList;
 
 /**
  * @author Evren Sirin
  *
  */
-public class ResultVarImpl extends ParameterImpl implements ResultVar {
-	public ResultVarImpl(OWLIndividual ind) {
-		super(ind);
+public class InputListImpl extends ParameterListImpl implements InputList {
+    public InputListImpl() {
+        super(Input.class);
+    }
+
+    public InputListImpl(OWLIndividualList list) {
+        super(list, Input.class);
+    }
+
+	public Input inputAt(int index) {
+		return (Input) get(index);
+	}
+
+	public Input getInput(URI parameterURI) {
+		return (Input) getIndividual(parameterURI);
 	}
 }

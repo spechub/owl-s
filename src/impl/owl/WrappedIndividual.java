@@ -435,5 +435,9 @@ public class WrappedIndividual extends OWLObjectImpl implements OWLIndividual {
 
 	public void delete() {
 		individual.delete();
+	}
+
+	public String getNamespace() {
+		return individual.getNamespace();
 	}    
 }

@@ -3,6 +3,8 @@
  */
 package impl.owls.process;
 
+import impl.owls.process.constructs.ProcessImpl;
+
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owls.process.AtomicProcess;
 import org.mindswap.owls.process.CompositeProcess;

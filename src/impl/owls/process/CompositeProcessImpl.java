@@ -26,6 +26,8 @@
  */
 package impl.owls.process;
 
+import impl.owls.process.constructs.ProcessImpl;
+
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owls.process.BindingList;
 import org.mindswap.owls.process.CompositeProcess;
@@ -38,7 +40,7 @@ import org.mindswap.owls.vocabulary.OWLS;
  */
 public class CompositeProcessImpl extends ProcessImpl implements CompositeProcess {
 	public CompositeProcessImpl(OWLIndividual ind) {
-		super(ind);
+		super(ind); 
 	}
 
 	/**

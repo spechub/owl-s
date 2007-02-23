@@ -24,59 +24,40 @@
  * Created on Dec 27, 2003
  *
  */
-package impl.owls.process;
+package impl.owls.process.parameter;
 
-import impl.owls.process.constructs.ProcessImpl;
-
+import org.mindswap.owl.OWLDataValue;
 import org.mindswap.owl.OWLIndividual;
-import org.mindswap.owls.grounding.AtomicGrounding;
-import org.mindswap.owls.grounding.Grounding;
-import org.mindswap.owls.process.AtomicProcess;
-import org.mindswap.owls.service.Service;
+import org.mindswap.owls.process.Input;
+import org.mindswap.owls.process.Process;
+import org.mindswap.owls.vocabulary.FLAServiceOnt;
 import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * @author Evren Sirin
  *
  */
-public class AtomicProcessImpl extends ProcessImpl implements AtomicProcess {
-	AtomicGrounding grounding = null;
-	
+public class InputImpl extends ParameterImpl implements Input {
+
 	/**
 	 * @param resource
 	 */
-	public AtomicProcessImpl(OWLIndividual ind) {
+	public InputImpl(OWLIndividual ind) {
 		super(ind);
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.mindswap.owls.process.AtomicProcess#getGrounding()
-	 */
-	public AtomicGrounding getGrounding() {	
-	    Service service = getService();
-	    if( service == null )
-	        return null;
-	    Grounding grounding = service.getGrounding();
-	    if( grounding == null )
-	        return null;
+	public Process getProcess() {
+	    OWLIndividual ind = getIncomingProperty(OWLS.Process.hasInput);
+		return (ind == null) ? null : (Process) ind.castTo(Process.class);
+	}
+
+	
+	public boolean transformInputType () {
+	    OWLDataValue dv = this.getProperty(FLAServiceOnt.transformInputType);
+	    if (dv != null && dv.getLexicalValue().trim().toLowerCase().equals("false"))
+	        return false;
 	    
-		return grounding.getAtomicGrounding(this);
+	    return true;
 	}
 
-
-    /* (non-Javadoc)
-     * @see org.mindswap.owls.process.AtomicProcess#setGrounding(org.mindswap.owls.grounding.AtomicGrounding)
-     */
-    public void setGrounding(AtomicGrounding grounding) {
-        grounding.setProcess(this);
-    }
-
-	public void deleteGrounding() {
-		getGrounding().delete();		
-	}
-
-	public void removeGrounding() {
-		if (getGrounding().hasProperty(OWLS.Grounding.owlsProcess, this))
-			getGrounding().removeProperty(OWLS.Grounding.owlsProcess, this);
-	}
 }

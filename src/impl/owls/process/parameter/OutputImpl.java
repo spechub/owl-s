@@ -24,59 +24,27 @@
  * Created on Dec 27, 2003
  *
  */
-package impl.owls.process;
-
-import impl.owls.process.constructs.ProcessImpl;
+package impl.owls.process.parameter;
 
 import org.mindswap.owl.OWLIndividual;
-import org.mindswap.owls.grounding.AtomicGrounding;
-import org.mindswap.owls.grounding.Grounding;
-import org.mindswap.owls.process.AtomicProcess;
-import org.mindswap.owls.service.Service;
+import org.mindswap.owls.process.Output;
+import org.mindswap.owls.process.Process;
 import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * @author Evren Sirin
  *
  */
-public class AtomicProcessImpl extends ProcessImpl implements AtomicProcess {
-	AtomicGrounding grounding = null;
-	
+public class OutputImpl extends ParameterImpl implements Output {
 	/**
 	 * @param resource
 	 */
-	public AtomicProcessImpl(OWLIndividual ind) {
+	public OutputImpl(OWLIndividual ind) {
 		super(ind);
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.mindswap.owls.process.AtomicProcess#getGrounding()
-	 */
-	public AtomicGrounding getGrounding() {	
-	    Service service = getService();
-	    if( service == null )
-	        return null;
-	    Grounding grounding = service.getGrounding();
-	    if( grounding == null )
-	        return null;
-	    
-		return grounding.getAtomicGrounding(this);
-	}
-
-
-    /* (non-Javadoc)
-     * @see org.mindswap.owls.process.AtomicProcess#setGrounding(org.mindswap.owls.grounding.AtomicGrounding)
-     */
-    public void setGrounding(AtomicGrounding grounding) {
-        grounding.setProcess(this);
-    }
-
-	public void deleteGrounding() {
-		getGrounding().delete();		
-	}
-
-	public void removeGrounding() {
-		if (getGrounding().hasProperty(OWLS.Grounding.owlsProcess, this))
-			getGrounding().removeProperty(OWLS.Grounding.owlsProcess, this);
+	public Process getProcess() {
+	    OWLIndividual ind = getIncomingProperty(OWLS.Process.hasOutput);
+		return (ind == null) ? null : (Process) ind.castTo(Process.class);
 	}
 }

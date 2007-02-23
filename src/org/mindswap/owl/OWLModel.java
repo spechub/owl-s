@@ -952,4 +952,27 @@ public interface OWLModel {
     public void write(Writer writer, URI baseURI);
     public void write(OutputStream out);
     public void write(OutputStream out, URI baseURI);
+    
+    /**
+     * Returns a list with all classes that do not belong to the OWL-S language 
+     * definition and its base and helpers languages such as OWL, RDF or SWRL.
+     * 
+     * @return all classes do not belong to the OWL-S language definition
+     */
+    public List getNonLanguageClasses();
+    /**
+     * Returns a list with all object properties that do not belong to the OWL-S language 
+     * definition and its base and helpers languages such as OWL, RDF or SWRL.
+     * 
+     * @return all object properties do not belong to the OWL-S language definition
+     */
+    public List getNonLanguageObjectProperties();
+    /**
+     * Returns a list with all datatype properties that do not belong to the OWL-S language 
+     * definition and its base and helpers languages such as OWL, RDF or SWRL.
+     * 
+     * @return all datatype do not belong to the OWL-S language definition
+     */
+    public List getNonLanguageDataProperties();
+    
 }

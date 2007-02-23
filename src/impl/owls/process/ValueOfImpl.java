@@ -4,6 +4,8 @@
 package impl.owls.process;
 
 import impl.owl.WrappedIndividual;
+import impl.owls.process.binding.InputBindingImpl;
+import impl.owls.process.binding.OutputBindingImpl;
 
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owls.process.Binding;

@@ -21,22 +21,24 @@
 // IN THE SOFTWARE.
 
 /*
- * Created on Dec 27, 2003
+ * Created on Dec 28, 2003
  *
  */
-package impl.owls.process;
-
-import impl.owls.process.parameter.ParameterImpl;
+package impl.owls.process.constructs;
 
 import org.mindswap.owl.OWLIndividual;
-import org.mindswap.owls.process.ResultVar;
+import org.mindswap.owls.process.Choice;
 
 /**
  * @author Evren Sirin
- *
+ * @author Michael Dänzer, University of Zurich
  */
-public class ResultVarImpl extends ParameterImpl implements ResultVar {
-	public ResultVarImpl(OWLIndividual ind) {
+public class ChoiceImpl extends BagBasedControlConstructImpl implements Choice {
+	public ChoiceImpl(OWLIndividual ind) {
 		super(ind);
 	}
+	
+    public String getConstructName() {
+        return "Choice";
+    }
 }

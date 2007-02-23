@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -581,4 +582,40 @@ public class OWLKnowledgeBaseImpl extends OWLModelImpl implements OWLKnowledgeBa
     public OWLIndividual parseLiteral(String literal) {
         return getBaseOntology().parseLiteral( literal );
     }
+    
+    public List getNonLanguageClasses() {		    	
+    	ArrayList list = new ArrayList();
+    	Set ontologies = getOntologies();
+    	Iterator iter = ontologies.iterator();
+    	while (iter.hasNext()) {
+    		OWLOntology ont = (OWLOntology) iter.next();
+    		list.addAll(ont.getNonLanguageClasses());
+    	}
+    		
+		return list;
+	}
+
+	public List getNonLanguageDataProperties() {
+    	ArrayList list = new ArrayList();
+    	Set ontologies = getOntologies();
+    	Iterator iter = ontologies.iterator();
+    	while (iter.hasNext()) {
+    		OWLOntology ont = (OWLOntology) iter.next();
+    		list.addAll(ont.getNonLanguageDataProperties());
+    	}
+    		
+		return list;
+	}
+
+	public List getNonLanguageObjectProperties() {
+    	ArrayList list = new ArrayList();
+    	Set ontologies = getOntologies();
+    	Iterator iter = ontologies.iterator();
+    	while (iter.hasNext()) {
+    		OWLOntology ont = (OWLOntology) iter.next();
+    		list.addAll(ont.getNonLanguageObjectProperties());
+    	}
+    		
+		return list;
+	}
 }

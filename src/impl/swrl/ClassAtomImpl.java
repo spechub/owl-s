@@ -15,7 +15,7 @@ import org.mindswap.swrl.SWRLObject;
  *
  */
 public class ClassAtomImpl extends AtomImpl implements ClassAtom {
-    public ClassAtomImpl(OWLIndividual ind) {
+    public ClassAtomImpl(OWLIndividual ind) { 
         super(ind);
     }
 

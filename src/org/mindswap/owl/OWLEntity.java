@@ -55,6 +55,12 @@ public interface OWLEntity extends OWLObject {
 	
 	public String getQName();
 	
+	/**
+	 * Returns the namespace of this entity 
+	 * @return the namespace of this entity
+	 */
+	public String getNamespace();
+	
 	public Object getAnonID();
 	
 	/**

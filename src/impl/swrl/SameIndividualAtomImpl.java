@@ -15,7 +15,7 @@ import org.mindswap.swrl.SameIndividualAtom;
  */
 public class SameIndividualAtomImpl extends AtomImpl implements SameIndividualAtom {
     public SameIndividualAtomImpl(OWLIndividual ind) {
-        super(ind);
+        super(ind); 
     }    
 
     public SWRLIndividualObject getArgument1() {

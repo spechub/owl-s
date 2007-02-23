@@ -19,7 +19,7 @@ import org.mindswap.swrl.SWRLObject;
  */
 public class DataPropertyAtomImpl extends AtomImpl implements DataPropertyAtom {
     public DataPropertyAtomImpl(OWLIndividual ind) {
-        super(ind);
+        super(ind); 
     }
 
     public OWLDataProperty getPropertyPredicate() {

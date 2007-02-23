@@ -24,19 +24,20 @@
  * Created on Dec 27, 2003
  *
  */
-package impl.owls.process;
-
-import impl.owls.process.parameter.ParameterImpl;
+package impl.owls.process.parameter;
 
 import org.mindswap.owl.OWLIndividual;
-import org.mindswap.owls.process.ResultVar;
+import org.mindswap.owls.process.Local;
 
 /**
  * @author Evren Sirin
  *
  */
-public class ResultVarImpl extends ParameterImpl implements ResultVar {
-	public ResultVarImpl(OWLIndividual ind) {
+public class LocalImpl extends ParameterImpl implements Local {
+	/**
+	 * @param resource
+	 */
+	public LocalImpl(OWLIndividual ind) {
 		super(ind);
 	}
 }

@@ -69,6 +69,10 @@ public abstract class OWLEntityImpl extends OWLObjectImpl implements OWLEntity {
         return kb.getQNames().shortForm( resource.getURI() );
     }
     
+    public String getNamespace() {
+    	return resource.getNameSpace();
+    }
+    
     public String getLabel() {
 	    OWLDataValue value = getAnnotation(RDFS.label);
 		return (value == null) ? null : value.getLexicalValue();

@@ -14,6 +14,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 
 import org.mindswap.owl.OWLClass;
 import org.mindswap.owl.OWLDataProperty;
@@ -28,6 +29,9 @@ import org.mindswap.owl.OWLOntology;
 import org.mindswap.owl.OWLProperty;
 import org.mindswap.owl.OWLValue;
 import org.mindswap.owls.service.Service;
+import org.mindswap.owls.vocabulary.MoreGroundings;
+import org.mindswap.owls.vocabulary.OWLS;
+import org.mindswap.owls.vocabulary.OWLS_Extensions;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.ontology.OntModel;
@@ -38,6 +42,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
 
@@ -55,6 +60,8 @@ public class OWLOntologyImpl extends OWLModelImpl implements OWLOntology, org.mi
     private Map imports;
 
     private OWLOntology sourceOntology;
+    
+    private Vector owlsNamespaces;
 
     public OWLOntologyImpl(OWLKnowledgeBase kb, URI uri, URI fileURI, Model jenaModel) {
         super(jenaModel);
@@ -522,4 +529,67 @@ public class OWLOntologyImpl extends OWLModelImpl implements OWLOntology, org.mi
 		Resource resource = (Resource) ind.getImplementation();
 		removeResourcesForOneLevel(resource, true);
 	}
+	
+	   public List getNonLanguageClasses() {		    	
+			return getNonLanguageItems(getOntModel().listClasses());
+		}
+
+		public List getNonLanguageDataProperties() {
+			return getNonLanguageItems(getOntModel().listDatatypeProperties());
+		}
+
+		public List getNonLanguageObjectProperties() {
+			return getNonLanguageItems(getOntModel().listObjectProperties());
+		}
+		
+		private List getNonLanguageItems(ExtendedIterator iter) {
+			List list = new ArrayList();
+			while (iter.hasNext()) {
+				Resource resource = (Resource) iter.next();
+				if (!isInLanguageNamespace(resource))
+					list.add(wrapClass(resource, getBaseOntology()));
+			}
+			
+			return list;
+		}
+		
+		private boolean isInLanguageNamespace(Resource resource) {
+			String namespace = resource.getNameSpace();
+			
+			if ((owlsNamespaces == null) || (owlsNamespaces.isEmpty())) {
+				owlsNamespaces = new Vector();
+				// OWL-S namespaces
+				owlsNamespaces.add(OWLS.Service.Service.getNamespace());
+				owlsNamespaces.add(OWLS.Process.Process.getNamespace());
+				owlsNamespaces.add(OWLS.Profile.Profile.getNamespace());
+				owlsNamespaces.add(OWLS.Grounding.WsdlGrounding.getNamespace());
+				owlsNamespaces.add(OWLS.Expression.Expression.getNamespace());
+				owlsNamespaces.add(OWLS.Actor.Actor.getNamespace());
+				// expression language namespaces
+				owlsNamespaces.add(org.mindswap.owl.vocabulary.KIF.ns);
+				owlsNamespaces.add(org.mindswap.owl.vocabulary.SWRL.AtomList.getNamespace());
+				owlsNamespaces.add(org.mindswap.owl.vocabulary.SWRLB.equal.getNamespace());
+				owlsNamespaces.add(org.mindswap.owl.vocabulary.DRS.ns);			
+				// OWL+RDF namespaces
+				owlsNamespaces.add(org.mindswap.owl.vocabulary.XSD.ns);
+				owlsNamespaces.add(org.mindswap.owl.vocabulary.RDF.ns);
+				owlsNamespaces.add(org.mindswap.owl.vocabulary.RDFS.ns);
+				owlsNamespaces.add(org.mindswap.owl.vocabulary.OWL.ns);
+				// Extensions
+				owlsNamespaces.add(MoreGroundings.JavaGrounding.getNamespace());
+				owlsNamespaces.add(OWLS_Extensions.Process.hasPerform.getNamespace());
+				// helpers
+				owlsNamespaces.add(org.mindswap.owl.vocabulary.DC.ns);	
+				owlsNamespaces.add("http://www.isi.edu/~pan/damltime/time-entry.owl#");
+				owlsNamespaces.add("http://www.daml.org/services/owl-s/1.1/generic/swrlx.owl#");
+				owlsNamespaces.add("http://www.daml.org/services/owl-s/1.1/generic/ObjectList.owl#");
+			}
+			
+			for (int i = 0; i < owlsNamespaces.size(); i++) {
+				if (owlsNamespaces.get(i).equals(namespace))
+					return true;
+			}
+
+			return false;
+		}
 }
