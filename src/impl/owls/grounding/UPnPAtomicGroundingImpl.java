@@ -30,6 +30,7 @@ import org.mindswap.owl.OWLFactory;
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owl.OWLKnowledgeBase;
 import org.mindswap.owls.OWLSFactory;
+import org.mindswap.owls.grounding.AtomicGrounding;
 import org.mindswap.owls.grounding.MessageMap;
 import org.mindswap.owls.grounding.MessageMapList;
 import org.mindswap.owls.grounding.UPnPAtomicGrounding;
@@ -204,4 +205,9 @@ public class UPnPAtomicGroundingImpl extends AtomicGroundingImpl implements UPnP
 	    
 	    addMessageMap(map);
     }
+    
+	@Override
+	public String getGroundingType() {
+		return AtomicGrounding.GROUNDING_UPNP;
+	}
 }

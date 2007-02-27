@@ -17,6 +17,7 @@ import org.mindswap.owl.OWLIndividualList;
 import org.mindswap.owl.OWLKnowledgeBase;
 import org.mindswap.owl.OWLObject;
 import org.mindswap.owl.OWLValue;
+import org.mindswap.owls.grounding.AtomicGrounding;
 import org.mindswap.owls.grounding.JavaAtomicGrounding;
 import org.mindswap.owls.grounding.MessageMapList;
 import org.mindswap.owls.process.Input;
@@ -296,6 +297,16 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
 		ind.setProperty(MoreGroundings.owlsParameter, owlsParameter);
 		ind.setProperty(MoreGroundings.paramIndex, Integer.toString(index));
 		addProperty(MoreGroundings.hasJavaParameter, ind);
+	}
+
+	@Override
+	public String getGroundingType() {
+		return AtomicGrounding.GROUNDING_JAVA;
+	}
+	
+	@Override
+	public String toString() {
+		return getClaz() + "." + getMethod();
 	}
 }
 

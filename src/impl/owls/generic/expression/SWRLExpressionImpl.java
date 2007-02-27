@@ -34,6 +34,7 @@ import org.mindswap.owls.generic.expression.Expression;
 import org.mindswap.owls.process.Condition;
 import org.mindswap.owls.vocabulary.OWLS;
 import org.mindswap.query.ValueMap;
+import org.mindswap.swrl.Atom;
 import org.mindswap.swrl.AtomList;
 import org.mindswap.utils.RDFUtils;
 
@@ -78,5 +79,29 @@ public class SWRLExpressionImpl extends ExpressionImpl implements Expression, Co
     
     public boolean isTrue(OWLModel model, ValueMap binding) {
         return model.isTrue( this, binding );
-    }
+    }    
+    
+	@Override
+	public String toPrettyString() {
+		String string = toString();
+		if (string == null || string.length() == 0)
+			return super.toPrettyString();
+		else
+			return string;
+	}
+
+	@Override
+	public String toString() {
+		AtomList atoms = getBody();						
+		String string = "";
+		for (int i = 0; i < atoms.size(); i++) {
+			Atom atom = atoms.atomAt(i);
+			String addOperator = string.length() == 0 ? "" : " AND \n"; 
+			string = string + addOperator + atom.toString();
+		}
+		
+		return string.length() > 0 ? string : super.toString();
+	}
+    
+    
 }

@@ -40,6 +40,7 @@ import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owl.OWLKnowledgeBase;
 import org.mindswap.owl.OWLValue;
 import org.mindswap.owls.OWLSFactory;
+import org.mindswap.owls.grounding.AtomicGrounding;
 import org.mindswap.owls.grounding.MessageMap;
 import org.mindswap.owls.grounding.MessageMapList;
 import org.mindswap.owls.grounding.WSDLAtomicGrounding;
@@ -316,5 +317,9 @@ public class WSDLAtomicGroundingImpl extends AtomicGroundingImpl implements WSDL
 	    
 	    addMessageMap(map);
     }
-
+    
+	@Override
+	public String getGroundingType() {
+		return AtomicGrounding.GROUNDING_WSDL;
+	}
 }

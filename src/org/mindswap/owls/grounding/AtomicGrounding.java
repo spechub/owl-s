@@ -45,6 +45,10 @@ import org.mindswap.query.ValueMap;
  *
  */
 public interface AtomicGrounding extends OWLIndividual {
+	public final static String GROUNDING_WSDL = "WSDL";
+	public final static String GROUNDING_UPNP = "UPNP";
+	public final static String GROUNDING_JAVA = "Java";
+	
 	/**
 	 * Get a URL that describes the properties of this grounding. The nature of the file
 	 * depends on the actual grounding type, e.g. WSDL grounding will return the URL of 
@@ -111,4 +115,10 @@ public interface AtomicGrounding extends OWLIndividual {
 	 * @throws ExecutionException
 	 */
 	public ValueMap invoke(ValueMap values, OWLKnowledgeBase kb) throws ExecutionException;
+	
+	/**
+	 * Returns the type of grounding such as WSDL or Java.
+	 * @return the type of the grounding
+	 */
+	public String getGroundingType();
 }

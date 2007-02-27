@@ -24,7 +24,7 @@
  * Created on Dec 27, 2003
  *
  */
-package impl.owls.process.constructs;
+package impl.owls.process;
 
 import impl.owl.WrappedIndividual;
 

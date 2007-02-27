@@ -85,4 +85,6 @@ public abstract class AtomicGroundingImpl extends WrappedIndividual implements A
 	    setProperty(OWLS.Grounding.owlsProcess, process);
 		process.setGrounding(this);
 	}
+	
+	public abstract String getGroundingType();
 }
