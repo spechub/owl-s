@@ -37,7 +37,9 @@ import org.mindswap.exceptions.ServiceNotAvailableException;
 import org.mindswap.owl.EntityFactory;
 import org.mindswap.owl.OWLFactory;
 import org.mindswap.owl.OWLIndividual;
+import org.mindswap.owl.OWLIndividualList;
 import org.mindswap.owl.OWLKnowledgeBase;
+import org.mindswap.owl.OWLObjectProperty;
 import org.mindswap.owl.OWLValue;
 import org.mindswap.owls.OWLSFactory;
 import org.mindswap.owls.grounding.AtomicGrounding;
@@ -321,5 +323,68 @@ public class WSDLAtomicGroundingImpl extends AtomicGroundingImpl implements WSDL
 	@Override
 	public String getGroundingType() {
 		return AtomicGrounding.GROUNDING_WSDL;
+	}
+	
+	public void removeOperationRef() {
+		if (hasProperty(OWLS.Grounding.wsdlOperation)) {			
+			WSDLOperationRef opRef = getOperationRef();
+			opRef.removeOperation();
+			opRef.removePortType();
+			removeProperties(OWLS.Grounding.wsdlOperation);
+			opRef.delete();
+		}
+	}
+	
+	public void removeMessageMaps(OWLObjectProperty prop) {
+		if (hasProperty(prop)) {
+			OWLIndividualList indList = getProperties(prop);
+			for (int i = 0; i < indList.size(); i++) {
+				OWLIndividual ind = indList.individualAt(i);
+				if (ind.hasProperty(OWLS.Grounding.owlsParameter))
+					ind.removeProperties(OWLS.Grounding.owlsParameter);
+				if (ind.hasProperty(OWLS.Grounding.wsdlMessagePart))
+					ind.removeProperties(OWLS.Grounding.wsdlMessagePart);
+				
+				removeProperty(prop, ind);
+				ind.delete();				
+			}
+		}
+	}
+	
+	private void removeAll() {		
+		if (hasProperty(OWLS.Grounding.wsdlDocument))
+			removeProperties(OWLS.Grounding.wsdlDocument);
+		removeOperationRef();
+		
+		if (hasProperty(OWLS.Grounding.wsdlInputMessage))
+			removeProperties(OWLS.Grounding.wsdlInputMessage);
+		
+		removeMessageMaps(OWLS.Grounding.wsdlInput);
+		removeMessageMaps(OWLS.Grounding.wsdlOutput);
+		
+		if (hasProperty(OWLS.Grounding.wsdlOutputMessage))
+			removeProperties(OWLS.Grounding.wsdlOutputMessage);	
+	}
+	
+	@Override
+	public void delete() {		
+		removeAll();			
+		
+		super.delete();
+	}
+	
+	public URI getWSDLParameter(Parameter parameter) {
+		URI uri = getWSDLParameter(parameter, getInputMap());
+		if (uri == null)
+			uri = getWSDLParameter(parameter, getOutputMap());
+		return uri;	
+	}
+	
+	private URI getWSDLParameter(Parameter parameter, MessageMapList list) {
+		for (int i = 0; i < list.size(); i++) {
+			if (list.messageMapAt(i).getOWLSParameter().equals(parameter))
+				return list.messageMapAt(i).getGroundingParameterAsURI();
+		}
+		return null;	
 	}
 }

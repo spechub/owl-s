@@ -8,6 +8,8 @@ import impl.owls.generic.expression.SWRLExpressionImpl;
 import impl.owls.generic.list.OWLSObjListImpl;
 import impl.owls.grounding.GroundingImpl;
 import impl.owls.grounding.JavaAtomicGroundingImpl;
+import impl.owls.grounding.JavaParameterImpl;
+import impl.owls.grounding.JavaVariableImpl;
 import impl.owls.grounding.UPnPAtomicGroundingImpl;
 import impl.owls.grounding.UPnPMessageMapImpl;
 import impl.owls.grounding.WSDLAtomicGroundingImpl;
@@ -81,6 +83,8 @@ import org.mindswap.owls.generic.list.OWLSObjList;
 import org.mindswap.owls.grounding.AtomicGrounding;
 import org.mindswap.owls.grounding.Grounding;
 import org.mindswap.owls.grounding.JavaAtomicGrounding;
+import org.mindswap.owls.grounding.JavaParameter;
+import org.mindswap.owls.grounding.JavaVariable;
 import org.mindswap.owls.grounding.MessageMap;
 import org.mindswap.owls.grounding.UPnPAtomicGrounding;
 import org.mindswap.owls.grounding.WSDLAtomicGrounding;
@@ -270,6 +274,10 @@ public class OWLSConverters {
         OWLObjectConverter atomicGroundingConverter =
             new CombinedOWLSConverter(AtomicGrounding.class, new OWLObjectConverter[] {
                 upnpAtomicGroundingConverter, javaAtomicGroundingConverter, wsdlAtomicGroundingConverter});
+        OWLObjectConverter javaVariableConverter =
+        	new GenericOWLSConverter(JavaVariableImpl.class, MoreGroundings.JavaVariable);
+        OWLObjectConverter javaParameterConverter =
+        	new GenericOWLSConverter(JavaParameterImpl.class, MoreGroundings.JavaParameter);
         // end changed by Michael Daenzer        
         OWLObjectConverter wsdlOperationRefConverter =
             new GenericOWLSConverter(WSDLOperationRefImpl.class, OWLS.Grounding.WsdlOperationRef);
@@ -337,6 +345,8 @@ public class OWLSConverters {
         converters.put(WSDLAtomicGrounding.class, wsdlAtomicGroundingConverter);
         converters.put(UPnPAtomicGrounding.class, upnpAtomicGroundingConverter);
         converters.put(JavaAtomicGrounding.class, javaAtomicGroundingConverter);
+        converters.put(JavaVariable.class, javaVariableConverter);
+        converters.put(JavaParameter.class, javaParameterConverter);
         converters.put(WSDLOperationRef.class, wsdlOperationRefConverter);
         converters.put(MessageMap.class, messageMapConverter);
         

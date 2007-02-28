@@ -93,5 +93,17 @@ public interface JavaAtomicGrounding extends AtomicGrounding {
      * @param index Number of order for this Parameter in the Parameter-List
      * @param owlsParameter Reference to the OWL-S Input Variable
      */
-    public void setInputVar(String name, String type, int index, Input owlsParameter);
+    public void setInputParameter(String name, String type, int index, Input owlsParameter);
+    
+    /**
+     * Returns the java input parameter related to given OWL-S input 
+     * @return the java input parameter related to given OWL-S input
+     */
+    public JavaParameter getInputParamter(Input input);
+    
+    /**
+     * Returns the java output variable related to given OWL-S output
+     * @return the java output variable related to given OWL-S output
+     */
+    public JavaVariable getOutputVariable();
 }

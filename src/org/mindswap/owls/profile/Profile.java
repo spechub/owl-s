@@ -150,6 +150,10 @@ public interface Profile extends OWLIndividual, MultiConditional {
 	
 	public void addOutput(Output output);
 	
+	public void addInputs(InputList inputs);
+	
+	public void addOutputs(OutputList inputs);
+	
 	public void addResult(Result result);
 	
 	public void setResult(Result result);	

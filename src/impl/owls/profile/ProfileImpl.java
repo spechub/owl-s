@@ -107,6 +107,16 @@ public class ProfileImpl extends WrappedIndividual implements Profile {
 	    addProperty(OWLS.Profile.hasOutput, output);
 	}
 
+	public void addInputs(InputList inputs) {
+		for (int i = 0; i < inputs.size(); i++)
+			addInput(inputs.inputAt(i));
+	}
+	
+	public void addOutputs(OutputList outputs) {
+		for (int i = 0; i < outputs.size(); i++)
+			addOutput(outputs.outputAt(i));
+	}
+	
 	public void addResult(Result result) {
 	    addProperty(OWLS.Profile.hasResult, result);
 	}

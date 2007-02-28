@@ -63,8 +63,8 @@ public class CreateJavaGrounding {
 		
 		JavaAtomicGrounding jAtomicGround = ont.createJavaAtomicGrounding(URI.create(baseURI + "MyJAtomGround"));
 		jAtomicGround.setOutputVar(baseURI + "JPar1", "java.lang.String", output);
-		jAtomicGround.setInputVar(baseURI + "JIn1", "int", 1, input1);
-		jAtomicGround.setInputVar(baseURI + "JIn2", "java.lang.Double", 2, input2);
+		jAtomicGround.setInputParameter(baseURI + "JIn1", "int", 1, input1);
+		jAtomicGround.setInputParameter(baseURI + "JIn2", "java.lang.Double", 2, input2);
 		jAtomicGround.setClaz("examples.CreateJavaGrounding");
 		jAtomicGround.setMethod("testIt");
 		jAtomicGround.setProcess(process);

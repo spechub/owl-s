@@ -22,15 +22,18 @@
 
 package org.mindswap.owls.grounding;
 
+import java.net.URI;
+
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owls.process.Parameter;
 
 public interface MessageMap extends OWLIndividual {
 	public Parameter getOWLSParameter();
 	public String    getGroundingParameter();
+	public URI    getGroundingParameterAsURI();
 	public String    getTransformation();
 
 	public void setOWLSParameter(Parameter param);
 	public void setGroundingParameter(String param);
-	public void setTransformation(String param);
+	public void setTransformation(String param);		
 }

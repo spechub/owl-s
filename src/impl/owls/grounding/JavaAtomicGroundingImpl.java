@@ -19,6 +19,8 @@ import org.mindswap.owl.OWLObject;
 import org.mindswap.owl.OWLValue;
 import org.mindswap.owls.grounding.AtomicGrounding;
 import org.mindswap.owls.grounding.JavaAtomicGrounding;
+import org.mindswap.owls.grounding.JavaParameter;
+import org.mindswap.owls.grounding.JavaVariable;
 import org.mindswap.owls.grounding.MessageMapList;
 import org.mindswap.owls.process.Input;
 import org.mindswap.owls.process.Output;
@@ -291,7 +293,7 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
 	/* (non-Javadoc)
 	 * @see org.mindswap.owls.grounding.JavaAtomicGrounding#setInputVar(java.lang.String, java.lang.String, int, org.mindswap.owls.process.Input)
 	 */
-	public void setInputVar(String name, String type, int index, Input owlsParameter) {
+	public void setInputParameter(String name, String type, int index, Input owlsParameter) {
 		OWLIndividual ind = getOntology().createInstance(MoreGroundings.JavaParameter, URI.create(name));
 		ind.setProperty(MoreGroundings.javaType, type);
 		ind.setProperty(MoreGroundings.owlsParameter, owlsParameter);
@@ -308,6 +310,64 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
 	public String toString() {
 		return getClaz() + "." + getMethod();
 	}
+
+	private void removeAll() {
+		if (hasProperty(MoreGroundings.javaClass))
+			removeProperties(MoreGroundings.javaClass);
+		if (hasProperty(MoreGroundings.javaMethod))
+			removeProperties(MoreGroundings.javaMethod);
+		
+		// TODO an rdf:type property of the related input stays persistent. why????
+		if (hasProperty(MoreGroundings.hasJavaParameter)) {
+			OWLIndividualList indList = getProperties(MoreGroundings.hasJavaParameter);
+			for (int i = 0; i < indList.size(); i++) {
+				OWLIndividual ind = indList.individualAt(i);
+				if (ind.hasProperty(MoreGroundings.javaType))
+					ind.removeProperties(MoreGroundings.javaType);
+				if (ind.hasProperty(MoreGroundings.owlsParameter))
+					ind.removeProperties(MoreGroundings.owlsParameter);
+				if (ind.hasProperty(MoreGroundings.paramIndex))
+					ind.removeProperties(MoreGroundings.paramIndex);
+				removeProperty(MoreGroundings.hasJavaParameter, ind);
+				ind.delete();				
+			}
+		}
+		
+		if (hasProperty(MoreGroundings.javaOutput)) {
+			OWLIndividual ind = getProperty(MoreGroundings.javaOutput);
+			if (ind.hasProperty(MoreGroundings.javaType))
+				ind.removeProperties(MoreGroundings.javaType);
+			if (ind.hasProperty(MoreGroundings.owlsParameter))
+				ind.removeProperties(MoreGroundings.owlsParameter);
+			removeProperties(MoreGroundings.javaOutput);
+			ind.delete();
+		}
+		
+		if (hasProperty(MoreGroundings.owlsProcess))
+			removeProperties(MoreGroundings.owlsProcess);
+		if (hasProperty(OWLS.Grounding.owlsProcess))
+			removeProperties(OWLS.Grounding.owlsProcess);	
+	}
+	
+	@Override
+	public void delete() {		
+		removeAll();			
+		
+		super.delete();
+	}
+
+	public JavaParameter getInputParamter(Input input) {
+		OWLIndividualList list = getPropertiesAs(MoreGroundings.hasJavaParameter, JavaParameter.class);
+		for (int i = 0; i < list.size(); i++) {
+			if (list.individualAt(i).getURI().equals(input.getURI()))
+				return (JavaParameter) list.individualAt(i);
+		}
+		return null;
+	}
+
+	public JavaVariable getOutputVariable() {
+		return (JavaVariable) getPropertyAs(MoreGroundings.javaOutput, JavaVariable.class);
+	}		
 }
 
 

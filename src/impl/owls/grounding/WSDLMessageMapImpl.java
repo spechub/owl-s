@@ -30,6 +30,7 @@ import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owls.grounding.MessageMap;
 import org.mindswap.owls.process.Parameter;
 import org.mindswap.owls.vocabulary.OWLS;
+import org.mindswap.utils.URIUtils;
 
 public class WSDLMessageMapImpl extends WrappedIndividual implements MessageMap {
     public WSDLMessageMapImpl(OWLIndividual ind) { 
@@ -62,5 +63,9 @@ public class WSDLMessageMapImpl extends WrappedIndividual implements MessageMap 
 	
 	public String toString() {
 		return "[" + getOWLSParameter() + " -> " + getGroundingParameter() + "]";
+	}
+
+	public URI getGroundingParameterAsURI() {
+		return URIUtils.createURI(getGroundingParameter());
 	}
 }

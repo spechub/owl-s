@@ -13,7 +13,7 @@ import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * @author evren
- *
+ * @author Michael Dänzer, University of Zurich
  */
 public class WSDLOperationRefImpl extends WrappedIndividual implements WSDLOperationRef {
     public WSDLOperationRefImpl(OWLIndividual ind) {
@@ -41,4 +41,21 @@ public class WSDLOperationRefImpl extends WrappedIndividual implements WSDLOpera
     public URI getPortType() {
         return getPropertyAsURI(OWLS.Grounding.portType);
     }
+
+	public void removeOperation() {
+		if (hasProperty(OWLS.Grounding.wsdlOperation))
+			removeProperties(OWLS.Grounding.wsdlOperation);
+	}
+
+	public void removePortType() {
+		if (hasProperty(OWLS.Grounding.portType))
+			removeProperties(OWLS.Grounding.portType);
+	}
+
+	@Override
+	public void delete() {
+		removeOperation();
+		removePortType();
+		super.delete();
+	}    
 }

@@ -37,7 +37,6 @@ import org.mindswap.owls.service.Service;
 /**
  * Represents the OWL-S process. It represents the super class for Atomic, Composite and Simple 
  * processes. Properties that all three process classes share are defined here. 
- *   
  * 
  * OWL-S concept: http://www.daml.org/services/owl-s/1.0/Process.owl#Process
  * 
@@ -85,9 +84,13 @@ public interface Process extends OWLIndividual, MultiConditional {
 	
 	public Input createInput(URI uri, OWLType paramType);
 	
+	public void addInputs(InputList inputs);
+	
 	public void addOutput(Output output);
 
-	public Output createOutput(URI uri, OWLType paramType);
+	public Output createOutput(URI uri, OWLType paramType);		
+	
+	public void addOutputs(OutputList inputs);
 	
 	public void addLocal(Local local);
 	

@@ -101,6 +101,11 @@ public abstract class ProcessImpl extends WrappedIndividual implements Process {
 	    return in;
 	}
 	
+	public void addInputs(InputList inputs) {
+		for (int i = 0; i < inputs.size(); i++)
+			addInput(inputs.inputAt(i));
+	}
+		
 	public void addOutput(Output output) {
 	    addProperty(OWLS.Process.hasOutput, output);
 	}
@@ -115,6 +120,11 @@ public abstract class ProcessImpl extends WrappedIndividual implements Process {
 	    
 	    return out;
 
+	}
+	
+	public void addOutputs(OutputList outputs) {
+		for (int i = 0; i < outputs.size(); i++)
+			addOutput(outputs.outputAt(i));
 	}
 	
 	public void addLocal(Local local) {

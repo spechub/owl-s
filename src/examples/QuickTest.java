@@ -1,12 +1,17 @@
 package examples;
 
 import java.io.FileNotFoundException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
 import org.mindswap.owl.OWLClass;
 import org.mindswap.owl.OWLFactory;
 import org.mindswap.owl.OWLKnowledgeBase;
+import org.mindswap.owls.grounding.WSDLAtomicGrounding;
+import org.mindswap.owls.process.AtomicProcess;
+import org.mindswap.owls.process.Input;
+import org.mindswap.owls.process.Output;
 import org.mindswap.owls.service.Service;
 
 /**
@@ -21,12 +26,34 @@ public class QuickTest {
 	
 	public static void main(String[] args) {
 		QuickTest test = new QuickTest();
-		test.languageTest();
+		test.removeTest();
 	}
 
 	public QuickTest() {
 		kb = OWLFactory.createKB();
 		kb.setReasoner("Pellet");		
+	}
+	
+	private void removeTest() {
+		kb.getReader().getCache().setLocalCacheDirectory("E://Workspaces//NExT//Ontologies//ont_cache");
+		kb.getReader().getCache().setForced(true);
+		
+		Service service = null;
+		try {
+			service = kb.readService("http://www.mindswap.org/2004/owl-s/1.1/BabelFishTranslator.owl");
+//			service = kb.readService("http://www.ifi.unizh.ch/ddis/ont/next/kb/ProcessLibrary/processes/Add.owl");
+			
+			Input in = service.getProcess().getInputs().inputAt(0);
+			Output out = service.getProcess().getOutputs().outputAt(0);
+			WSDLAtomicGrounding ground = (WSDLAtomicGrounding) ((AtomicProcess) service.getProcess()).getGrounding();			
+
+			URI str = ground.getWSDLParameter(in);
+			URI str2 = ground.getWSDLParameter(out);
+			
+			kb.write(System.out);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void languageTest() {

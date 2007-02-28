@@ -135,6 +135,7 @@ public class GroundingImpl extends WrappedIndividual implements Grounding {
 
 	public void deleteAtomicGroundings() {
 		AtomicGroundingList list = getAtomicGroundings();
+		removeAtomicGroundings();
 		for (int index = 0; index < list.size(); index++) 
 			list.individualAt(index).delete();
 	}
@@ -142,5 +143,11 @@ public class GroundingImpl extends WrappedIndividual implements Grounding {
 	public void removeAtomicGroundings() {
 		if (hasProperty(OWLS.Grounding.hasAtomicProcessGrounding))
 			removeProperties(OWLS.Grounding.hasAtomicProcessGrounding);
+	}
+
+	@Override
+	public void delete() {		
+		deleteAtomicGroundings();
+		super.delete();
 	}
 }

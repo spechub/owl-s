@@ -24,6 +24,8 @@ package org.mindswap.owls.grounding;
 
 import java.net.URI;
 
+import org.mindswap.owls.process.Parameter;
+
 public interface WSDLAtomicGrounding extends AtomicGrounding {
 	public void setWSDL(URI wsdlLoc);
 	public URI getWSDL();
@@ -42,4 +44,6 @@ public interface WSDLAtomicGrounding extends AtomicGrounding {
 	
 	public WSDLOperationRef getOperationRef();
 	public void setOperationRef(WSDLOperationRef operationRef);
+	
+	public URI getWSDLParameter(Parameter parameter);	
 }

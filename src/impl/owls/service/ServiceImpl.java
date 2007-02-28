@@ -132,9 +132,7 @@ public class ServiceImpl extends WrappedIndividual implements Service {
 
 	public void removeGrounding(Grounding grounding) {		
 		if (hasProperty(OWLS.Service.supports, grounding))
-			removeProperty(OWLS.Service.supports, grounding);
-		
-		grounding.removeService();
+			removeProperty(OWLS.Service.supports, grounding);			
 	}
 
 	public void removeProcess() {

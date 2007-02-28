@@ -22,6 +22,8 @@
 
 package impl.owls.grounding;
 
+import java.net.URI;
+
 import impl.owl.WrappedIndividual;
 
 import org.mindswap.owl.OWLIndividual;
@@ -29,6 +31,7 @@ import org.mindswap.owls.grounding.MessageMap;
 import org.mindswap.owls.process.Parameter;
 import org.mindswap.owls.vocabulary.FLAServiceOnt;
 import org.mindswap.owls.vocabulary.OWLS;
+import org.mindswap.utils.URIUtils;
 
 public class UPnPMessageMapImpl extends WrappedIndividual implements MessageMap {
     public UPnPMessageMapImpl(OWLIndividual ind) { 
@@ -61,5 +64,9 @@ public class UPnPMessageMapImpl extends WrappedIndividual implements MessageMap 
 	
 	public String toString() {
 		return "[" + getOWLSParameter() + " -> " + getGroundingParameter() + "]";
+	}
+
+	public URI getGroundingParameterAsURI() {		
+		return URIUtils.createURI(getGroundingParameter());
 	}
 }
