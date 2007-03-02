@@ -18,7 +18,7 @@ public class JavaVariableImpl extends WrappedIndividual implements JavaVariable 
 	}
 
 	public Parameter getOWLSParameter() {
-		return (Parameter) getPropertyAs(OWLS.Grounding.owlsParameter, Parameter.class);
+		return (Parameter) getPropertyAs(MoreGroundings.owlsParameter, Parameter.class);
 	}
 
 	public void removeJavaType() {
@@ -27,8 +27,8 @@ public class JavaVariableImpl extends WrappedIndividual implements JavaVariable 
 	}
 
 	public void removeOWLSParameter() {
-		if (hasProperty(OWLS.Grounding.owlsParameter))
-			removeProperties(OWLS.Grounding.owlsParameter);
+		if (hasProperty(MoreGroundings.owlsParameter))
+			removeProperties(MoreGroundings.owlsParameter);
 	}
 
 	public void setJavaType(String type) {

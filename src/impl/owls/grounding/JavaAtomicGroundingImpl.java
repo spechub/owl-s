@@ -359,7 +359,8 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
 	public JavaParameter getInputParamter(Input input) {
 		OWLIndividualList list = getPropertiesAs(MoreGroundings.hasJavaParameter, JavaParameter.class);
 		for (int i = 0; i < list.size(); i++) {
-			if (list.individualAt(i).getURI().equals(input.getURI()))
+			OWLIndividual ind = list.individualAt(i).getProperty(MoreGroundings.owlsParameter); 
+			if (ind.getURI().equals(input.getURI()))
 				return (JavaParameter) list.individualAt(i);
 		}
 		return null;
