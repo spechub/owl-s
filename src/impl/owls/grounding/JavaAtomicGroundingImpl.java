@@ -368,6 +368,37 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
 
 	public JavaVariable getOutputVariable() {
 		return (JavaVariable) getPropertyAs(MoreGroundings.javaOutput, JavaVariable.class);
+	}
+
+	public OWLIndividualList getInputParameters() {
+		OWLIndividualList list = getPropertiesAs(MoreGroundings.hasJavaParameter, JavaParameter.class);
+		
+		list.add("tempPlaceForSwap");
+		// loop through every element
+		for (int i = 0; i < list.size() - 2; i++) {
+			int element = Integer.parseInt(list.individualAt(i).getProperty(
+					MoreGroundings.paramIndex).getLexicalValue());
+			int min = Integer.MAX_VALUE;
+			int pos = i;
+			// find the minimal element in the rest
+			for (int j = i + 1; j < list.size() - 1; j++) {
+				int temp = Integer.parseInt(list.individualAt(j).getProperty(
+						MoreGroundings.paramIndex).getLexicalValue());
+				if (temp < min) {
+					min = temp;
+					pos = j;
+				}
+			}
+			// swap it to the front
+			if (min < element) {
+				list.set(list.size() -1, list.get(i));
+				list.set(i, list.get(pos));
+				list.set(pos, list.get(list.size() - 1));
+			}
+		}
+		
+		list.remove(list.size() - 1);
+		return list;
 	}		
 }
 

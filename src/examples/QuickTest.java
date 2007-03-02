@@ -8,6 +8,7 @@ import java.util.List;
 import org.mindswap.owl.OWLClass;
 import org.mindswap.owl.OWLFactory;
 import org.mindswap.owl.OWLKnowledgeBase;
+import org.mindswap.owls.grounding.JavaAtomicGrounding;
 import org.mindswap.owls.grounding.WSDLAtomicGrounding;
 import org.mindswap.owls.process.AtomicProcess;
 import org.mindswap.owls.process.Input;
@@ -26,12 +27,30 @@ public class QuickTest {
 	
 	public static void main(String[] args) {
 		QuickTest test = new QuickTest();
-		test.removeTest();
+		test.testImplementation();
 	}
 
 	public QuickTest() {
 		kb = OWLFactory.createKB();
 		kb.setReasoner("Pellet");		
+	}
+	
+	private void testImplementation() {
+		kb.getReader().getCache().setLocalCacheDirectory("E://Workspaces//NExT//Ontologies//ont_cache");
+		kb.getReader().getCache().setForced(true);
+		
+		Service service = null;
+		try {
+			//service = kb.readService("http://www.mindswap.org/2004/owl-s/1.1/BabelFishTranslator.owl");
+			service = kb.readService("http://www.ifi.unizh.ch/ddis/ont/next/kb/ProcessLibrary/processes/Add.owl");
+			JavaAtomicGrounding g = (JavaAtomicGrounding) ((AtomicProcess) service.getProcess()).getGrounding();
+			List l = g.getInputParameters();
+			for (int i =0; i<l.size()-1;i++) {
+				System.out.println(l.get(i));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void removeTest() {

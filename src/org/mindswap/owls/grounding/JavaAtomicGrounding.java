@@ -25,7 +25,9 @@
  */
 package org.mindswap.owls.grounding;
 
+import org.mindswap.owl.OWLIndividualList;
 import org.mindswap.owls.process.Input;
+import org.mindswap.owls.process.InputList;
 import org.mindswap.owls.process.Output;
 
 /**
@@ -100,6 +102,13 @@ public interface JavaAtomicGrounding extends AtomicGrounding {
      * @return the java input parameter related to given OWL-S input
      */
     public JavaParameter getInputParamter(Input input);
+    
+    /**
+     * Returns the input parameters for this java method in correct order 
+     * @see org.mindswap.owls.vocabulary.MoreGroundings#paramIndex
+     * @return a list with all inputs for this java method in correct order 
+     */
+    public OWLIndividualList getInputParameters(); 
     
     /**
      * Returns the java output variable related to given OWL-S output
