@@ -29,6 +29,7 @@ import org.mindswap.owls.vocabulary.MoreGroundings;
 import org.mindswap.owls.vocabulary.OWLS;
 import org.mindswap.query.ValueMap;
 import org.mindswap.utils.ReflectionHelpers;
+import org.mindswap.utils.URIUtils;
 import org.mindswap.utils.XSLTEngine;
 
 /**
@@ -270,8 +271,6 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
         	}
         }
         return null;
-        
-       
     }
     
     // returns the number of OWL-S Input Parameters   
@@ -294,7 +293,7 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
 	 * @see org.mindswap.owls.grounding.JavaAtomicGrounding#setInputVar(java.lang.String, java.lang.String, int, org.mindswap.owls.process.Input)
 	 */
 	public void setInputParameter(String name, String type, int index, Input owlsParameter) {
-		OWLIndividual ind = getOntology().createInstance(MoreGroundings.JavaParameter, URI.create(name));
+		OWLIndividual ind = getOntology().createInstance(MoreGroundings.JavaParameter, URIUtils.createURI(name));
 		ind.setProperty(MoreGroundings.javaType, type);
 		ind.setProperty(MoreGroundings.owlsParameter, owlsParameter);
 		ind.setProperty(MoreGroundings.paramIndex, Integer.toString(index));

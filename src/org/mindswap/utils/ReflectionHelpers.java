@@ -90,10 +90,38 @@ public class ReflectionHelpers {
 		try {
 			javaClass = Class.forName(strClass);
 		} catch (Exception e) {
-			e.printStackTrace();
+			javaClass = null;
 		}
 		
 		return javaClass;
     }
 	
+	/**
+	 * Takes a primitive data type (as a string) and returns the corresponding
+	 * wrapper class (as a string), i.e. returns java.lang.Integer for int.
+	 * 
+	 * @return String the name of the wrapper class for the given primitive data type 
+	 */
+    public static String getWrapperTypeForPrimitive(String primitive) {    	
+    	// treat primitive datatypes
+    	if ("short".equals(primitive))
+    		return Short.class.getName();
+    	else if ("byte".equals(primitive))
+    		return Byte.class.getName();
+    	else if ("int".equals(primitive))
+    		return Integer.class.getName();
+    	else if ("long".equals(primitive))
+    		return Long.class.getName();
+    	else if ("float".equals(primitive))
+    		return Float.class.getName();
+    	else if ("double".equals(primitive))
+    		return Double.class.getName();
+    	else if ("char".equals(primitive))
+    		return Character.class.getName();
+    	else if ("boolean".equals(primitive))
+    		return Boolean.class.getName();
+    	// treat real classes		
+		return primitive;
+    }
+    
 }

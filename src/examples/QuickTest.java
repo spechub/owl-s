@@ -3,10 +3,13 @@ package examples;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.mindswap.owl.OWLClass;
 import org.mindswap.owl.OWLFactory;
+import org.mindswap.owl.OWLIndividualList;
 import org.mindswap.owl.OWLKnowledgeBase;
 import org.mindswap.owls.grounding.JavaAtomicGrounding;
 import org.mindswap.owls.grounding.WSDLAtomicGrounding;
@@ -14,6 +17,7 @@ import org.mindswap.owls.process.AtomicProcess;
 import org.mindswap.owls.process.Input;
 import org.mindswap.owls.process.Output;
 import org.mindswap.owls.service.Service;
+import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * This class is intended for the developers of the API to perform quick tests.
@@ -43,10 +47,14 @@ public class QuickTest {
 		try {
 			//service = kb.readService("http://www.mindswap.org/2004/owl-s/1.1/BabelFishTranslator.owl");
 			service = kb.readService("http://www.ifi.unizh.ch/ddis/ont/next/kb/ProcessLibrary/processes/Add.owl");
-			JavaAtomicGrounding g = (JavaAtomicGrounding) ((AtomicProcess) service.getProcess()).getGrounding();
-			List l = g.getInputParameters();
-			for (int i =0; i<l.size()-1;i++) {
-				System.out.println(l.get(i));
+			
+			OWLIndividualList list = kb.getInstances(OWLS.Process.Parameter);
+			for (int i = 0; i < list.size(); i++) { 
+				System.out.println("Types for " + list.individualAt(i) + " are ");
+				Set types = list.individualAt(i).getTypes();
+				Iterator iter = types.iterator();
+				while (iter.hasNext())
+					System.out.println("\t" + iter.next());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
