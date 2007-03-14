@@ -3,15 +3,17 @@
  */
 package org.mindswap.utils;
 
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Hashtable;
 
 /**
  * This class offers a few helpful methods for handling primitive datatypes in the Java Reflection API 
  * 
  * @author Michael Daenzer
  */
-public class ReflectionHelpers {
+public class ReflectionUtils {
 	
     /**
      * Takes a Class Variable for primitive Datatype or its Wrapper-Classes and a String. 
@@ -123,5 +125,19 @@ public class ReflectionHelpers {
     	// treat real classes		
 		return primitive;
     }
-    
+
+    public static Hashtable inferFieldFromGetter(Class claz) {
+    	Hashtable inferredFields = new Hashtable();    	
+    	
+    	Method[] methods = claz.getMethods();    	
+    	for (int i = 0; i < methods.length; i++) {
+    		String methodName = methods[i].getName(); 
+    		if (methodName.startsWith("get")) {
+    			inferredFields.put(methodName.substring(3), methods[i].getReturnType());
+    		} else if (methodName.startsWith("set") && methods[i].getParameterTypes().length == 1) {    			
+    			inferredFields.put(methodName.substring(3), methods[i].getParameterTypes()[0]);
+    		}    			
+    	}
+    	return inferredFields;
+    }
 }

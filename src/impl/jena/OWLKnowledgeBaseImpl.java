@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.mindswap.owl.OWLClass;
 import org.mindswap.owl.OWLDataProperty;
@@ -583,6 +584,18 @@ public class OWLKnowledgeBaseImpl extends OWLModelImpl implements OWLKnowledgeBa
         return getBaseOntology().parseLiteral( literal );
     }
     
+	public List getNonLanguageIndividuals() {
+    	ArrayList list = new ArrayList();
+    	Set ontologies = getOntologies();
+    	Iterator iter = ontologies.iterator();
+    	while (iter.hasNext()) {
+    		OWLOntology ont = (OWLOntology) iter.next();
+    		list.addAll(ont.getNonLanguageIndividuals());
+    	}
+    		
+		return list;				
+	}
+    
     public List getNonLanguageClasses() {		    	
     	ArrayList list = new ArrayList();
     	Set ontologies = getOntologies();
@@ -617,5 +630,17 @@ public class OWLKnowledgeBaseImpl extends OWLModelImpl implements OWLKnowledgeBa
     	}
     		
 		return list;
+	}
+
+	public Set getClasses() {	
+		TreeSet set = new TreeSet();    	
+    	Set ontologies = getOntologies();
+    	Iterator iter = ontologies.iterator();
+    	while (iter.hasNext()) {
+    		OWLOntology ont = (OWLOntology) iter.next();
+    		set.addAll(ont.getClasses());
+    	}
+    		
+		return set;				
 	}
 }

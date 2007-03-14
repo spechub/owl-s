@@ -952,7 +952,7 @@ public abstract class OWLModelImpl implements OWLModel, org.mindswap.owls.OWLSMo
         return set;
     }
 
-    private Set getAllClasses(Iterator i, OWLOntology ont) {
+    protected Set getAllClasses(Iterator i, OWLOntology ont) {
         Set set = new HashSet();
         while(i.hasNext()) {
             set.add(OWLModelImpl.this.wrapClass((Resource) i.next(), ont));

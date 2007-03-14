@@ -6,6 +6,7 @@ package org.mindswap.owl;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.net.URI;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -223,6 +224,8 @@ public interface OWLModel {
      * @return
      */
     public OWLClass getClass(URI uri);
+    
+    public Set getClasses();
     /**
      * @param uri
      * @return
@@ -952,6 +955,14 @@ public interface OWLModel {
     public void write(Writer writer, URI baseURI);
     public void write(OutputStream out);
     public void write(OutputStream out, URI baseURI);
+    
+    /**
+     * Returns a list with all individuals that do not belong to the OWL-S language 
+     * definition and its base and helpers languages such as OWL, RDF or SWRL.
+     * 
+     * @return all individuals do not belong to the OWL-S language definition
+     */
+    public List getNonLanguageIndividuals();
     
     /**
      * Returns a list with all classes that do not belong to the OWL-S language 

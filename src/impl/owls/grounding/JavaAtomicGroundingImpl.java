@@ -28,7 +28,7 @@ import org.mindswap.owls.process.Parameter;
 import org.mindswap.owls.vocabulary.MoreGroundings;
 import org.mindswap.owls.vocabulary.OWLS;
 import org.mindswap.query.ValueMap;
-import org.mindswap.utils.ReflectionHelpers;
+import org.mindswap.utils.ReflectionUtils;
 import org.mindswap.utils.URIUtils;
 import org.mindswap.utils.XSLTEngine;
 
@@ -166,7 +166,7 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
         for (int i = 0; i < params.length; i++) {
         	OWLValue owlValue = values.getValue(getInputOWLSParamAt(i));
         	if (owlValue.isDataValue())        		
-        		paramValues[i] = ReflectionHelpers.getCastedObjectFromStringValue(((OWLDataValue) owlValue).getLexicalValue(), params[i]);
+        		paramValues[i] = ReflectionUtils.getCastedObjectFromStringValue(((OWLDataValue) owlValue).getLexicalValue(), params[i]);
             else {
                 String xslt = getTransformationAt(i);
                 if(xslt != null) {
@@ -267,7 +267,7 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
         	OWLDataValue paramIndex = inParamList.individualAt(i).getProperty(MoreGroundings.paramIndex);
         	if (paramIndex.getLexicalValue().equals(Integer.toString(index + 1))) {
         		 String javaType = inParamList.individualAt(i).getProperty(MoreGroundings.javaType).getValue().toString();
-        	     return ReflectionHelpers.getClassFromString(javaType);
+        	     return ReflectionUtils.getClassFromString(javaType);
         	}
         }
         return null;
