@@ -531,7 +531,11 @@ public class OWLOntologyImpl extends OWLModelImpl implements OWLOntology, org.mi
 	}
 	
 	public List getNonLanguageIndividuals() {
-		return getNonLanguageItems(getOntModel().listIndividuals());
+		List classes = getNonLanguageClasses();
+		List inds = new ArrayList();
+		for (int i = 0; i < classes.size(); i++)
+			inds.addAll(getInstances((OWLClass) classes.get(i)));
+		return inds;
 	}
 	
 	public List getNonLanguageClasses() {		    	

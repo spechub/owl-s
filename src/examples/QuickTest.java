@@ -46,9 +46,17 @@ public class QuickTest {
 		Service service = null;
 		try {
 			//service = kb.readService("http://www.mindswap.org/2004/owl-s/1.1/BabelFishTranslator.owl");
-			service = kb.readService("http://www.ifi.unizh.ch/ddis/ont/next/kb/ProcessLibrary/processes/Add.owl");
+			//service = kb.readService("http://www.ifi.unizh.ch/ddis/ont/next/kb/ProcessLibrary/processes/Add.owl");
+//			service = kb.readService("http://www.dfki.de/scallops/health-scallops/MedicalFlightCompanyServices.owl");
+//			service = kb.readService("http://www.dfki.de/scallops/health-scallops/NonMedicalFlightCompanyServices.owl");
+//			service = kb.readService("http://www.dfki.de/scallops/health-scallops/MedicalTransportCompanyServices.owl");
+//			service = kb.readService("http://www.dfki.de/scallops/health-scallops/NonMedicalTransportCompanyServices.owl");
+//			service = kb.readService("http://www.dfki.de/scallops/health-scallops/EMAServices.owl");
+//			kb.read("http://www.dfki.de/scallops/health-scallops/EMAOntology.owl");
+			kb.read("http://www.dfki.de/scallops/health-scallops/EMAOntology.owl");
 			
-			OWLIndividualList list = kb.getInstances(OWLS.Process.Parameter);
+			
+			OWLIndividualList list = kb.getIndividuals();
 			for (int i = 0; i < list.size(); i++) { 
 				System.out.println("Types for " + list.individualAt(i) + " are ");
 				Set types = list.individualAt(i).getTypes();
