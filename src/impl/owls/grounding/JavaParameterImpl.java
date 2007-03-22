@@ -12,7 +12,9 @@ public class JavaParameterImpl extends JavaVariableImpl implements
 	}
 
 	public String getParameterIndex() {
-		return null;
+		if (hasProperty(MoreGroundings.paramIndex))
+			return getProperty(MoreGroundings.paramIndex).getLexicalValue();
+		return "";
 	}
 
 	public void removeParameterIndex() {
@@ -22,6 +24,21 @@ public class JavaParameterImpl extends JavaVariableImpl implements
 
 	public void setParameterIndex(int index) {
 		setProperty(MoreGroundings.paramIndex, index);
+	}
+
+	public String getTransformator() {
+		if (hasProperty(MoreGroundings.transformatorClass))
+			return getProperty(MoreGroundings.transformatorClass).getLexicalValue();
+		return "";
+	}
+
+	public void removeTransformator() {
+		if (hasProperty(MoreGroundings.transformatorClass))
+			removeProperties(MoreGroundings.transformatorClass);
+	}
+
+	public void setTransformator(String transformator) {
+		setProperty(MoreGroundings.transformatorClass, transformator);
 	}
 
 }

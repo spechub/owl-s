@@ -27,6 +27,7 @@ package org.mindswap.owl;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -111,4 +112,14 @@ public class OWLConfig {
     public static boolean getStrictConversion() {
         return strictConversion;
     }
+    
+	private static Map transformators = new Hashtable();	
+    
+	public static void addTransformator(OWLClass owlClass, OWLTransformator oWLTransformator) {
+		transformators.put(owlClass, oWLTransformator);
+	}
+
+    public static OWLTransformator getTransformator(OWLClass owlClass) {
+		return (OWLTransformator) transformators.get(owlClass);
+	}
 }

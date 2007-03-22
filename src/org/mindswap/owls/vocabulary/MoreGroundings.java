@@ -59,6 +59,7 @@ public class MoreGroundings {
 	public static OWLDataProperty paramIndex;
 	public static OWLObjectProperty javaOutput;
 	public static OWLObjectProperty hasJavaParameter;
+	public static OWLDataProperty transformatorClass;
 	
 	static {
 		JavaGrounding = EntityFactory.createClass(URIUtils.createURI(URI + "JavaGrounding"));
@@ -73,6 +74,7 @@ public class MoreGroundings {
 		javaType          = EntityFactory.createDataProperty(URIUtils.createURI(URI + "javaType"));
 		JavaParameter     = EntityFactory.createClass(URIUtils.createURI(URI + "JavaParameter"));
 		paramIndex        = EntityFactory.createDataProperty(URIUtils.createURI(URI + "paramIndex"));
+		transformatorClass = EntityFactory.createDataProperty(URIUtils.createURI(URI + "transformatorClass"));
 		
 		javaOutput        = EntityFactory.createObjectProperty(URIUtils.createURI(URI + "javaOutput"));
 		hasJavaParameter  = EntityFactory.createObjectProperty(URIUtils.createURI(URI + "hasJavaParameter"));

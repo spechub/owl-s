@@ -30,7 +30,6 @@ import org.mindswap.owls.vocabulary.OWLS;
 import org.mindswap.query.ValueMap;
 import org.mindswap.utils.ReflectionUtils;
 import org.mindswap.utils.URIUtils;
-import org.mindswap.utils.XSLTEngine;
 
 /**
  * A JavaAtomicGrounding grounds an OWL-S Service to a Java method invocation. The method call
@@ -49,9 +48,7 @@ import org.mindswap.utils.XSLTEngine;
  * @see org.mindswap.owls.vocabulary.NextOnt
  * @see impl.owls.grounding.AtomicGroundingImpl
  */
-public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements JavaAtomicGrounding {
-    OWLIndividualList inParamList = null;
-    
+public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements JavaAtomicGrounding {   
     /**
      * @param ind
      */
@@ -142,12 +139,11 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
         if ((strMethod == null) || (strMethod.equals("")))
             throw new ExecutionException("JavaAtomicGrounding: No Java Method defined in Grounding!");        
 
-        // TODO dmi get types from owl paramtype
         // prepare parameters
-        params = new Class[getInputOWLSParamsSize()];
-        for (int i = 0; i < getInputOWLSParamsSize(); i++) {
-        	params[i] = getInputJavaParamAt(i);
-        }
+        int paramSize = getInputParameters().size();
+        params = new Class[paramSize];
+        for (int i = 0; i < paramSize; i++) 
+        	params[i] = getJavaParameterTypeAt(i);
         
         // get class and method reference
         try {
@@ -159,23 +155,17 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
         	throw new ExecutionException("JavaAtomicGrounding: Method " + strMethod + " defined in Grounding not found." );
         } catch (Exception e) {
         	throw new ExecutionException("JavaAtomicGrounding: " + e.getClass().toString() + " ocurred: " + e.getMessage());
-        }
+        }      
         
         // prepare inputs
-        paramValues = new Object[getInputOWLSParamsSize()];
+        paramValues = new Object[paramSize];
         for (int i = 0; i < params.length; i++) {
-        	OWLValue owlValue = values.getValue(getInputOWLSParamAt(i));
+        	
+        	OWLValue owlValue = values.getValue(getOWLSParameterAt(i));
         	if (owlValue.isDataValue())        		
         		paramValues[i] = ReflectionUtils.getCastedObjectFromStringValue(((OWLDataValue) owlValue).getLexicalValue(), params[i]);
-            else {
-                String xslt = getTransformationAt(i);
-                if(xslt != null) {
-                    String rdf = ((OWLIndividual) owlValue).toRDF();
-                    String xsltResult = XSLTEngine.transform(rdf, xslt, values);
-                    paramValues[i] = xsltResult.trim();
-                }               
-                else
-                    paramValues[i] = ((OWLIndividual) owlValue).toString();
+            else if (owlValue.isIndividual()) {
+                paramValues[i] = getJavaParameterAt(i, (OWLIndividual) owlValue);
             }
             //System.out.println( "Parameter " + i + " " + paramValues[i] );
         }
@@ -195,94 +185,115 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
         
         // set output
         if (result != null) {
-            Parameter param = getOutputOWLSParam();
+            Parameter param = getOWLSOutput();
             if (param == null) 
             	throw new ExecutionException("JavaAtomicGrounding: Output in Grounding not specified although method provides a return value.");            
             if(param.getParamType().isDataType())
 		    	results.setValue(param, EntityFactory.createDataValue(result));
 			else 
-				results.setValue(param, kb.getBaseOntology().parseLiteral(result.toString()));
+				results.setValue(param, transformResult(result));
         }
         
         return results;
     }
 
-    // returns the OWL-S Output Parameter
-	private Parameter getOutputOWLSParam() {	
+    private OWLIndividual transformResult(Object result) {
+    	JavaVariable output = getOutput();
+    	if (output == null)
+    		return null;
+    	
+    	String transformerName = output.getTransformator().trim();    	
+    	if (transformerName != null && !transformerName.trim().equals("")) {
+    		try {
+				Class transformerClass = Class.forName(transformerName);
+				JavaClassTransformator transformer = (JavaClassTransformator) transformerClass.newInstance();
+				return transformer.transformToOWL(result);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}    		    		
+    	} 
+    	return null;
+	}
+
+	// returns the OWL-S Output Parameter
+	private Parameter getOWLSOutput() {	
 		OWLObject owlsParam = getProperty(MoreGroundings.javaOutput).getProperty(MoreGroundings.owlsParameter);
 		return (owlsParam == null) ? null : (Parameter) owlsParam.castTo(Parameter.class);
     }
 	
-	// Implements the Singleton Pattern for the private field inParamList 
-    private void createInputOWLSParamList() {
-    	if (inParamList == null)
-            inParamList = getProperties(MoreGroundings.hasJavaParameter);
-    }
+
 
     // returns the n-th OWL-S Input Parameter
-    private Parameter getInputOWLSParamAt(int index) {
-        createInputOWLSParamList();
-
-        // TODO dmi throw exception
-        if (index >= getInputOWLSParamsSize())
-            return null;
+    private Parameter getOWLSParameterAt(int index) {
+    	JavaParameter param = getInputParamter(index);
+    	if (param == null)
+    		return null;
         
-        for (int i = 0; i < getInputOWLSParamsSize(); i++) {
-            OWLDataValue paramIndex = inParamList.individualAt(i).getProperty(MoreGroundings.paramIndex);
-            if (paramIndex.getLexicalValue().equals(Integer.toString(index + 1))) {
-                OWLObject owlsParam = inParamList.individualAt(i).getProperty(MoreGroundings.owlsParameter);
-                return (owlsParam == null) ? null : (Parameter) owlsParam.castTo(Parameter.class); 
-            }
-        }
-        return null;
-    }
-
-    // returns the n-th XSLT transformtion
-    private String getTransformationAt(int index) {
-        createInputOWLSParamList();
-
-        // TODO dmi throw exception
-        if (index >= getInputOWLSParamsSize())
-        	return null;
-        
-        for (int i = 0; i < getInputOWLSParamsSize(); i++) {
-        	OWLDataValue paramIndex = inParamList.individualAt(i).getProperty(MoreGroundings.paramIndex);
-        	if (paramIndex.getLexicalValue().equals(Integer.toString(index + 1))) {
-                OWLDataValue xslt = inParamList.individualAt(i).getProperty(OWLS.Grounding.xsltTransformationString);
-                return (xslt == null) ? null : xslt.toString();
-        	}
-        }
-        return null;
+    	return param.getOWLSParameter();
     }
     
     // returns the n-th Parameter of the Java Method specified in the OWL-S JavaAtomicProcessGrounding
-    private Class getInputJavaParamAt(int index) {        
-    	createInputOWLSParamList();
+    private Class getJavaParameterTypeAt(int index) {                
+    	JavaParameter param = getInputParamter(index);
+    	if (param == null)
+    		return null;
     	
-        // TODO dmi throw exception
-        if (index >= getInputOWLSParamsSize())
-        	return null;
-        
-        for (int i = 0; i < getInputOWLSParamsSize(); i++) {
-        	OWLDataValue paramIndex = inParamList.individualAt(i).getProperty(MoreGroundings.paramIndex);
-        	if (paramIndex.getLexicalValue().equals(Integer.toString(index + 1))) {
-        		 String javaType = inParamList.individualAt(i).getProperty(MoreGroundings.javaType).getValue().toString();
-        	     return ReflectionUtils.getClassFromString(javaType);
-        	}
-        }
-        return null;
-    }
-    
-    // returns the number of OWL-S Input Parameters   
-    private int getInputOWLSParamsSize() {
-    	createInputOWLSParamList();
-    	return inParamList.size();
+    	String transformerName = param.getTransformator().trim();
+    	String javaType = param.getJavaType();
+    	if (transformerName != null && !transformerName.trim().equals("")) {
+    		try {
+				Class transformerClass = Class.forName(transformerName);
+				JavaClassTransformator transformer = (JavaClassTransformator) transformerClass.newInstance();
+				return transformer.getJavaClass();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+    		
+    		return null;
+    	} else {
+    		return ReflectionUtils.getClassFromString(javaType);
+    	}
     }
 
+    // returns the n-th Parameter of the Java Method specified in the OWL-S JavaAtomicProcessGrounding
+    private Object getJavaParameterAt(int index, OWLIndividual owlValue) {                
+    	JavaParameter param = getInputParamter(index);
+    	if (param == null)
+    		return null;
+    	
+    	String transformerName = param.getTransformator().trim();
+    	String javaType = param.getJavaType();
+    	if (transformerName != null && !transformerName.trim().equals("")) {
+    		try {
+				Class transformerClass = Class.forName(transformerName);
+				JavaClassTransformator transformer = (JavaClassTransformator) transformerClass.newInstance();
+				return transformer.transformFromOWL(owlValue);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+    		
+    		return null;
+    	} else {
+    		return ReflectionUtils.getClassFromString(javaType);
+    	}
+    }
+    
 	/* (non-Javadoc)
 	 * @see org.mindswap.owls.grounding.JavaAtomicGrounding#setOutputVar(java.lang.String, java.lang.String, org.mindswap.owls.process.Output)
 	 */
-	public void setOutputVar(String name, String type, Output owlsParameter) {
+	public void setOutput(String name, String type, Output owlsParameter) {
 		OWLIndividual ind = getOntology().createInstance(MoreGroundings.JavaVariable, URI.create(name));
 		ind.setProperty(MoreGroundings.javaType, type);
 		ind.setProperty(MoreGroundings.owlsParameter, owlsParameter);
@@ -364,8 +375,18 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
 		}
 		return null;
 	}
+	
+	public JavaParameter getInputParamter(int index) {
+		OWLIndividualList list = getPropertiesAs(MoreGroundings.hasJavaParameter, JavaParameter.class);
+		for (int i = 0; i < list.size(); i++) {
+			String curIndex = list.individualAt(i).getProperty(MoreGroundings.paramIndex).getLexicalValue(); 
+			if (Integer.valueOf(curIndex).intValue() == index)
+				return (JavaParameter) list.individualAt(i);
+		}
+		return null;
+	}
 
-	public JavaVariable getOutputVariable() {
+	public JavaVariable getOutput() {
 		return (JavaVariable) getPropertyAs(MoreGroundings.javaOutput, JavaVariable.class);
 	}
 
@@ -398,6 +419,14 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
 		
 		list.remove(list.size() - 1);
 		return list;
+	}	
+	
+	public String getTransformator(JavaVariable variable) {
+		return getPropertyAsString(MoreGroundings.transformatorClass);
+	}
+
+	public void setTransformator(String transformClass) {
+		setProperty(MoreGroundings.transformatorClass, transformClass);
 	}		
 }
 

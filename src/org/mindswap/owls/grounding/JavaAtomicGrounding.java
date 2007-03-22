@@ -27,7 +27,6 @@ package org.mindswap.owls.grounding;
 
 import org.mindswap.owl.OWLIndividualList;
 import org.mindswap.owls.process.Input;
-import org.mindswap.owls.process.InputList;
 import org.mindswap.owls.process.Output;
 
 /**
@@ -86,7 +85,7 @@ public interface JavaAtomicGrounding extends AtomicGrounding {
      * @param type Fully qualified Java type of the return value of the method to invoke 
      * @param owlsParameter Reference to the OWL-S Output Variable
      */
-    public void setOutputVar(String name, String type, Output owlsParameter); 
+    public void setOutput(String name, String type, Output owlsParameter); 
     /**
      * Sets an Input Parameter of the Java Grounding. Declares one Parameter of the Jave method to invoke
      * 
@@ -114,5 +113,5 @@ public interface JavaAtomicGrounding extends AtomicGrounding {
      * Returns the java output variable related to given OWL-S output
      * @return the java output variable related to given OWL-S output
      */
-    public JavaVariable getOutputVariable();
+    public JavaVariable getOutput();
 }

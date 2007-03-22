@@ -268,7 +268,7 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
             result = executeProcess( p, values );            
         } catch( ExecutionException e ) {
             // executionFailed( e );
-        	System.out.println("Excecution failed");
+        	System.out.println("Excecution failed cause of " + e.getMessage());
         }        
 		
 		notifyListeners("[DONE]");

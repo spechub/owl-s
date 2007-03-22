@@ -16,4 +16,8 @@ public interface JavaVariable extends OWLIndividual {
 	public void setOWLSParameter(Parameter parameter);
 	public Parameter getOWLSParameter();	
 	public void removeOWLSParameter();
+	
+	public void setTransformator(String transformator);
+	public String getTransformator();
+	public void removeTransformator();
 }

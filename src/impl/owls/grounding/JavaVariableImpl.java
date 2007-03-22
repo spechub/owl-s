@@ -39,4 +39,19 @@ public class JavaVariableImpl extends WrappedIndividual implements JavaVariable 
 		setProperty(OWLS.Grounding.owlsParameter, parameter);
 	}
 
+	public String getTransformator() {
+		if (hasProperty(MoreGroundings.transformatorClass))
+			return getProperty(MoreGroundings.transformatorClass).getLexicalValue();
+		return "";
+	}
+
+	public void removeTransformator() {
+		if (hasProperty(MoreGroundings.transformatorClass))
+			removeProperties(MoreGroundings.transformatorClass);
+	}
+
+	public void setTransformator(String transformator) {
+		setProperty(MoreGroundings.transformatorClass, transformator);
+	}
+	
 }
