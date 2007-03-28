@@ -1,10 +1,10 @@
 package impl.owls.grounding;
 
 import org.mindswap.owl.OWLClass;
-import org.mindswap.owl.OWLFactory;
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owl.OWLKnowledgeBase;
 import org.mindswap.owl.OWLTransformator;
+import org.mindswap.owl.OWLValue;
 
 /**
  * 
@@ -16,9 +16,21 @@ public abstract class JavaClassTransformator implements OWLTransformator {
 	protected Class javaClass;
 	protected OWLKnowledgeBase kb;	
 
-	public JavaClassTransformator() {
-		super();
-		this.kb = OWLFactory.createKB();
+	public JavaClassTransformator(OWLKnowledgeBase kb) {
+		super();		
+		setKB(kb);
+	}
+	
+	public void setKB(OWLKnowledgeBase kb) {
+		this.kb = kb;
+	}
+	
+	public void setOWLClass(OWLClass owlClass) {
+		this.owlClass = owlClass;		
+	}
+	
+	public void setJavaClass(Class javaClass) {
+		this.javaClass = javaClass;		
 	}
 	
 	public OWLClass getOWLClass() { 
@@ -28,18 +40,15 @@ public abstract class JavaClassTransformator implements OWLTransformator {
 	public Class getJavaClass() {
 		return javaClass;
 	}
-
-	private Class classFromString(String className) {
-		Class claz;
-		try {
-			claz = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			claz = null;
-		}
-		return claz;
-	}
 	
-	public abstract Object transformFromOWL(OWLIndividual ind);
+	public abstract Object transformFromOWL(OWLValue ind);
 
-	public abstract OWLIndividual transformToOWL(Object object);
+	public abstract OWLValue transformToOWL(Object object);
+	
+	protected OWLIndividual getIndividual(OWLValue value) {
+		if (value.isDataValue())
+			return null;
+		else
+			return (OWLIndividual) value.castTo(OWLIndividual.class);
+	}
 }

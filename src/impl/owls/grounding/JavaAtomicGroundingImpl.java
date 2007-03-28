@@ -3,6 +3,7 @@
  */
 package impl.owls.grounding;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
@@ -197,7 +198,7 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
         return results;
     }
 
-    private OWLIndividual transformResult(Object result) {
+    private OWLValue transformResult(Object result) {
     	JavaVariable output = getOutput();
     	if (output == null)
     		return null;
@@ -206,13 +207,22 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
     	if (transformerName != null && !transformerName.trim().equals("")) {
     		try {
 				Class transformerClass = Class.forName(transformerName);
-				JavaClassTransformator transformer = (JavaClassTransformator) transformerClass.newInstance();
+				Constructor constructor = transformerClass.getConstructor(new Class[] {OWLKnowledgeBase.class});
+				JavaClassTransformator transformer = (JavaClassTransformator) constructor.newInstance(new Object[] {getKB()});
 				return transformer.transformToOWL(result);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
 				e.printStackTrace();
 			}    		    		
     	} 
@@ -247,13 +257,22 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
     	if (transformerName != null && !transformerName.trim().equals("")) {
     		try {
 				Class transformerClass = Class.forName(transformerName);
-				JavaClassTransformator transformer = (JavaClassTransformator) transformerClass.newInstance();
+				Constructor constructor = transformerClass.getConstructor(new Class[] {OWLKnowledgeBase.class});
+				JavaClassTransformator transformer = (JavaClassTransformator) constructor.newInstance(new Object[] {getKB()});				
 				return transformer.getJavaClass();
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
 				e.printStackTrace();
 			}
     		
@@ -274,13 +293,22 @@ public class JavaAtomicGroundingImpl extends AtomicGroundingImpl implements Java
     	if (transformerName != null && !transformerName.trim().equals("")) {
     		try {
 				Class transformerClass = Class.forName(transformerName);
-				JavaClassTransformator transformer = (JavaClassTransformator) transformerClass.newInstance();
+				Constructor constructor = transformerClass.getConstructor(new Class[] {OWLKnowledgeBase.class});
+				JavaClassTransformator transformer = (JavaClassTransformator) constructor.newInstance(new Object[] {getKB()});
 				return transformer.transformFromOWL(owlValue);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
 				e.printStackTrace();
 			}
     		
