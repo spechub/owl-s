@@ -27,6 +27,7 @@
 package org.mindswap.owl.vocabulary;
 
 import java.net.URI;
+import java.util.Calendar;
 
 /**
  * @author Evren Sirin
@@ -196,4 +197,35 @@ public class XSD {
 		
 		return null;
     }
+    
+    public static Class getClassFromURI(URI type) {
+    	String strType = type.toString();
+    	
+    	if (strType.equals(XSD.negativeInteger) || strType.equals(XSD.nonNegativeInteger) || 
+    			strType.equals(XSD.unsignedInt))
+			return Integer.class;
+		else if (strType.equals(XSD.integer) || strType.equals(XSD.xsdLong) || 
+				strType.equals(XSD.unsignedLong) || strType.equals(XSD.nonPositiveInteger) ||
+				strType.equals(XSD.nonNegativeInteger) || strType.equals(XSD.negativeInteger) ||
+				strType.equals(XSD.positiveInteger)) 
+			return Long.class;
+		else if (strType.equals(XSD.xsdShort) || strType.equals(XSD.unsignedShort))
+			return Short.class;   	
+		else if (strType.equals(XSD.xsdByte) || strType.equals(XSD.unsignedByte))
+			return Byte.class;   	
+		else if (strType.equals(XSD.xsdFloat))
+			return Float.class;   	
+		else if (strType.equals(XSD.xsdDouble))
+			return Double.class;   	
+		else if (strType.equals(XSD.xsdBoolean))
+			return Boolean.class;  
+		else if (strType.equals(XSD.string))
+			return String.class;  
+		else if (strType.equals(XSD.xsdBoolean))
+			return Boolean.class;  
+		else if (strType.equals(XSD.dateTime) || strType.equals(XSD.date))
+			return Calendar.class;  
+		return null;
+    }
+    
 }

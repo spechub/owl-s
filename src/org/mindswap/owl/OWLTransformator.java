@@ -6,9 +6,9 @@ package org.mindswap.owl;
  * @date 20.03.2007
  */
 public interface OWLTransformator {
-	public OWLIndividual transformToOWL(Object object);
+	public OWLValue transformToOWL(Object object);
 	
-	public Object transformFromOWL(OWLIndividual ind);
+	public Object transformFromOWL(OWLValue ind);
 	
 	public OWLClass getOWLClass();
 }
