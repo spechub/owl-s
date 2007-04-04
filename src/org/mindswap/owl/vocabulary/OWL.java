@@ -45,10 +45,9 @@ public class OWL {
 	    EntityFactory.createClass(URIUtils.createURI(ns + "Thing"));
 	public final static OWLClass Nothing = 
 	    EntityFactory.createClass(URIUtils.createURI(ns + "Nothing"));
-	// added by Michael Daenzer
+ 
 	public final static OWLClass Ontology = 
-		EntityFactory.createClass(URIUtils.createURI(ns + "Ontology"));
-	// end added by Michael Daenzer	
+		EntityFactory.createClass(URIUtils.createURI(ns + "Ontology"));	
 	
 	public final static URI imports       = URI.create(ns + "imports");	
 	public final static URI inverseOf       = URI.create(ns + "inverseOf");

@@ -42,6 +42,7 @@ import org.mindswap.owl.OWLIndividualList;
 import org.mindswap.owl.OWLKnowledgeBase;
 import org.mindswap.owl.OWLValue;
 import org.mindswap.owl.list.RDFList;
+import org.mindswap.owls.generic.expression.Expression;
 import org.mindswap.owls.generic.list.OWLSObjList;
 import org.mindswap.owls.grounding.AtomicGrounding;
 import org.mindswap.owls.process.AnyOrder;
@@ -68,6 +69,7 @@ import org.mindswap.owls.process.Produce;
 import org.mindswap.owls.process.RepeatUntil;
 import org.mindswap.owls.process.RepeatWhile;
 import org.mindswap.owls.process.Result;
+import org.mindswap.owls.process.ResultList;
 import org.mindswap.owls.process.Sequence;
 import org.mindswap.owls.process.SimpleProcess;
 import org.mindswap.owls.process.Split;
@@ -341,16 +343,32 @@ public class ProcessExecutionEngineImpl implements ProcessExecutionEngine {
 	    
 	    if(DEBUG) System.out.println("Invoking " + grounding.getDescriptionURL());
 	    
-	    ValueMap result = grounding.invoke(values, env);
-        
-        result.addMap( values );
+	    ValueMap results = grounding.invoke(values, env);
+	    results.addMap( values );
 	    
-	    if(DEBUG) System.out.println("Result:\n" + result.debugString() + "\n");
+	    ResultList resultList = process.getResults();
+	    for (int i = 0; i < resultList.size(); i++) {	    	
+	    	OWLIndividualList effects = resultList.resultAt(i).getEffects();
+	    	for (int j = 0; j < effects.size(); j++) {
+	    		Expression effect = (Expression) effects.individualAt(j);
+//	    		AtomList newList = effect.getBody().apply(results);
+	    		effect.getBody().evaluate(results);
+	    	}
+	    }
+        
+        
+	    
+	    if(DEBUG) System.out.println("Result:\n" + results.debugString() + "\n");
  
 	    if( !env.isConsistent() )
 	        throw new ExecutionException("Invalid value returned from the process " + process, process);
 	    
-	    return result;
+	    return results;
+	}
+	
+	protected void applyEffects(Expression effect, ValueMap values) {
+		AtomList newList = effect.getBody().apply(values);
+		newList.evaluate(values);
 	}
 	
 	protected ValueMap executeCompositeProcess(CompositeProcess process, ValueMap values) {

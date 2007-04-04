@@ -51,6 +51,13 @@ public interface AtomList extends RDFList {
 	 * @return
 	 */
 	public AtomList apply(ValueMap values);
+	
+	/**
+	 * Evaluates the expression dependent on the semantics of the underlying atoms. See
+	 * all siblings of <code>Atom</code> for details. 
+	 *
+	 */
+	public void evaluate(ValueMap values);
     
     /**
      * Return all the variables mentioned in this AtomList

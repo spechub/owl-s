@@ -45,7 +45,7 @@ import org.mindswap.owl.vocabulary.RDF;
 
 /**
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public class RDFListImpl extends WrappedIndividual implements RDFList {
     protected ListVocabulary vocabulary;
@@ -110,8 +110,8 @@ public class RDFListImpl extends WrappedIndividual implements RDFList {
     }
     
     public void setFirst(OWLValue value) {
-        if (isEmpty())
-            throw new RuntimeException( "Cannot modify empty list (list:nil)" );
+ //       if (isEmpty())
+ //           throw new RuntimeException( "Cannot modify empty list (list:nil)" );
         
         if (value == null)
         	setProperty(vocabulary.firstD(), vocabulary.nil());

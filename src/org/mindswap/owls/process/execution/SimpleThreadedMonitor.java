@@ -10,7 +10,7 @@ import org.mindswap.swrl.Variable;
 /**
  * Simple monitor to show monitoring for threaded execution.
  * 
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  * @date 04.09.2006
  */
 

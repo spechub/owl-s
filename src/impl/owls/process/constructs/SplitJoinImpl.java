@@ -31,7 +31,7 @@ import org.mindswap.owls.process.SplitJoin;
 
 /**
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public class SplitJoinImpl extends BagBasedControlConstructImpl implements SplitJoin {
     public SplitJoinImpl(OWLIndividual ind) {

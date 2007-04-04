@@ -14,7 +14,7 @@ import org.mindswap.owls.process.execution.ThreadedProcessExecutionEngine;
 import org.mindswap.query.ValueMap;
 
 /**
- * @author Michael Daenzer, University of Zurich
+ * @author Michael Daenzer (University of Zurich)
  */
 
 //TODO dmi introduce new Factory classes for easy handling of several parallel executions.

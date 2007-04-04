@@ -6,7 +6,7 @@ package org.mindswap.owls.process;
  * For more information refer to the OWL-S white paper at
  * the official <a href="http://www.daml.org/services/owl-s/">web site.</a>
  * 
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public interface BagBasedControlConstruct extends ControlConstruct {
 	/**

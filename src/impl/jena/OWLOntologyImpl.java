@@ -402,8 +402,8 @@ public class OWLOntologyImpl extends OWLModelImpl implements OWLOntology, org.mi
         Resource object = (Resource) value.getImplementation();
 
         ontModel.remove(ontModel.listStatements(subject, predicate, (Resource) null));
-         ontModel.add(subject, predicate, object);
-         kb.refresh();
+        ontModel.add(subject, predicate, object);
+        kb.refresh();
     }
 
 

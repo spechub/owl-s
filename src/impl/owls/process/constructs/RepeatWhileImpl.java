@@ -11,7 +11,7 @@ import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public class RepeatWhileImpl extends IterateImpl implements RepeatWhile {  
     public RepeatWhileImpl(OWLIndividual ind) {

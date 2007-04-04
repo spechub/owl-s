@@ -5,7 +5,7 @@ import org.mindswap.owls.process.Parameter;
 
 /**
  * 
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  * @date 28.02.2007
  */
 public interface JavaVariable extends OWLIndividual {

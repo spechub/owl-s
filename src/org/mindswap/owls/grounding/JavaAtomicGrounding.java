@@ -47,7 +47,7 @@ import org.mindswap.owls.process.Output;
  * 	<li>an output type (at the time only primitive datatypes and their adapter classes)</li>
  * </ul></p>
  * 
- * @author Michael Daenzer, University of Zurich
+ * @author Michael Daenzer (University of Zurich)
  * @see <a href="http://www.ifi.unizh.ch/ddis/ont/owl-s/MoreGroundings.owl">MoreGroundings.owl</a>
  * @see org.mindswap.owls.grounding.AtomicGrounding 
  * @see org.mindswap.owls.vocabulary.MoreGroundings

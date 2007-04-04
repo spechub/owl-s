@@ -16,7 +16,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 
 /**
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public class OWLClassImpl extends OWLEntityImpl implements OWLClass {
     public OWLClassImpl(OWLOntology ont, Resource resource) {

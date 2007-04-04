@@ -31,7 +31,7 @@ import org.mindswap.owls.process.Choice;
 
 /**
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public class ChoiceImpl extends BagBasedControlConstructImpl implements Choice {
 	public ChoiceImpl(OWLIndividual ind) {

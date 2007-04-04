@@ -6,9 +6,12 @@ package impl.swrl;
 import org.mindswap.owl.OWLClass;
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owl.vocabulary.SWRL;
+import org.mindswap.owls.vocabulary.OWLS;
+import org.mindswap.query.ValueMap;
 import org.mindswap.swrl.ClassAtom;
 import org.mindswap.swrl.SWRLIndividualObject;
 import org.mindswap.swrl.SWRLObject;
+import org.mindswap.swrl.Variable;
 
 /**
  * @author Evren Sirin
@@ -62,4 +65,12 @@ public class ClassAtomImpl extends AtomImpl implements ClassAtom {
             return "Missing_class_predicate";
         return "(" + getArgument1() + " rdf:type " + classPredicate.getQName() + ")";
     }
+
+	public void evaluate(ValueMap values) {
+		OWLIndividual subject = getArgument1();
+		if (subject.isType(OWLS.Process.Parameter)) 
+			subject = values.getIndividualValue((Variable) subject);
+					
+		subject.addType(getClassPredicate());
+	}
 }

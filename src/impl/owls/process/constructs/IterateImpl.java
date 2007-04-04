@@ -13,7 +13,7 @@ import org.mindswap.owls.process.ProcessList;
 
 /**
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public abstract class IterateImpl extends ControlConstructImpl implements Iterate {
     public IterateImpl(OWLIndividual ind) {

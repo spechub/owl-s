@@ -34,7 +34,7 @@ package org.mindswap.owls.process;
  *  
  * 
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public interface Sequence extends ControlConstruct {
 	

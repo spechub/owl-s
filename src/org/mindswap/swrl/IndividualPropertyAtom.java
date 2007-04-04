@@ -26,17 +26,63 @@
 package org.mindswap.swrl;
 
 import org.mindswap.owl.OWLObjectProperty;
+import org.mindswap.query.ValueMap;
 
 /**
  * @author Evren Sirin
+ * @author Michael Dänzer (University of Zurich)
  */
 public interface IndividualPropertyAtom extends Atom {
+	
+	/**
+	 * Returns the object property predicate for this SWRL individualvaluedProperty atom 
+	 * 
+	 * @return the object property predicate for this this SWRL individualvaluedProperty atom
+	 */
     public OWLObjectProperty getPropertyPredicate();
+	/**
+	 * Sets the data property predicate for this SWRL individualvaluedProperty atom 
+	 * 
+	 * @param p the object property predicate for this this SWRL individualvaluedProperty atom
+	 */
     public void setPropertyPredicate(OWLObjectProperty p);
     
+    /**
+     * Retuns the subject of the property of this SWRL individualvaluedProperty atom.
+     *  
+     * It is of one of the explicit or inferred types of the domain of the OWL data property
+     * @return the subject of the property of this SWRL individualvaluedProperty atom.
+     */
     public SWRLIndividualObject getArgument1();
+    /**
+     * Sets the subject of the property of this SWRL individualvaluedProperty atom. 
+     * It must be of one of the explicit or inferred types of the domain of the OWL data property
+     * 
+     * @param obj the subject of the property of this SWRL individualvaluedProperty atom.
+     */
     public void setArgument1(SWRLIndividualObject obj);
     
+    /**
+     * Retuns the object of the property of this SWRL individualvaluedProperty atom.
+     *  
+     * It is of one of the explicit or inferred types of the range of the OWL data property
+     * @return the object of the property of this SWRL individualvaluedProperty atom.
+     */
     public SWRLIndividualObject getArgument2();
+    
+    /**
+     * Sets the object of the property of this SWRL individualvaluedProperty atom. 
+     * It must be of one of the explicit or inferred types of the range of the OWL data property
+     * 
+     * @param obj the object of the property of this SWRL individualvaluedProperty atom.
+     */
     public void setArgument2(SWRLIndividualObject obj);
+    
+    /**
+     * Evaluates the atom. Sets the argument 2 as value for the object property predicate of argument 1 
+     * 
+     * @param values the set of values bound to the process (and its super-processes)
+     * for which this atom (i.e. this corresponfing atom) is encapsulated.
+     */
+    public void evaluate(ValueMap values);
 }

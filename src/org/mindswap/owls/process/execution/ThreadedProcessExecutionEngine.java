@@ -38,7 +38,7 @@ import org.mindswap.query.ValueMap;
  * the Execution of every SubControlConstruct if the Execution was 
  * interrupted (with a call of interruptExecution()) by another thread and wait until the interruption ends (with a call of unfreeze()). </p> 
  * 
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  * @see org.mindswap.owls.process.execution.ProcessExecutionEngine  
  * @see org.mindswap.owls.process.execution.ProcessMonitor
  */

@@ -13,7 +13,7 @@ import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * @author evren
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public class WSDLOperationRefImpl extends WrappedIndividual implements WSDLOperationRef {
     public WSDLOperationRefImpl(OWLIndividual ind) {

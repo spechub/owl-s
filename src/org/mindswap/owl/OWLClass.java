@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public interface OWLClass extends OWLEntity, OWLType {
 	public boolean isSubClassOf(OWLClass c);

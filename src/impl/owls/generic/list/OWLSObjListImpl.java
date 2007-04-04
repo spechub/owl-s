@@ -37,7 +37,7 @@ import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public class OWLSObjListImpl extends RDFListImpl implements OWLSObjList {
     public OWLSObjListImpl(OWLIndividual ind) {

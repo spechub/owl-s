@@ -26,14 +26,47 @@
 package org.mindswap.swrl;
 
 import org.mindswap.owl.OWLClass;
+import org.mindswap.query.ValueMap;
 
 /**
  * @author Evren Sirin
+ * @author Michael Dänzer (University of Zurich)
  */
 public interface ClassAtom extends Atom {
+	/**
+	 * Returns the class predicate for this SWRL class atom 
+	 * 
+	 * @return the OWL class for this this SWRL class atom
+	 */
     public OWLClass getClassPredicate();
+    
+    /**
+     * Sets  the class predicate for this SWRL class atom
+     * @param c the OWL class for this this SWRL class atom
+     */
     public void setClassPredicate(OWLClass c);
     
+    /**
+     * Gets the argument for this SWRL class atom, i.e. the instance to check
+     * or set for the class predicate  
+     * @return the variable to check/set for the class predicate
+     */
     public SWRLIndividualObject getArgument1();
+    
+    /**
+     * Sets the argument for this SWRL class atom, i.e. the instance to check
+     * or set for the class predicate
+     * @param obj the variable to check/set for the class predicate
+     */
     public void setArgument1(SWRLIndividualObject obj);
+    
+
+    /**
+     * Evaluates the atom. Adds the type of the class predicate to the individual
+     * in argument 1. 
+     * 
+     * @param values the set of values bound to the process (and its super-processes)
+     * for which this atom (i.e. this corresponfing atom) is encapsulated.
+     */
+    public void evaluate(ValueMap values);
 }

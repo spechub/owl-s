@@ -39,7 +39,7 @@ import org.mindswap.owls.vocabulary.OWLS;
 
 /**
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public class SequenceImpl extends ControlConstructImpl implements Sequence {
 

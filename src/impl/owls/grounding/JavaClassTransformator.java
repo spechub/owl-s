@@ -8,7 +8,7 @@ import org.mindswap.owl.OWLValue;
 
 /**
  * 
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  * @date 20.03.2007
  */
 public abstract class JavaClassTransformator implements OWLTransformator {

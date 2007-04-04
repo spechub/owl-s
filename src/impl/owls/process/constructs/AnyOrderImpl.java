@@ -31,7 +31,7 @@ import org.mindswap.owls.process.AnyOrder;
 
 /**
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public class AnyOrderImpl extends BagBasedControlConstructImpl implements AnyOrder {
 	public AnyOrderImpl(OWLIndividual ind) {

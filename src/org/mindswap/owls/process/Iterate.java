@@ -32,7 +32,7 @@ package org.mindswap.owls.process;
  * {@link ForEach}. 
  * 
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public interface Iterate extends ControlConstruct {
 	/**

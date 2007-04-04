@@ -12,7 +12,7 @@ import org.mindswap.utils.URIUtils;
 /**
  * Class with static references to the Dublin Core (DC) ontology.
  * 
- * @author Michael Daenzer, University of Zurich
+ * @author Michael Daenzer (University of Zurich)
  * @see <a href="http://dublincore.org/">Dublin Core Metadata Initiative</a>
  * @see <a href="http://dublincore.org/2003/03/24/dces#">Dublin Core Ontology</a>
  */

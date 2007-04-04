@@ -31,7 +31,7 @@ import org.mindswap.owls.process.Split;
 
 /**
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public class SplitImpl extends BagBasedControlConstructImpl implements Split {
 	public SplitImpl(OWLIndividual ind) {

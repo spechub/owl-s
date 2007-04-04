@@ -34,7 +34,7 @@ package org.mindswap.owls.process;
  * the official <a href="http://www.daml.org/services/owl-s/">web site.</a>
  * 
  * @author Evren Sirin
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  */
 public interface Split extends BagBasedControlConstruct {
 }

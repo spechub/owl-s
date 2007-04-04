@@ -26,17 +26,60 @@
 package org.mindswap.swrl;
 
 import org.mindswap.owl.OWLDataProperty;
+import org.mindswap.query.ValueMap;
 
 /**
  * @author Evren Sirin
  */
 public interface DataPropertyAtom extends Atom {
+	
+	/**
+	 * Returns the data property predicate for this SWRL datavaluedProperty atom 
+	 * 
+	 * @return the data property predicate for this this SWRL datavaluedProperty atom
+	 */
     public OWLDataProperty getPropertyPredicate();
+    
+    /**
+     * Sets the data property predicate for this SWRL datavaluedProperty atom
+     * @param p  the data property predicate for this SWRL datavaluedProperty atom
+     */
     public void setPropertyPredicate(OWLDataProperty p);
     
+    /**
+     * Retuns the subject of the property of this SWRL datavaluedProperty atom. 
+     * It is of one of the explicit or inferred types of the domain of the OWL data property
+     * @return the subject of the property of this SWRL datavaluedProperty atom.
+     */
     public SWRLIndividualObject getArgument1();
+    /**
+     * Sets the subject of the property of this SWRL datavaluedProperty atom. 
+     * It must be of one of the explicit or inferred types of the domain of the OWL data property
+     * 
+     * @param obj the subject of the property of this SWRL datavaluedProperty atom.
+     */
     public void setArgument1(SWRLIndividualObject obj);
     
+    /**
+     * Returns the object of the property of this SWRL datavaluedProperty atom. 
+     * It is of one of the explicit or inferred types of the range of the OWL data property
+     * @return the object of the property of this SWRL datavaluedProperty atom.
+     */
     public SWRLDataObject getArgument2();
+    
+    /**
+     * Sets the object of the property of this SWRL datavaluedProperty atom. 
+     * It must be of one of the explicit or inferred types of the range of the OWL data property
+     * 
+     * @param obj the object of the property of this SWRL datavaluedProperty atom.
+     */
     public void setArgument2(SWRLDataObject obj);
+    
+    /**
+     * Evaluates the atom. Sets the argument 2 as value for the data property predicate of argument 1 
+     * 
+     * @param values the set of values bound to the process (and its super-processes)
+     * for which this atom (i.e. this corresponfing atom) is encapsulated.
+     */
+    public void evaluate(ValueMap values);
 }

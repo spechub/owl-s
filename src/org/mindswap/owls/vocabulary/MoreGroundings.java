@@ -34,7 +34,7 @@ import org.mindswap.utils.URIUtils;
 /**
  * Static description for the additional OWL-S Extensions groundings
  * 
- * @author Michael Daenzer, University of Zurich
+ * @author Michael Daenzer (University of Zurich)
  * @see <a href="http://www.ifi.unizh.ch/ddis/ont/MoreGroundings.owl">MoreGroundings.owl</a>
  */
 public class MoreGroundings {

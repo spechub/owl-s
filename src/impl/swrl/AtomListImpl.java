@@ -63,7 +63,8 @@ public class AtomListImpl extends RDFListImpl implements AtomList {
     
     public AtomList insert( Atom first ) {
         OWLOntology ont = getOntology();
-        AtomList list = new AtomListImpl( ont.createInstance( vocabulary.List() ) );
+        AtomListImpl list = new AtomListImpl( ont.createInstance( vocabulary.List() ) );        
+        
         list.setFirst( first );
         list.setRest( this );
                 
@@ -116,6 +117,11 @@ public class AtomListImpl extends RDFListImpl implements AtomList {
         }
         
         return arg;
+    }
+    
+    public void evaluate(ValueMap values) {
+    	for (int i = 0; i < size(); i++)
+    		atomAt(i).evaluate(values);
     }
     
     public AtomList apply( ValueMap binding ) {

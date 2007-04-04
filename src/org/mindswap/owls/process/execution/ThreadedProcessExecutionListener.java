@@ -33,7 +33,7 @@ import org.mindswap.owls.process.Process;
  * A listener interface which observer can implement to monitor threaded process
  * executions performed by the <code>ThreadedProcessExecutionEngine</code>.
  * 
- * @author Michael Daenzer, University of Zurich
+ * @author Michael Daenzer (University of Zurich)
  * @see org.mindswap.owls.process.execution.ProcessExecutionEngine
  * @see org.mindswap.owls.process.execution.ThreadedProcessExecutionEngine 
  * @deprecated

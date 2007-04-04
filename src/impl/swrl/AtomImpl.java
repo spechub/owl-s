@@ -15,5 +15,5 @@ import org.mindswap.swrl.Atom;
 public abstract class AtomImpl extends WrappedIndividual implements Atom {
     public AtomImpl(OWLIndividual ind) {
         super(ind);
-    }
+    }    
 }

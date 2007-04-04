@@ -6,12 +6,14 @@ package impl.swrl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.mindswap.exceptions.NotImplementedException;
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owl.OWLValue;
 import org.mindswap.owl.list.RDFList;
 import org.mindswap.owl.vocabulary.RDF;
 import org.mindswap.owl.vocabulary.SWRL;
 import org.mindswap.owl.vocabulary.SWRLB;
+import org.mindswap.query.ValueMap;
 import org.mindswap.swrl.BuiltinAtom;
 import org.mindswap.swrl.SWRLDataObject;
 import org.mindswap.swrl.SWRLObject;
@@ -159,4 +161,13 @@ public class BuiltinAtomImpl extends AtomImpl implements BuiltinAtom {
 
         return str.toString();
     }
+
+	public void evaluate(ValueMap values) {
+		OWLIndividual builtin = getBuiltin();
+		if (! (builtin.equals(SWRLB.add) || builtin.equals(SWRLB.subtract) ||
+				builtin.equals(SWRLB.multiply) || builtin.equals(SWRLB.divide)))
+			return;
+		
+		throw new NotImplementedException("Builtin SWRL atoms cannot be evaluated");
+	}
 }

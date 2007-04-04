@@ -25,8 +25,11 @@
  */
 package org.mindswap.swrl;
 
+import org.mindswap.query.ValueMap;
+
 /**
  * @author Evren Sirin
+ * @author Michael Dänzer (University of Zurich)
  */
 public interface SameIndividualAtom extends Atom {
     public SWRLIndividualObject getArgument1();
@@ -34,4 +37,12 @@ public interface SameIndividualAtom extends Atom {
     
     public SWRLIndividualObject getArgument2();
     public void setArgument2(SWRLIndividualObject obj);
+    
+    /**
+     * Evaluates the atom by setting the OWL property sameAs to argument1 and argument2
+
+     * @param values the set of values bound to the process (and its super-processes)
+     * for which this atom (i.e. this corresponfing atom) is encapsulated.
+     */
+    public void evaluate(ValueMap values);
 }

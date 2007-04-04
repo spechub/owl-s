@@ -6,9 +6,12 @@ package impl.swrl;
 import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owl.OWLObjectProperty;
 import org.mindswap.owl.vocabulary.SWRL;
+import org.mindswap.owls.vocabulary.OWLS;
+import org.mindswap.query.ValueMap;
 import org.mindswap.swrl.IndividualPropertyAtom;
 import org.mindswap.swrl.SWRLIndividualObject;
 import org.mindswap.swrl.SWRLObject;
+import org.mindswap.swrl.Variable;
 
 /**
  * @author Evren Sirin
@@ -77,4 +80,13 @@ public class IndividualPropertyAtomImpl extends AtomImpl implements IndividualPr
 	    	getPropertyPredicate().getQName() + 
 	    	" " + getArgument2() + ")";        
     }
+
+	public void evaluate(ValueMap values) {				
+		OWLIndividual subject = getArgument1();
+		OWLIndividual object = getArgument2();
+		if (subject.isType(OWLS.Process.Parameter)) {
+			OWLIndividual value = values.getIndividualValue((Variable) subject);
+			value.setProperty(getPropertyPredicate(), object);
+		}
+	}
 }

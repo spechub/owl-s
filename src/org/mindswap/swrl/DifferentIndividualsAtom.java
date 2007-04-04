@@ -25,6 +25,8 @@
  */
 package org.mindswap.swrl;
 
+import org.mindswap.query.ValueMap;
+
 /**
  * @author Evren Sirin
  */
@@ -34,4 +36,12 @@ public interface DifferentIndividualsAtom extends Atom {
     
     public SWRLIndividualObject getArgument2();
     public void setArgument2(SWRLIndividualObject obj);
+    
+    /**
+     * Evaluates the atom by setting the OWL property differentFrom to argument1 and argument2
+
+     * @param values the set of values bound to the process (and its super-processes)
+     * for which this atom (i.e. this corresponding atom) is encapsulated.
+     */
+    public void evaluate(ValueMap values);
 }
