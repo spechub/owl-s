@@ -30,7 +30,7 @@ import org.mindswap.query.ValueMap;
  * 		<pre>public String testIt(int i, Double y)</pre>
  * </p>
  * 
- * @author Michael Daenzer, University of Zurich
+ * @author Michael Daenzer (University of Zurich)
  */
 public class CreateJavaGrounding {
 

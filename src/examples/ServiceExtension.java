@@ -32,7 +32,7 @@ import org.mindswap.utils.URIUtils;
  * This example shows how the default Service implementation can be extended to support
  * custom defined extensions of the service. 
  *   
- * @author Michael Daenzer, University of Zurich
+ * @author Michael Daenzer (University of Zurich)
  *
  */
 public class ServiceExtension {

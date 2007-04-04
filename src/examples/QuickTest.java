@@ -1,136 +1,128 @@
 package examples;
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URI;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
-import org.mindswap.owl.OWLClass;
+import javax.tools.JavaCompiler;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
+
+import org.mindswap.owl.OWLDataProperty;
 import org.mindswap.owl.OWLFactory;
-import org.mindswap.owl.OWLIndividualList;
+import org.mindswap.owl.OWLIndividual;
 import org.mindswap.owl.OWLKnowledgeBase;
-import org.mindswap.owls.grounding.JavaAtomicGrounding;
-import org.mindswap.owls.grounding.WSDLAtomicGrounding;
-import org.mindswap.owls.process.AtomicProcess;
-import org.mindswap.owls.process.Input;
-import org.mindswap.owls.process.Output;
-import org.mindswap.owls.service.Service;
-import org.mindswap.owls.vocabulary.OWLS;
+import org.mindswap.owl.OWLOntology;
+import org.mindswap.owl.OWLProperty;
+import org.mindswap.pellet.jena.PelletReasoner;
+import org.mindswap.utils.URIUtils;
 
 /**
  * This class is intended for the developers of the API to perform quick tests.
  * Do use this class for whatever you intend to, but do never ask for support :-)
  *  
- * @author Michael Dänzer, University of Zurich
+ * @author Michael Dänzer (University of Zurich)
  * @date 16.01.2007
  */
 public class QuickTest {
 	private OWLKnowledgeBase kb;
 	
 	public static void main(String[] args) {
-		QuickTest test = new QuickTest();
-		test.testImplementation();
+		QuickTest test = new QuickTest();	
+		test.OWL2Java();
 	}
 
 	public QuickTest() {
 		kb = OWLFactory.createKB();
-		kb.setReasoner("Pellet");		
+		kb.setReasoner("Pellet");	
+		PelletReasoner r = (PelletReasoner) kb.getReasoner(); 
+		r.setDerivationLogging(false);
+		
+		kb.getReader().getCache().setLocalCacheDirectory("e://workspaces//NExT//Ontologies//ont_cache");
+		kb.getReader().getCache().setForced(true);
 	}
 	
-	private void testImplementation() {
-		kb.getReader().getCache().setLocalCacheDirectory("E://Workspaces//NExT//Ontologies//ont_cache");
-		kb.getReader().getCache().setForced(true);
-		
-		Service service = null;
+	private void OWL2Java() {
 		try {
-			//service = kb.readService("http://www.mindswap.org/2004/owl-s/1.1/BabelFishTranslator.owl");
-			//service = kb.readService("http://www.ifi.unizh.ch/ddis/ont/next/kb/ProcessLibrary/processes/Add.owl");
-//			service = kb.readService("http://www.dfki.de/scallops/health-scallops/MedicalFlightCompanyServices.owl");
-//			service = kb.readService("http://www.dfki.de/scallops/health-scallops/NonMedicalFlightCompanyServices.owl");
-//			service = kb.readService("http://www.dfki.de/scallops/health-scallops/MedicalTransportCompanyServices.owl");
-//			service = kb.readService("http://www.dfki.de/scallops/health-scallops/NonMedicalTransportCompanyServices.owl");
-//			service = kb.readService("http://www.dfki.de/scallops/health-scallops/EMAServices.owl");
-//			kb.read("http://www.dfki.de/scallops/health-scallops/EMAOntology.owl");
-			kb.read("http://www.dfki.de/scallops/health-scallops/EMAOntology.owl");
+			OWLOntology ont = kb.read("http://www.w3.org/2001/sw/WebOnt/guide-src/wine.owl");
+			OWLIndividual ind = ont.getIndividual(URIUtils.createURI("http://www.w3.org/2001/sw/WebOnt/guide-src/wine#ChateauDeMeursaultMeursault"));
+			Map props = ind.getProperties();			
 			
+			JavaCompiler jc = ToolProvider.getSystemJavaCompiler();  
+			StandardJavaFileManager sjfm = jc.getStandardFileManager(null, null, null);  
 			
-			OWLIndividualList list = kb.getIndividuals();
-			for (int i = 0; i < list.size(); i++) { 
-				System.out.println("Types for " + list.individualAt(i) + " are ");
-				Set types = list.individualAt(i).getTypes();
-				Iterator iter = types.iterator();
-				while (iter.hasNext())
-					System.out.println("\t" + iter.next());
+			String userDir = System.getProperty("user.dir") + System.getProperty("file.separator");	
+			System.out.println(userDir);
+			File javaFile = new File(userDir + "TempOWLClass.java");  
+			if (javaFile.exists())
+				javaFile.delete();
+			javaFile.createNewFile();
+			
+			FileWriter writer = new FileWriter(javaFile);
+			writer.write("public class TempOWLClass {\n");
+			Iterator iter = props.values().iterator();
+			while (iter.hasNext()) {
+				OWLProperty prop = (OWLProperty) iter.next();
+				String type = getJavaType(prop);
+				String value = "";				
+				if (prop instanceof OWLDataProperty) 
+					value = ind.getProperty((OWLDataProperty)prop).getLexicalValue();					  
+				writer.write("public " + type + " " + prop.getLocalName()+ " = " + value + ";");	
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void removeTest() {
-		kb.getReader().getCache().setLocalCacheDirectory("E://Workspaces//NExT//Ontologies//ont_cache");
-		kb.getReader().getCache().setForced(true);
-		
-		Service service = null;
-		try {
-			service = kb.readService("http://www.mindswap.org/2004/owl-s/1.1/BabelFishTranslator.owl");
-//			service = kb.readService("http://www.ifi.unizh.ch/ddis/ont/next/kb/ProcessLibrary/processes/Add.owl");
 			
-			Input in = service.getProcess().getInputs().inputAt(0);
-			Output out = service.getProcess().getOutputs().outputAt(0);
-			WSDLAtomicGrounding ground = (WSDLAtomicGrounding) ((AtomicProcess) service.getProcess()).getGrounding();			
-
-			URI str = ground.getWSDLParameter(in);
-			URI str2 = ground.getWSDLParameter(out);
+			writer.write("\tpublic void printIt(String it) {\n");
+			writer.write("\t\tSystem.out.println(it);\n");
+			writer.write("\t}\n");
+			writer.write("}\n");
+			writer.flush();
 			
-			kb.write(System.out);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void languageTest() {
-		kb.getReader().getCache().setLocalCacheDirectory("E://Workspaces//NExT//Ontologies//ont_cache");
-		kb.getReader().getCache().setForced(true);
-		
-		Service service;
-		try {
-			service = kb.readService("http://www.ifi.unizh.ch/ddis/ont/next/kb/ProcessLibrary/AtomicProcesses/Add.owl");
+			Iterable fileObjects = sjfm.getJavaFileObjects(javaFile);  
+			jc.getTask(null, sjfm, null, null, null, fileObjects).call();  
+			sjfm.close(); 
 			
-			List classes = kb.getNonLanguageClasses();
-			List dataProps = kb.getNonLanguageDataProperties();
-			List objProps = kb.getNonLanguageObjectProperties();
-			for (int i = 0; i < classes.size(); i++)
-				System.out.println(((OWLClass) classes.get(i)).getURI());
-			System.out.println("--------------------------------------");
-			for (int i = 0; i < dataProps.size(); i++)
-				System.out.println(dataProps.get(i));
-			System.out.println("--------------------------------------");
-			for (int i = 0; i < objProps.size(); i++)
-				System.out.println(objProps.get(i));
+			String[] options = new String[]{"-d", userDir};  
+			jc.getTask(null, sjfm, null, Arrays.asList(options), null, fileObjects).call();
+			
+			File outputDir = new File(userDir);  
+			URL[] urls = new URL[]{outputDir.toURI().toURL()};  
+			URLClassLoader ucl = new URLClassLoader(urls, jc.getClass().getClassLoader());  
+			Class clazz = ucl.loadClass("tempOWLClass");  
+			Method m = clazz.getDeclaredMethods()[0];		
+			Field f = clazz.getDeclaredFields()[0];
+			Object o = clazz.newInstance();
+			m.invoke(o, "test");			
+			System.out.println(f.get(o));			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 		}
+		
 	}
 	
-	private void pelletErrorTest() {
-		kb.getReader().getCache().setLocalCacheDirectory("E://Workspaces//NExT//Ontologies//ont_cache");
-		kb.getReader().getCache().setForced(true);
-		
-		Service service;
-		try {
-			service = kb.readService("http://www.ifi.unizh.ch/ddis/ont/next/ProcessSpace/Projectgigimgii.owl#gigimgii");
-			service.getOntology().write(System.out);
-			service.deleteProcess();
-			service.getOntology().write(System.out);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
+	private String getJavaType(OWLProperty prop) {
+		return null;
 	}
 }
