@@ -15,6 +15,8 @@ import org.mindswap.owls.process.Perform;
 import org.mindswap.owls.process.ValueOf;
 import org.mindswap.owls.vocabulary.OWLS;
 
+import com.ibm.wsdl.BindingImpl;
+
 /**
  * @author Evren Sirin
  */
@@ -54,10 +56,12 @@ public class ValueOfImpl extends WrappedIndividual implements ValueOf {
 	public Binding getEnclosingBinding() {
 		OWLIndividual uncastedBinding = getIncomingProperty(OWLS.Process.valueSource);
 		Binding binding = null;
-		if (uncastedBinding instanceof InputBinding)
+		if (uncastedBinding.isType(OWLS.Process.InputBinding))
 			binding = new InputBindingImpl(getIncomingProperty(OWLS.Process.valueSource));
-		else
+		else if (uncastedBinding.isType(OWLS.Process.OutputBinding))
 			binding = new OutputBindingImpl(getIncomingProperty(OWLS.Process.valueSource));
+		
+	//	binding = new BindingImpl(getIncomingProperty(OWLS.Process.valueSource));
 		return binding;
 	}
 

@@ -6,7 +6,6 @@ package org.mindswap.owl;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.net.URI;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +24,7 @@ import org.mindswap.owls.grounding.WSDLAtomicGrounding;
 import org.mindswap.owls.grounding.WSDLOperationRef;
 import org.mindswap.owls.process.AnyOrder;
 import org.mindswap.owls.process.AtomicProcess;
+import org.mindswap.owls.process.BindingList;
 import org.mindswap.owls.process.Choice;
 import org.mindswap.owls.process.CompositeProcess;
 import org.mindswap.owls.process.Condition;
@@ -38,6 +38,7 @@ import org.mindswap.owls.process.InputBinding;
 import org.mindswap.owls.process.Local;
 import org.mindswap.owls.process.Output;
 import org.mindswap.owls.process.OutputBinding;
+import org.mindswap.owls.process.Parameter;
 import org.mindswap.owls.process.Perform;
 import org.mindswap.owls.process.Process;
 import org.mindswap.owls.process.Produce;
@@ -986,4 +987,5 @@ public interface OWLModel {
      */
     public List getNonLanguageDataProperties();
     
+    public BindingList getBindingsFor(Parameter parameter);
 }

@@ -31,6 +31,8 @@ import org.mindswap.owl.OWLReader;
 import org.mindswap.owl.OWLValue;
 import org.mindswap.owls.OWLSFactory;
 import org.mindswap.owls.OWLSVersionTranslator;
+import org.mindswap.owls.process.BindingList;
+import org.mindswap.owls.process.Parameter;
 import org.mindswap.owls.service.Service;
 import org.mindswap.owls.vocabulary.OWLS;
 import org.mindswap.utils.QNameProvider;
@@ -642,5 +644,13 @@ public class OWLKnowledgeBaseImpl extends OWLModelImpl implements OWLKnowledgeBa
     	}
     		
 		return set;				
+	}
+
+	public BindingList getBindingsFor(Parameter parameter) {
+		BindingList bindings = OWLSFactory.createBindingList();
+		Iterator iter = getOntologies().iterator();
+		while (iter.hasNext())
+			bindings.addAll( ((OWLOntology) iter.next()).getBindingsFor(parameter));
+		return bindings;
 	}
 }

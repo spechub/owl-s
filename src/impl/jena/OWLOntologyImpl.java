@@ -28,6 +28,10 @@ import org.mindswap.owl.OWLObjectProperty;
 import org.mindswap.owl.OWLOntology;
 import org.mindswap.owl.OWLProperty;
 import org.mindswap.owl.OWLValue;
+import org.mindswap.owls.OWLSFactory;
+import org.mindswap.owls.process.Binding;
+import org.mindswap.owls.process.BindingList;
+import org.mindswap.owls.process.Parameter;
 import org.mindswap.owls.service.Service;
 import org.mindswap.owls.vocabulary.MoreGroundings;
 import org.mindswap.owls.vocabulary.OWLS;
@@ -39,6 +43,7 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
@@ -603,5 +608,19 @@ public class OWLOntologyImpl extends OWLModelImpl implements OWLOntology, org.mi
 
 	public Set getClasses() {
 		return getAllClasses(ontModel.listClasses(), this);
+	}
+
+	public BindingList getBindingsFor(Parameter parameter) {
+		Property prop = (Property) OWLS.Process.toParam.getImplementation();
+		ResIterator iter = getOntModel().listSubjectsWithProperty(prop, parameter.getImplementation());
+		BindingList bindings = OWLSFactory.createBindingList();
+		while (iter.hasNext()) {
+			Resource resource = (Resource) iter.next();
+			OWLIndividual ind = new OWLIndividualImpl(this, resource);
+			if (ind.isType(OWLS.Process.Binding))
+				bindings.add((Binding) ind.castTo(Binding.class));
+		}
+						
+		return bindings;
 	}
 }
